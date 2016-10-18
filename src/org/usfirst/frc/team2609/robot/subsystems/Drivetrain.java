@@ -1,16 +1,18 @@
 package org.usfirst.frc.team2609.robot.subsystems;
 import org.usfirst.frc.team2609.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem {
 
-
     public void humanDrive(){
-
     }
-
+    public void test1(double left, double right){
+		RobotMap.driveVictorRight1.set(right);
+		RobotMap.driveVictorRight2.set(right);
+		RobotMap.driveVictorLeft1.set(left);
+		RobotMap.driveVictorLeft2.set(left);
+    }
     public void encoderDriveStraight(double driveTarget, double drivePower, double driveHeading){
     	double distError = 0;
 		double power = 0;

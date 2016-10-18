@@ -1,12 +1,7 @@
 package org.usfirst.frc.team2609.robot.commands;
-
 import org.usfirst.frc.team2609.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class EncReset extends Command {
 
     public EncReset() {
