@@ -1,7 +1,9 @@
 package org.usfirst.frc.team2609.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2609.robot.*;
+import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
 public class DriveEncoder extends Command {
 	private double driveTarget;
@@ -11,8 +13,12 @@ public class DriveEncoder extends Command {
 	private SimPID headingPID;
 	private SimPID steeringPID;
 	private int doneRange = 0;
-	public static double drivePIDOutput = 0;
-	public static double steerPIDOutput = 0;
+	private double gyroP = 0;
+	double gyroI;
+	double gyroD;
+	double driveP;
+	double driveI;
+	double driveD;
 	//private double driveTarget;
 	// Number of minutes wasted on 1s vs ls:
 	// 30min 10/18/2016
@@ -20,13 +26,19 @@ public class DriveEncoder extends Command {
 	
 	public DriveEncoder(double driveTarget, double drivePower, double driveHeading) {
         requires(Robot.drivetrain);
+        gyroP = (double)SmartDashboard.getNumber("Gyro P: ");
+        gyroI = (double)SmartDashboard.getNumber("Gyro I: ");
+        gyroD = (double)SmartDashboard.getNumber("Gyro D: ");
+        driveP = (double)SmartDashboard.getNumber("Drive P: ");
+        driveI = (double)SmartDashboard.getNumber("Drive I: ");
+        driveD = (double)SmartDashboard.getNumber("Drive D: ");
         this.steeringPID = new SimPID();
         this.steeringPID.setDesiredValue(0);
-        this.steeringPID.setConstants(0.0005, 0.0001, 0);
+        this.steeringPID.setConstants(gyroP,gyroI, driveD);
         this.steeringPID.setMaxOutput(0.6);
         this.drivePID = new SimPID();
         this.drivePID.setDesiredValue(driveTarget);
-        this.drivePID.setConstants(0.0022, 0.001, 0);
+        this.drivePID.setConstants(driveP, driveI, driveD);
         this.drivePID.setMaxOutput(0.6);
         this.drivePID.setDoneRange(10);
         
@@ -41,46 +53,19 @@ public class DriveEncoder extends Command {
     	drivePID.resetPreviousVal();
     	//Robot.drivetrain.encoderDriveStraight(driveTarget, drivePower, driveHeading, init=True);
     	System.out.println("initialize.drivePower" + drivePower);
-		/*if (driveTarget < RobotMap.driveEncLeft.getDistance()) {
-			drivePower = Math.abs(drivePower)*-1;
-		}
-		else{
-			drivePower = Math.abs(drivePower);
-		}*/
 		System.out.println("initialize.drivePower " + drivePower);
-		
     }
 
     protected void execute() {
-    	
     	//Robot.drivetrain.encoderDriveStraight(driveTarget, drivePower, driveHeading); //init=False
-    	double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
-    	steerPIDOutput = this.steeringPID.calcPID(encError);
-    	drivePIDOutput = this.drivePID.calcPID(RobotMap.driveEncLeft.getDistance());
-    	System.out.println("drivePIDOutput " + drivePIDOutput);
-    	System.out.println("steerPIDOutput " + steerPIDOutput);
-    	Robot.drivetrain.test1(drivePIDOutput-steerPIDOutput, -drivePIDOutput+steerPIDOutput);
+    	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
+    	double gyroYaw = RobotMap.ahrs.getYaw();
+    	Robot.drivetrain.driveStraight(RobotMap.driveEncLeft.get(), RobotMap.driveEncRight.get(), gyroYaw, drivePID, steeringPID);	
     }
 
     protected boolean isFinished() {
     	return drivePID.isDone();
-    	/*double distTravel = (RobotMap.driveEncLeft.getDistance()+((RobotMap.driveEncRight.getDistance()*-1)))*0.5;
-    	System.out.println("distTravel " + distTravel);
-    	if ( (distTravel > driveTarget -5) && (distTravel < driveTarget +5)){
-    		System.out.println("!!!!!!!!!distTravel " + distTravel);
-    		return true;
-    	}
-		else{
-			
-			return false;
-		}
-    	/*distanceTraveled = Math.min(Math.abs(RobotMap.wheelEncoderRight.getDistance()),Math.abs(RobotMap.wheelEncoderLeft.getDistance()));
-    	if (distanceTraveled > Math.abs(driveDistanceSetpoint)-1){//Find the encoder with the least distance traveled
-    		return true;
-    	}
-		else{
-			return false;
-		}*/
+    	
     }
 
     protected void end() {

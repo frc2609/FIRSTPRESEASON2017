@@ -1,13 +1,17 @@
 package org.usfirst.frc.team2609.robot.subsystems;
+import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem {
-
+	private static double drivePIDOutput = 0;
+	private static double steerPIDOutput = 0;
+	
     public void humanDrive(){
     }
-    public void test1(double left, double right){
+    public void driveTank(double left, double right){
 		RobotMap.driveVictorRight1.set(right);
 		RobotMap.driveVictorRight2.set(right);
 		RobotMap.driveVictorLeft1.set(left);
@@ -60,7 +64,13 @@ public class Drivetrain extends Subsystem {
 		RobotMap.driveVictorLeft1.set(0);
 		RobotMap.driveVictorLeft2.set(0);
     }
-    
+    public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
+    	steerPIDOutput = steerPID.calcPID(steerInput);
+    	drivePIDOutput = encPID.calcPID(encLeft);
+    	System.out.println("drivePIDOutput " + drivePIDOutput);
+    	System.out.println("steerPIDOutput " + steerPIDOutput);
+    	Robot.drivetrain.driveTank(drivePIDOutput-steerPIDOutput, -drivePIDOutput+steerPIDOutput);
+    }
     public void resetDriveEncoders(){
     	RobotMap.driveEncLeft.reset();
     	RobotMap.driveEncRight.reset();
@@ -79,9 +89,8 @@ public class Drivetrain extends Subsystem {
     }
     
     public void gyroYawZero(){
-    	//RobotMap.ahrs.zeroYaw();
+    	RobotMap.ahrs.zeroYaw();
     }
-    
     public void tankDrive(double speed){
     	//RobotMap.Drivetrain4.tankDrive(speed,speed,squaredTank);
     }

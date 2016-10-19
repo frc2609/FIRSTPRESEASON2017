@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -23,13 +23,19 @@ public class Robot extends IterativeRobot {
 
     public void robotInit() {
 		oi = new OI();
-		drivetrain = new Drivetrain();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
+		SmartDashboard.putNumber("Gyro P: ", 0.1);
+    	SmartDashboard.putNumber("Gyro I: ", 0.0001);
+    	SmartDashboard.putNumber("Gyro D: ", 0.0);
+		SmartDashboard.putNumber("Drive P: ", 0.0022);
+    	SmartDashboard.putNumber("Drive I: ", 0.001);
+    	SmartDashboard.putNumber("Drive D: ", 0.0);
+		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
+		SmartDashboard.putData("Auto mode", chooser);
 //      chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
-        
+
     }
 	
     public void disabledInit(){
@@ -43,6 +49,7 @@ public class Robot extends IterativeRobot {
 	}
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
+        Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
         String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
