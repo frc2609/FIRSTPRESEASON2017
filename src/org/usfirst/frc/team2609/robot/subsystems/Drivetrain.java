@@ -67,9 +67,8 @@ public class Drivetrain extends Subsystem {
     public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
     	steerPIDOutput = steerPID.calcPID(steerInput);
     	drivePIDOutput = encPID.calcPID(encLeft);
-    	System.out.println("drivePIDOutput " + drivePIDOutput);
-    	System.out.println("steerPIDOutput " + steerPIDOutput);
-    	Robot.drivetrain.driveTank(drivePIDOutput-steerPIDOutput, -drivePIDOutput+steerPIDOutput);
+    	System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
+    	Robot.drivetrain.driveTank(drivePIDOutput+steerPIDOutput, -drivePIDOutput+steerPIDOutput);
     }
     public void resetDriveEncoders(){
     	RobotMap.driveEncLeft.reset();

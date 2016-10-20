@@ -24,12 +24,15 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
-		SmartDashboard.putNumber("Gyro P: ", 0.1);
-    	SmartDashboard.putNumber("Gyro I: ", 0.0001);
+		SmartDashboard.putNumber("Gyro P: ", 0.01);
+    	SmartDashboard.putNumber("Gyro I: ", 0.001);
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
-		SmartDashboard.putNumber("Drive P: ", 0.0022);
+    	SmartDashboard.putNumber("Gyro Max: ", 0.2);
+		SmartDashboard.putNumber("Drive P: ", 0.002);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
     	SmartDashboard.putNumber("Drive D: ", 0.0);
+    	SmartDashboard.putNumber("Drive Max: ", 0.8);
+    	SmartDashboard.putNumber("Drive Eps: ", 1);
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
@@ -44,6 +47,8 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
+		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 	}
@@ -68,6 +73,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
         SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 		SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
@@ -81,9 +87,14 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
+        Robot.drivetrain.gyroYawZero();
+        //RobotMap.serialport.reset();
+		//RobotMap.serialport.writeString(":85");
+		
     }
 
     public void teleopPeriodic() {
+    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
         Scheduler.getInstance().run();

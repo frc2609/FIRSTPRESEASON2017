@@ -3,6 +3,8 @@ package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -16,6 +18,7 @@ public class RobotMap {
 	public static Encoder driveEncLeft;
 	public static Encoder driveEncRight;
 	public static AHRS ahrs;
+	public static SerialPort serialport;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
@@ -25,6 +28,8 @@ public class RobotMap {
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
         }
+    	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
+    	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
 		driveVictorLeft1 = new Victor(0);
 		driveVictorLeft2 = new Victor(1);
 		driveVictorRight1 = new Victor(2);
