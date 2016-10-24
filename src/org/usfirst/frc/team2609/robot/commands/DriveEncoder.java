@@ -33,7 +33,7 @@ public class DriveEncoder extends Command {
         driveMax = (double)SmartDashboard.getNumber("Drive Max: ");
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ");
         this.steeringPID = new SimPID();
-        this.steeringPID.setDesiredValue(0);
+        this.steeringPID.setDesiredValue(driveHeading);
         this.steeringPID.setConstants(gyroP,gyroI, driveD);
         this.steeringPID.setMaxOutput(gyroMax);
         this.drivePID = new SimPID();

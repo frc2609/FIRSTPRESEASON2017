@@ -11,9 +11,9 @@ public class HockeyStick extends CommandGroup {
         addSequential(new GyroTurn(0.3,45));
         addSequential(new EncReset());
         addSequential(new TimerDelay(1));
-        addSequential(new DriveEncoder(500, 0.6, 0));
+        addSequential(new DriveEncoder(500, 0.6, 45));
         addSequential(new TimerDelay(1));
-        addSequential(new DriveEncoder(0, 0.6, 0));
+        addSequential(new DriveEncoder(0, 0.6, 45));
     	addSequential(new TimerDelay(1));
         addSequential(new GyroTurn(0.3,0));
         addSequential(new TimerDelay(1));

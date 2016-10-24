@@ -34,7 +34,7 @@ public class GyroTurn extends Command {
     }
 
     protected boolean isFinished() {
-    	System.out.println("gyroPID.isDone "+ gyroPID.isDone());
+    	//System.out.println("gyroPID.isDone "+ gyroPID.isDone());
     	return gyroPID.isDone();
     }
 
