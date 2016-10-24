@@ -23,20 +23,22 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
-		SmartDashboard.putNumber("Gyro P: ", 0.01);
-    	SmartDashboard.putNumber("Gyro I: ", 0.001);
-    	SmartDashboard.putNumber("Gyro D: ", 0.0);
-    	SmartDashboard.putNumber("Gyro Max: ", 0.2);
-		SmartDashboard.putNumber("Drive P: ", 0.002);
+		SmartDashboard.putNumber("Drive P: ", 0.003);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
-    	SmartDashboard.putNumber("Drive D: ", 0.0);
+    	SmartDashboard.putNumber("Drive D: ", 0.01);
     	SmartDashboard.putNumber("Drive Max: ", 0.8);
     	SmartDashboard.putNumber("Drive Eps: ", 1);
-        SmartDashboard.putNumber("turn P: ", .1);
-        SmartDashboard.putNumber("turn I: ",0);
-        SmartDashboard.putNumber("turn D: ",0);
-        SmartDashboard.putNumber("turn Max: ",0.3);
-        SmartDashboard.putNumber("turn Eps: ",1.0);
+    	
+		SmartDashboard.putNumber("Gyro P: ", 0.02);
+    	SmartDashboard.putNumber("Gyro I: ", 0.000);
+    	SmartDashboard.putNumber("Gyro D: ", 0.0);
+    	SmartDashboard.putNumber("Gyro Max: ", 0.2);
+		
+        SmartDashboard.putNumber("turn P: ", .03);
+        SmartDashboard.putNumber("turn I: ",0.001);
+        SmartDashboard.putNumber("turn D: ",0.0);
+        SmartDashboard.putNumber("turn Max: ",0.25);
+        SmartDashboard.putNumber("turn Eps: ",1);
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());

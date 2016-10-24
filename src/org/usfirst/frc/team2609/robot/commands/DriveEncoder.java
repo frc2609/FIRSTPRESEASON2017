@@ -5,8 +5,8 @@ import org.usfirst.frc.team2609.robot.*;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
 public class DriveEncoder extends Command {
-	private SimPID drivePID;
-	private SimPID steeringPID;
+	SimPID drivePID;
+	SimPID steeringPID;
 	double gyroP = 0;
 	double gyroI = 0;
 	double gyroD = 0;
@@ -34,7 +34,7 @@ public class DriveEncoder extends Command {
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ");
         this.steeringPID = new SimPID();
         this.steeringPID.setDesiredValue(driveHeading);
-        this.steeringPID.setConstants(gyroP,gyroI, driveD);
+        this.steeringPID.setConstants(gyroP, gyroI, gyroD);
         this.steeringPID.setMaxOutput(gyroMax);
         this.drivePID = new SimPID();
         this.drivePID.setDesiredValue(driveTarget);
@@ -47,6 +47,21 @@ public class DriveEncoder extends Command {
     protected void initialize() {
     	steeringPID.resetPreviousVal();
     	drivePID.resetPreviousVal();
+        gyroP = (double)SmartDashboard.getNumber("Gyro P: ");
+        gyroI = (double)SmartDashboard.getNumber("Gyro I: ");
+        gyroD = (double)SmartDashboard.getNumber("Gyro D: ");
+        gyroMax = (double)SmartDashboard.getNumber("Gyro Max: ");
+        this.steeringPID.setConstants(gyroP, gyroI, gyroD);
+        this.steeringPID.setMaxOutput(gyroMax);
+        driveP = (double)SmartDashboard.getNumber("Drive P: ");
+        driveI = (double)SmartDashboard.getNumber("Drive I: ");
+        driveD = (double)SmartDashboard.getNumber("Drive D: ");
+        driveMax = (double)SmartDashboard.getNumber("Drive Max: ");
+        driveEps = (double)SmartDashboard.getNumber("Drive Eps: ");
+        this.drivePID.setConstants(driveP, driveI, driveD);
+        this.drivePID.setMaxOutput(driveMax);
+        this.drivePID.setDoneRange(1);
+        this.drivePID.setErrorEpsilon(driveEps);
     }
 
     protected void execute() {
@@ -64,5 +79,6 @@ public class DriveEncoder extends Command {
     }
 
     protected void interrupted() {
+    	Robot.drivetrain.stopDrive();
     }
 }
