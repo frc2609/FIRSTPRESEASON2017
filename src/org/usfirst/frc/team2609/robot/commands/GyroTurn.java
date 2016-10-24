@@ -22,7 +22,8 @@ public class GyroTurn extends Command {
         this.gyroPID.setDesiredValue(turnHeading);
         this.gyroPID.setConstants(turnP, turnI, turnD);
         this.gyroPID.setMaxOutput(maxPower);
-        this.gyroPID.setDoneRange(1);}
+        this.gyroPID.setDoneRange(1);
+    }
  
     protected void initialize() {
     	gyroPID.resetPreviousVal();
@@ -33,6 +34,7 @@ public class GyroTurn extends Command {
     }
 
     protected boolean isFinished() {
+    	System.out.println("gyroPID.isDone "+ gyroPID.isDone());
     	return gyroPID.isDone();
     }
 

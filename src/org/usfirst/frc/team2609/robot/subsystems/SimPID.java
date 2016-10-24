@@ -170,7 +170,9 @@ public class SimPID {
         else {
             this.cycleCount = 0;
         }
-        
+        /*System.out.println("PID isDone currerror: "+ currError);
+        System.out.print(" ,PID doneRange: "+ this.doneRange);
+        System.out.print(" ,PID cycleCount: " + this.cycleCount);*/
         return this.cycleCount > this.minCycleCount;
     }
     
