@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2609.robot.commands.Auto1;
-import org.usfirst.frc.team2609.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2609.robot.commands.HockeyStick;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
-	//public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -33,9 +32,15 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Drive D: ", 0.0);
     	SmartDashboard.putNumber("Drive Max: ", 0.8);
     	SmartDashboard.putNumber("Drive Eps: ", 1);
+        SmartDashboard.putNumber("turn P: ", .1);
+        SmartDashboard.putNumber("turn I: ",0);
+        SmartDashboard.putNumber("turn D: ",0);
+        SmartDashboard.putNumber("turn Max: ",0.3);
+        SmartDashboard.putNumber("turn Eps: ",1.0);
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
+        chooser.addObject("Hockey Stick", new HockeyStick());
 		SmartDashboard.putData("Auto mode", chooser);
 //      chooser.addObject("My Auto", new MyAutoCommand());
 
@@ -53,21 +58,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 	}
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
-        String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new Auto1();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new Auto1();
-			break;
-		} 
-    	
-    	// schedule the autonomous command (example)
+        autonomousCommand = (Command) chooser.getSelected();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -100,8 +93,8 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.1;
-        double X = -driveStick.getRawAxis(0);
-        double Y = -driveStick.getRawAxis(1);
+        double X = -driveStick.getRawAxis(0)*0.7;
+        double Y = -driveStick.getRawAxis(1)*0.7;
         if (Math.abs(X)<deadZone){
         	X = 0;
         }

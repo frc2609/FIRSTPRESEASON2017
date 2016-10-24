@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2609.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import org.usfirst.frc.team2609.robot.*;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
@@ -58,7 +57,6 @@ public class DriveEncoder extends Command {
 
     protected boolean isFinished() {
     	return drivePID.isDone();
-    	
     }
 
     protected void end() {
