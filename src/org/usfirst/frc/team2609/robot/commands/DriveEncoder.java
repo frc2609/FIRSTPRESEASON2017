@@ -44,25 +44,25 @@ public class DriveEncoder extends Command {
         this.drivePID.setErrorEpsilon(driveEps);
     }
 
-    protected void initialize() {
+    protected void initialize() 																						{
     	steeringPID.resetPreviousVal();
     	drivePID.resetPreviousVal();
-        gyroP = (double)SmartDashboard.getNumber("Gyro P: ");
-        gyroI = (double)SmartDashboard.getNumber("Gyro I: ");
-        gyroD = (double)SmartDashboard.getNumber("Gyro D: ");
-        gyroMax = (double)SmartDashboard.getNumber("Gyro Max: ");
-        this.steeringPID.setConstants(gyroP, gyroI, gyroD);
-        this.steeringPID.setMaxOutput(gyroMax);
-        driveP = (double)SmartDashboard.getNumber("Drive P: ");
-        driveI = (double)SmartDashboard.getNumber("Drive I: ");
-        driveD = (double)SmartDashboard.getNumber("Drive D: ");
-        driveMax = (double)SmartDashboard.getNumber("Drive Max: ");
-        driveEps = (double)SmartDashboard.getNumber("Drive Eps: ");
-        this.drivePID.setConstants(driveP, driveI, driveD);
-        this.drivePID.setMaxOutput(driveMax);
-        this.drivePID.setDoneRange(1);
-        this.drivePID.setErrorEpsilon(driveEps);
-    }
+        gyroP = (double)SmartDashboard.getNumber("Gyro P: ")																;
+        gyroI = (double)SmartDashboard.getNumber("Gyro I: ")																;
+        gyroD = (double)SmartDashboard.getNumber("Gyro D: ")																;
+        gyroMax = (double)SmartDashboard.getNumber("Gyro Max: ")															;
+        this.steeringPID.setConstants(gyroP, gyroI, gyroD)																	;
+        this.steeringPID.setMaxOutput(gyroMax)																				;
+        driveP = (double)SmartDashboard.getNumber("Drive P: ")																;
+        driveI = (double)SmartDashboard.getNumber("Drive I: ")																;
+        driveD = (double)SmartDashboard.getNumber("Drive D: ")																;
+        driveMax = (double)SmartDashboard.getNumber("Drive Max: ")															;
+        driveEps = (double)SmartDashboard.getNumber("Drive Eps: ")															;
+        this.drivePID.setConstants(driveP, driveI, driveD)																	;
+        this.drivePID.setMaxOutput(driveMax)																				;
+        this.drivePID.setDoneRange(1)																						;
+        this.drivePID.setErrorEpsilon(driveEps)																				;
+    																													}
 
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));

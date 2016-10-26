@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.HockeyStick;
+import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -43,7 +44,8 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
         chooser.addObject("Hockey Stick", new HockeyStick());
-		SmartDashboard.putData("Auto mode", chooser);
+        chooser.addObject("Swivel", new Swivel());
+        SmartDashboard.putData("Auto mode", chooser);
 //      chooser.addObject("My Auto", new MyAutoCommand());
 
     }
