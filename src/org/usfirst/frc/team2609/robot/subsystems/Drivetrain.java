@@ -36,10 +36,11 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveEncRight.reset();
     }
     
-    public void gyroTurn(SimPID gyroPID)
+    public void gyroTurn(SimPID rightPID, SimPID leftPID)
     {
-    	double rotateValue = gyroPID.calcPID(RobotMap.ahrs.getYaw());
-    	driveTank(rotateValue, rotateValue);
+    	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
+    	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
+    	driveTank(leftValue, rightValue);
     }
     
     public void gyroYawZero(){
