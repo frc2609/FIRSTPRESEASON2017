@@ -10,7 +10,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.sysProps
+sysProps.xml
 
 # Eclipse Core
 #.project
