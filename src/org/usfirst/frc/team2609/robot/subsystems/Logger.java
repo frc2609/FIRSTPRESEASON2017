@@ -65,7 +65,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("time,leftOut,rightOut,backOut,leftSpeed,rightSpeed,backSpeed,xPosition,yPosition,batteryVolt,leftCurrent1,leftCurrent2,rightCurrent1,rightCurrent2,backCurrent1,backCurrent2");
+	            this.writer.write("time, encLeft, encRight, rateLeft, rateRight, yaw, angle, victorLeft, victorRight");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -87,14 +87,16 @@ public class Logger {
     public void logAll() {
     	if(this.wantToLog()){
 	        try {
-	            this.writer.write(String.format("%d", new java.util.Date().getTime()));
+	        	//int ,%d
+	        	//double ,%.3f
+	        	this.writer.write(String.format("%d", new java.util.Date().getTime()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
 	            
-	            this.writer.write(String.format(",%d", RobotMap.ahrs.getYaw()));
-	            this.writer.write(String.format(",%d", RobotMap.ahrs.getAngle()));
+	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
+	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
 	            
 	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorLeft1.get()));
 	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorRight1.get()));
