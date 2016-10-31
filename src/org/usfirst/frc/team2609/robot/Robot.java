@@ -10,6 +10,7 @@ import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.HockeyStick;
 import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2609.robot.subsystems.Logger;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static OI oi;
+	private Logger logger;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -46,6 +48,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Hockey Stick", new HockeyStick());
         chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
+        this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
 
     }
@@ -85,6 +88,7 @@ public class Robot extends IterativeRobot {
         //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
+        this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
 		
@@ -95,6 +99,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
         Scheduler.getInstance().run();
+        this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.1;
         double X = -driveStick.getRawAxis(0)*0.7;
