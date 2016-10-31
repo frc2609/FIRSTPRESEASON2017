@@ -93,21 +93,11 @@ public class Logger {
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
 	            
-	            this.writer.write(String.format(",%d", this.sensorIn.getEncoderLeftSpeed()));
-	            this.writer.write(String.format(",%d", this.sensorIn.getEncoderRightSpeed()));
-	            this.writer.write(String.format(",%d",this.sensorIn.getEncoderBackSpeed()));
+	            this.writer.write(String.format(",%d", RobotMap.ahrs.getYaw()));
+	            this.writer.write(String.format(",%d", RobotMap.ahrs.getAngle()));
 	            
-	            this.writer.write(String.format(",%.3f",this.sensorIn.getXPosition()));
-	            this.writer.write(String.format(",%.3f",this.sensorIn.getYPosition()));
-	            
-	            
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getVoltage()));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(0)));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(1)));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(2)));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(12)));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(13)));
-	            this.writer.write(String.format(",%.3f", this.sensorIn.getCurrent(14)));
+	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorLeft1.get()));
+	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorRight1.get()));
 	            
 	            
 	            
