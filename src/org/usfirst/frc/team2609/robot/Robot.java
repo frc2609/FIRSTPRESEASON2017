@@ -68,6 +68,7 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
         autonomousCommand = (Command) chooser.getSelected();
+        this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -80,6 +81,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveVictorLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveVictorRight1.get());
+        this.logger.logAll(); // write to logs
 		
     }
 
