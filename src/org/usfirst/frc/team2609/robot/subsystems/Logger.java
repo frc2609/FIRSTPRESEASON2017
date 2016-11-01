@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Logger {
    
     private BufferedWriter writer;
-    private boolean logging =false; 
+    private boolean logging =true; 
     private final String loggerBoolean = "Logging";
     private static Logger instance;
-    private String fileName ="";
+    private String fileName ="beaverlog";
     private final String SDFileName = "File Name: ";
     DriverStation ds;
     
