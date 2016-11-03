@@ -49,9 +49,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Eps: ",1);
         
         SmartDashboard.putNumber("camera P: ",0.02);
-        SmartDashboard.putNumber("camera I: ",0.000);
+        SmartDashboard.putNumber("camera I: ",0.001);
         SmartDashboard.putNumber("camera D: ",0.0);
-        SmartDashboard.putNumber("camera Max: ",0.2);
+        SmartDashboard.putNumber("camera Max: ",0.5);
         SmartDashboard.putNumber("camera Eps: ",1);
         
 		drivetrain = new Drivetrain();

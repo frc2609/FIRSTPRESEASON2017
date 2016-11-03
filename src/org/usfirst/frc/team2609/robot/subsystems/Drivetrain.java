@@ -40,8 +40,7 @@ public class Drivetrain extends Subsystem {
     }
     public void cameraTurn(SimPID rightPID, SimPID leftPID, double errorX)
     {
-    	
-    	double rightValue = rightPID.calcPID(errorX);
+    	double rightValue = rightPID.calcPID(-errorX);
     	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
     	driveTank(leftValue, rightValue);
     }
