@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
+import java.io.IOException;
+
 import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.HockeyStick;
 import org.usfirst.frc.team2609.robot.commands.Swivel;
@@ -22,7 +26,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
-
+    NetworkTable table;
+    
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
@@ -50,6 +55,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
+        
+        table = NetworkTable.getTable("GRIP/target");
 
     }
 	
@@ -140,6 +147,19 @@ public class Robot extends IterativeRobot {
             RobotMap.driveVictorLeft2.set(leftOutput);
             RobotMap.driveVictorRight1.set(-rightOutput);
             RobotMap.driveVictorRight2.set(-rightOutput);
+            double[] defaultval = new double[0];
+            try{
+            	double[] centerXarray = table.getNumberArray("centerX", defaultval);
+            	double centerX = centerXarray[0];
+            	SmartDashboard.putNumber("centerX", centerX);
+            	
+            }
+            catch(ArrayIndexOutOfBoundsException e)
+            {
+            	System.out.println(e.toString());
+            }
+            
+            
 }
     
     public void testPeriodic() {

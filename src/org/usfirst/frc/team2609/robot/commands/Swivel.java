@@ -15,7 +15,13 @@ public class Swivel extends CommandGroup {
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(395, 0.6, -90));
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(150, 0.6, -90));
+    	addSequential(new TimerDelay(5));
+    	addSequential(new DriveEncoder(364, 0.6, -90));
+    	addSequential(new EncReset());
+    	addSequential(new GyroTurn(0.3,0));
+    	addSequential(new EncReset());
+    	
+
     	
     }
 }
