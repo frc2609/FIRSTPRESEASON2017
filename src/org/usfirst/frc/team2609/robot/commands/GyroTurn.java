@@ -13,6 +13,7 @@ public class GyroTurn extends Command {
 	double turnMax = 0;
 	double turnEps = 0;
 	double maxPower = 0;
+	
     public GyroTurn(double maxPower, double turnHeading) {
         turnP = (double)SmartDashboard.getNumber("turn P: ");
         turnI = (double)SmartDashboard.getNumber("turn I: ");

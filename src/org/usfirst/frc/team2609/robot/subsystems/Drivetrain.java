@@ -3,10 +3,13 @@ import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem {
 	private static double drivePIDOutput = 0;
 	private static double steerPIDOutput = 0;
+	double[] defaultval = new double[0];
+    
 	
     public void humanDrive(){
     }
@@ -35,7 +38,13 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveEncLeft.reset();
     	RobotMap.driveEncRight.reset();
     }
-    
+    public void cameraTurn(SimPID rightPID, SimPID leftPID, double errorX)
+    {
+    	
+    	double rightValue = rightPID.calcPID(errorX);
+    	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
+    	driveTank(leftValue, rightValue);
+    }
     public void gyroTurn(SimPID rightPID, SimPID leftPID)
     {
     	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());

@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
-    NetworkTable table;
+    public static NetworkTable table;
     
     public void robotInit() {
 		oi = new OI();
@@ -47,6 +47,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",0.25);
         SmartDashboard.putNumber("turn Eps: ",1);
+        
+        SmartDashboard.putNumber("camera P: ",0.02);
+        SmartDashboard.putNumber("camera I: ",0.000);
+        SmartDashboard.putNumber("camera D: ",0.0);
+        SmartDashboard.putNumber("camera Max: ",0.2);
+        SmartDashboard.putNumber("camera Eps: ",1);
+        
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
@@ -89,6 +96,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveVictorLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveVictorRight1.get());
         this.logger.logAll(); // write to logs
+        
 		
     }
 
@@ -147,17 +155,7 @@ public class Robot extends IterativeRobot {
             RobotMap.driveVictorLeft2.set(leftOutput);
             RobotMap.driveVictorRight1.set(-rightOutput);
             RobotMap.driveVictorRight2.set(-rightOutput);
-            double[] defaultval = new double[0];
-            try{
-            	double[] centerXarray = table.getNumberArray("centerX", defaultval);
-            	double centerX = centerXarray[0];
-            	SmartDashboard.putNumber("centerX", centerX);
-            	
-            }
-            catch(ArrayIndexOutOfBoundsException e)
-            {
-            	System.out.println(e.toString());
-            }
+            
             
             
 }
