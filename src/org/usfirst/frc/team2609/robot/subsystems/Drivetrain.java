@@ -38,7 +38,7 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveEncLeft.reset();
     	RobotMap.driveEncRight.reset();
     }
-    public void cameraTurn(SimPID rightPID, SimPID leftPID, double errorX)
+    public void gyroCameraTurn(SimPID rightPID, SimPID leftPID, double errorX)
     {
     	double rightValue = rightPID.calcPID(-errorX);
     	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());

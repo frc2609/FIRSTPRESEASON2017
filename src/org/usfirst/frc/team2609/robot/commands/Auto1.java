@@ -7,7 +7,7 @@ public class Auto1 extends CommandGroup {
     public Auto1() {
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.exampleSubsystem);
-        addSequential(new GyroCameraTurn(.5, Robot.centerX));
+        addSequential(new GyroCameraTurn(.5));
         
     }
 }

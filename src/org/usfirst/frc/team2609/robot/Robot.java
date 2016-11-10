@@ -27,7 +27,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
-    public static double centerX = 0;
+    //public static double centerX = 0;
     
     public void robotInit() {
 		oi = new OI();
@@ -43,23 +43,25 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
     	SmartDashboard.putNumber("Gyro Max: ", 0.2);
 		
-        SmartDashboard.putNumber("turn P: ", .03);
+        SmartDashboard.putNumber("turn P: ",0.03);
         SmartDashboard.putNumber("turn I: ",0.001);
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",0.25);
         SmartDashboard.putNumber("turn Eps: ",1);
         
-        SmartDashboard.putNumber("camera P: ",0.02);
+        SmartDashboard.putNumber("camera P: ",0.03);
         SmartDashboard.putNumber("camera I: ",0.001);
         SmartDashboard.putNumber("camera D: ",0.0);
         SmartDashboard.putNumber("camera Max: ",0.5);
         SmartDashboard.putNumber("camera Eps: ",1);
         
-        SmartDashboard.putNumber("gyroCamera P: ",0.02);
-        SmartDashboard.putNumber("gyroCamera I: ",0.000);
+        SmartDashboard.putNumber("gyroCamera P: ",0.03);
+        SmartDashboard.putNumber("gyroCamera I: ",0.001);
         SmartDashboard.putNumber("gyroCamera D: ",0.0);
         SmartDashboard.putNumber("gyroCamera Max: ",0.5);
         SmartDashboard.putNumber("gyroCamera Eps: ",1);
+
+        
         
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
@@ -104,16 +106,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveVictorLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveVictorRight1.get());
-		
-		try{
-    		double[] centerXarray = table.getNumberArray("centerX", new double[0]);
-        	Robot.centerX = centerXarray[0];
-        	SmartDashboard.putNumber("centerX", Robot.centerX);
-        }
-        catch(ArrayIndexOutOfBoundsException e)
-        {
-        	System.out.println(e.toString());
-        }
 		
         this.logger.logAll(); // write to logs
         

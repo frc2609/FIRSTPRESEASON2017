@@ -22,20 +22,17 @@ public class GyroCameraTurn extends Command {
 	double centerXlocal;
 	double errorX;
 	
-    public GyroCameraTurn(double maxPower, double centerXlocal) {
+    public GyroCameraTurn(double maxPower) {
         gyroCameraP = (double)SmartDashboard.getNumber("gyroCamera P: ");
         gyroCameraI = (double)SmartDashboard.getNumber("gyroCamera I: ");
         gyroCameraD = (double)SmartDashboard.getNumber("gyroCamera D: ");
         gyroCameraMax = (double)SmartDashboard.getNumber("gyroCamera Max: ");
         gyroCameraEps = (double)SmartDashboard.getNumber("gyroCamera Eps: ");
-        this.centerXlocal = centerXlocal;
         System.out.println("gyroCameraTURN CLASS INITED");
     	this.cameraPID = new SimPID();
         this.pivotPID = new SimPID();
         this.cameraPID.setMaxOutput(gyroCameraMax);
         this.cameraPID.setDoneRange(1);
-        errorX = (centerXlocal - 320);//*(0.084375)); //why can't java divide
-        this.cameraPID.setDesiredValue(errorX);
     }
  
     protected void initialize() {
@@ -45,11 +42,23 @@ public class GyroCameraTurn extends Command {
     	cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(gyroCameraP, gyroCameraI, gyroCameraD);
         this.cameraPID.setErrorEpsilon(gyroCameraEps);
+		try{
+    		double[] centerXarray = Robot.table.getNumberArray("centerX", new double[0]);
+        	this.centerXlocal = centerXarray[0];
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+        	System.out.println(e.toString());
+        }
+
+        errorX = (centerXlocal - 320)*(0.084375); //why can't java divide
+        this.cameraPID.setDesiredValue(errorX);
     }
 
     protected void execute() {
-    	Robot.drivetrain.cameraTurn(cameraPID, pivotPID, errorX);
-    	System.out.println(Robot.centerX);
+    	Robot.drivetrain.gyroCameraTurn(cameraPID, pivotPID);
+    	System.out.println(centerXlocal);
+    	System.out.println(errorX);
     }
 
     protected boolean isFinished() {
@@ -58,6 +67,7 @@ public class GyroCameraTurn extends Command {
     }
 
     protected void end() {
+    	System.out.println("CameraPID.isDone "+ cameraPID.isDone());
     	Robot.drivetrain.stopDrive();
     }
 
