@@ -28,6 +28,12 @@ public class Drivetrain extends Subsystem {
 		RobotMap.driveVictorLeft1.set(0);
 		RobotMap.driveVictorLeft2.set(0);
     }
+    public void disableDrive(){
+		RobotMap.driveVictorRight1.disable();
+		RobotMap.driveVictorRight2.disable();
+		RobotMap.driveVictorLeft1.disable();
+		RobotMap.driveVictorLeft2.disable();
+    }
     public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
     	steerPIDOutput = steerPID.calcPID(steerInput);
     	drivePIDOutput = encPID.calcPID(encLeft);
@@ -48,6 +54,13 @@ public class Drivetrain extends Subsystem {
     public void gyroCameraTurn(SimPID rightPID, SimPID leftPID)
     {
     	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
+    	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
+    	driveTank(leftValue, rightValue);
+    }
+    
+    public void cameraTurn(SimPID rightPID, SimPID leftPID, double centerX)
+    {
+    	double rightValue = rightPID.calcPID(centerX);
     	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
     	driveTank(leftValue, rightValue);
     }

@@ -49,11 +49,12 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Max: ",0.25);
         SmartDashboard.putNumber("turn Eps: ",1);
         
-        SmartDashboard.putNumber("camera P: ",0.03);
-        SmartDashboard.putNumber("camera I: ",0.001);
+        SmartDashboard.putNumber("camera P: ",0.01);
+        SmartDashboard.putNumber("camera I: ",0.000);
         SmartDashboard.putNumber("camera D: ",0.0);
-        SmartDashboard.putNumber("camera Max: ",0.5);
+        SmartDashboard.putNumber("camera Max: ",0.3);
         SmartDashboard.putNumber("camera Eps: ",1);
+        SmartDashboard.putNumber("camera Delay: ",0.01);
         
         SmartDashboard.putNumber("gyroCamera P: ",0.03);
         SmartDashboard.putNumber("gyroCamera I: ",0.001);
@@ -72,7 +73,7 @@ public class Robot extends IterativeRobot {
         this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
         
-        table = NetworkTable.getTable("GRIP/target");
+        table = NetworkTable.getTable("RaspberryPi");
         
 
     }
