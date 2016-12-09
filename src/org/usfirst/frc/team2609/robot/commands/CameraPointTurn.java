@@ -1,16 +1,11 @@
 package org.usfirst.frc.team2609.robot.commands;
 import org.usfirst.frc.team2609.robot.Robot;
-import org.usfirst.frc.team2609.robot.RobotMap;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CameraTurn extends Command {
+public class CameraPointTurn extends Command {
 	private SimPID cameraPID;
-	private SimPID pivotPID;
 	double turnP = 0;
 	double turnI = 0;
 	double turnD = 0;
@@ -25,9 +20,8 @@ public class CameraTurn extends Command {
 	double centerXlocal;
 	double errorX;
 	
-    public CameraTurn(double maxPower) {
+    public CameraPointTurn(double MaxPower) {
     	this.cameraPID = new SimPID();
-        this.pivotPID = new SimPID();
     }
  
     protected void initialize() {
@@ -36,10 +30,7 @@ public class CameraTurn extends Command {
         CameraD = (double)SmartDashboard.getNumber("camera D: ");
         CameraMax = (double)SmartDashboard.getNumber("camera Max: ");
         CameraEps = (double)SmartDashboard.getNumber("camera Eps: ");        
-        this.pivotPID.setDesiredValue(0);
-        this.pivotPID.setConstants(0.01, 0, 0);
-        this.pivotPID.setMaxOutput(1);
-    	cameraPID.resetPreviousVal();
+        this.cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(CameraP, CameraI, CameraD);
         this.cameraPID.setMaxOutput(CameraMax);
         this.cameraPID.setErrorEpsilon(CameraEps);
@@ -51,9 +42,9 @@ public class CameraTurn extends Command {
     protected void execute() {
     	this.centerXlocal = Robot.table.getNumber("centerX",0);
         //errorX = (centerXlocal - 320)*(0.084375); //why can't java divide
-    	Robot.drivetrain.cameraTurn(cameraPID, pivotPID, centerXlocal);
+    	Robot.drivetrain.cameraPointTurn(cameraPID, centerXlocal);
     	System.out.println(centerXlocal);
-    	Timer.delay(SmartDashboard.getNumber("camera Delay: "));
+    	//Timer.delay(SmartDashboard.getNumber("camera Delay: "));
     }
 
     protected boolean isFinished() {

@@ -1,13 +1,12 @@
 package org.usfirst.frc.team2609.robot.commands;
 import org.usfirst.frc.team2609.robot.Robot;
+import org.usfirst.frc.team2609.robot.RobotMap;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroCameraTurn extends Command {
 	private SimPID cameraPID;
-	private SimPID pivotPID;
 	double turnP = 0;
 	double turnI = 0;
 	double turnD = 0;
@@ -19,8 +18,9 @@ public class GyroCameraTurn extends Command {
 	double gyroCameraMax = 0;
 	double gyroCameraEps = 0;
 	double maxPower = 0;
-	double centerXlocal;
+	double angleToTarget;
 	double errorX;
+	int endCounter = 0;
 	
     public GyroCameraTurn(double maxPower) {
         gyroCameraP = (double)SmartDashboard.getNumber("gyroCamera P: ");
@@ -30,40 +30,46 @@ public class GyroCameraTurn extends Command {
         gyroCameraEps = (double)SmartDashboard.getNumber("gyroCamera Eps: ");
         System.out.println("gyroCameraTURN CLASS INITED");
     	this.cameraPID = new SimPID();
-        this.pivotPID = new SimPID();
+
         this.cameraPID.setMaxOutput(gyroCameraMax);
         this.cameraPID.setDoneRange(1);
     }
  
     protected void initialize() {
-        this.pivotPID.setDesiredValue(0);
-        this.pivotPID.setConstants(0.01, 0, 0);
-        this.pivotPID.setMaxOutput(1);
     	cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(gyroCameraP, gyroCameraI, gyroCameraD);
         this.cameraPID.setErrorEpsilon(gyroCameraEps);
-		try{
-    		double[] centerXarray = Robot.table.getNumberArray("centerX", new double[0]);
-        	this.centerXlocal = centerXarray[0];
-        }
-        catch(ArrayIndexOutOfBoundsException e)
-        {
-        	System.out.println(e.toString());
-        }
-
-        errorX = (centerXlocal - 320)*(0.084375); //why can't java divide
-        this.cameraPID.setDesiredValue(errorX);
+    	this.angleToTarget = Robot.table.getNumber("angleToTarget",0)*(180/Math.PI);
+        this.cameraPID.setDesiredValue(angleToTarget);
     }
 
     protected void execute() {
-    	Robot.drivetrain.gyroCameraTurn(cameraPID, pivotPID);
-    	System.out.println(centerXlocal);
-    	System.out.println(errorX);
+    	Robot.drivetrain.gyroCameraTurn(cameraPID, cameraPID);
+    	System.out.println(angleToTarget);
     }
 
     protected boolean isFinished() {
-    	System.out.println("CameraPID.isDone "+ cameraPID.isDone());
-    	return cameraPID.isDone();
+    	boolean isDone = cameraPID.isDone();
+    	System.out.println("CameraPID.isDone NOT REALLY"+ isDone);
+    	//return cameraPID.isDone();
+    	if(isDone){
+    		System.out.println("CameraPID.isDone REALLY "+ isDone);
+    		endCounter++;
+    		System.out.println("endCounter "+ endCounter);
+        	this.angleToTarget = Robot.table.getNumber("angleToTarget",0)*(180/Math.PI);
+        	this.cameraPID.resetPreviousVal();
+            this.cameraPID.setDesiredValue(RobotMap.ahrs.getYaw()+angleToTarget);
+            if(endCounter >= 5){
+            	return true;
+            }
+            else{
+            	return false;
+            }
+    	}
+    	else{
+    		endCounter=0;
+    		return false;
+    	}
     }
 
     protected void end() {
