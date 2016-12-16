@@ -2,15 +2,22 @@ package org.usfirst.frc.team2609.robot.subsystems;
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem {
 	private static double drivePIDOutput = 0;
 	private static double steerPIDOutput = 0;
 	double[] defaultval = new double[0];
     
-	
+	public void trackLED(boolean state){
+    	if (state){
+    		RobotMap.ringLED.set(Relay.Value.kOn);
+    	}
+    	else{
+    		RobotMap.ringLED.set(Relay.Value.kOff);
+    	}
+	}
     public void humanDrive(){
     }
     public void driveTank(double left, double right){

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2609.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
@@ -19,6 +20,7 @@ public class RobotMap {
 	public static Encoder driveEncRight;
 	public static AHRS ahrs;
 	public static SerialPort serialport;
+	public static Relay ringLED;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
@@ -38,5 +40,7 @@ public class RobotMap {
 		driveEncRight = new Encoder(1, 3);
 		driveEncLeft.setDistancePerPulse(1);
 		driveEncRight.setDistancePerPulse(1.4);
+		ringLED = new Relay(0);
+		ringLED.setDirection(Relay.Direction.kForward);
 	}
 }

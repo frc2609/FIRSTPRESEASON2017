@@ -20,6 +20,7 @@ public class GyroCameraTurn extends Command {
 	double maxPower = 0;
 	double angleToTarget;
 	double errorX;
+	double OldFrameNum;
 	int endCounter = 0;
 	
     public GyroCameraTurn(double maxPower) {
@@ -39,8 +40,9 @@ public class GyroCameraTurn extends Command {
     	cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(gyroCameraP, gyroCameraI, gyroCameraD);
         this.cameraPID.setErrorEpsilon(gyroCameraEps);
-    	this.angleToTarget = Robot.table.getNumber("angleToTarget",0)*(180/Math.PI);
-        this.cameraPID.setDesiredValue(angleToTarget);
+    	this.angleToTarget = Robot.table.getNumber("angleToTarget",0); //*(180/Math.PI)
+        this.cameraPID.setDesiredValue(RobotMap.ahrs.getYaw()+angleToTarget);
+        this.OldFrameNum = Robot.table.getNumber("piLoops", 0);
     }
 
     protected void execute() {
@@ -54,22 +56,22 @@ public class GyroCameraTurn extends Command {
     	//return cameraPID.isDone();
     	if(isDone){
     		System.out.println("CameraPID.isDone REALLY "+ isDone);
-    		endCounter++;
     		System.out.println("endCounter "+ endCounter);
-        	this.angleToTarget = Robot.table.getNumber("angleToTarget",0)*(180/Math.PI);
-        	this.cameraPID.resetPreviousVal();
-            this.cameraPID.setDesiredValue(RobotMap.ahrs.getYaw()+angleToTarget);
+    		if(OldFrameNum != Robot.table.getNumber("piLoops" , -1)){
+    			endCounter++;
+            	this.angleToTarget = Robot.table.getNumber("angleToTarget",0); //*(180/Math.PI)
+            	this.cameraPID.resetPreviousVal();
+                this.cameraPID.setDesiredValue(RobotMap.ahrs.getYaw()+angleToTarget);
+    		}
             if(endCounter >= 5){
             	return true;
-            }
-            else{
-            	return false;
             }
     	}
     	else{
     		endCounter=0;
-    		return false;
     	}
+    	this.OldFrameNum = Robot.table.getNumber("piLoops", -1);
+    	return false;
     }
 
     protected void end() {

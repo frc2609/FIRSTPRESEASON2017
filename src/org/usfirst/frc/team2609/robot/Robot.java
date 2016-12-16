@@ -61,6 +61,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("gyroCamera D: ",0.0);
         SmartDashboard.putNumber("gyroCamera Max: ",0.5);
         SmartDashboard.putNumber("gyroCamera Eps: ",1);
+        boolean valueVision = false;
+        SmartDashboard.putBoolean("vision", valueVision);
 
         
         
