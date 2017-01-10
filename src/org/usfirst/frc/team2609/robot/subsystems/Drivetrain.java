@@ -29,15 +29,11 @@ public class Drivetrain extends Subsystem {
     } */   
     public void stopDrive(){
 		RobotMap.driveTalonRight1.set(0);
-		RobotMap.driveVictorRight2.set(0);
 		RobotMap.driveTalonLeft1.set(0);
-		RobotMap.driveVictorLeft2.set(0);
     }
     public void disableDrive(){
 		RobotMap.driveTalonRight1.disable();
-		RobotMap.driveVictorRight2.disable();
 		RobotMap.driveTalonLeft1.disable();
-		RobotMap.driveVictorLeft2.disable();
     }
     public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
     	steerPIDOutput = steerPID.calcPID(steerInput);

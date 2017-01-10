@@ -14,9 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 public class RobotMap {
 	public static CANTalon driveTalonLeft1;
-	public static CANTalon driveVictorLeft2;
 	public static CANTalon driveTalonRight1;
-	public static CANTalon driveVictorRight2;
 	public static CANTalon launcherVictor;
 	public static Encoder driveEncLeft;
 	public static Encoder driveEncRight;
