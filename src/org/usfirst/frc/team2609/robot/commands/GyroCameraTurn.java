@@ -24,11 +24,11 @@ public class GyroCameraTurn extends Command {
 	int endCounter = 0;
 	
     public GyroCameraTurn(double maxPower) {
-        gyroCameraP = (double)SmartDashboard.getNumber("gyroCamera P: ");
-        gyroCameraI = (double)SmartDashboard.getNumber("gyroCamera I: ");
-        gyroCameraD = (double)SmartDashboard.getNumber("gyroCamera D: ");
-        gyroCameraMax = (double)SmartDashboard.getNumber("gyroCamera Max: ");
-        gyroCameraEps = (double)SmartDashboard.getNumber("gyroCamera Eps: ");
+        gyroCameraP = (double)SmartDashboard.getNumber("gyroCamera P: ", 0);
+        gyroCameraI = (double)SmartDashboard.getNumber("gyroCamera I: ", 0);
+        gyroCameraD = (double)SmartDashboard.getNumber("gyroCamera D: ", 0);
+        gyroCameraMax = (double)SmartDashboard.getNumber("gyroCamera Max: ", 0);
+        gyroCameraEps = (double)SmartDashboard.getNumber("gyroCamera Eps: ", 0);
         System.out.println("gyroCameraTURN CLASS INITED");
     	this.cameraPID = new SimPID();
 
@@ -57,6 +57,7 @@ public class GyroCameraTurn extends Command {
     	if(isDone){
     		System.out.println("CameraPID.isDone REALLY "+ isDone);
     		System.out.println("endCounter "+ endCounter);
+    		endCounter++; // DELETE THIS ONCE THE FRAME COUNTER IS WORKING!!!
     		if(OldFrameNum != Robot.table.getNumber("piLoops" , -1)){
     			endCounter++;
             	this.angleToTarget = Robot.table.getNumber("angleToTarget",0); //*(180/Math.PI)

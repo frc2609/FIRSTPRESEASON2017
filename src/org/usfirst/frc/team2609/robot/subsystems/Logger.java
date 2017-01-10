@@ -98,9 +98,6 @@ public class Logger {
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
 	            
-	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorLeft1.get()));
-	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorRight1.get()));
-	            
 	            
 	            
 	            

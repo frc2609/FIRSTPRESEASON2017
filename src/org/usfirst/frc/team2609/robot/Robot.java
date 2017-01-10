@@ -63,6 +63,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("gyroCamera Eps: ",1);
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
+        SmartDashboard.putNumber("Launcher Speed", 0);
 
         
         
@@ -72,7 +73,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Hockey Stick", new HockeyStick());
         chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
-        this.logger = logger.getInstance();
+        //this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
         
         table = NetworkTable.getTable("RaspberryPi");
@@ -95,7 +96,7 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
         autonomousCommand = (Command) chooser.getSelected();
-        this.logger.openFile();
+        //this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
         
     }
@@ -107,10 +108,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 		SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
 		SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
-		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveVictorLeft1.get());
-		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveVictorRight1.get());
+		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
+		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
-        this.logger.logAll(); // write to logs
+//        this.logger.logAll(); // write to logs
         
 		
     }
@@ -120,7 +121,7 @@ public class Robot extends IterativeRobot {
         //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
-        this.logger.openFile();
+//        this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
 		
@@ -131,7 +132,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
         Scheduler.getInstance().run();
-        this.logger.logAll(); // write to logs
+//        this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.1;
         double X = -driveStick.getRawAxis(0)*0.7;
@@ -166,11 +167,9 @@ public class Robot extends IterativeRobot {
 
         	
         
-            RobotMap.driveVictorLeft1.set(leftOutput);
-            RobotMap.driveVictorLeft2.set(leftOutput);
-            RobotMap.driveVictorRight1.set(-rightOutput);
-            RobotMap.driveVictorRight2.set(-rightOutput);
-            
+            RobotMap.driveTalonLeft1.set(leftOutput);
+            RobotMap.driveTalonRight1.set(-rightOutput);
+//            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             
 }
