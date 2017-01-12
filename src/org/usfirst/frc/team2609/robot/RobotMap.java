@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.ctre.CANTalon;
@@ -21,6 +23,7 @@ public class RobotMap {
 	public static AHRS ahrs;
 	public static SerialPort serialport;
 	public static Relay ringLED;
+	public static DigitalInput dio4;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
@@ -40,5 +43,6 @@ public class RobotMap {
 		driveEncRight.setDistancePerPulse(1.4);
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
+		dio4 = new DigitalInput(9);
 	}
 }
