@@ -16,14 +16,18 @@ import com.kauailabs.navx.frc.AHRS;
 
 public class RobotMap {
 	public static CANTalon driveTalonLeft1;
+	public static CANTalon driveTalonLeft2;
 	public static CANTalon driveTalonRight1;
-	public static CANTalon launcherVictor;
+	public static CANTalon driveTalonRight2;
+	
+	public static CANTalon prototype;
 	public static Encoder driveEncLeft;
 	public static Encoder driveEncRight;
 	public static AHRS ahrs;
 	public static SerialPort serialport;
 	public static Relay ringLED;
 	public static DigitalInput dio4;
+	
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
@@ -35,8 +39,13 @@ public class RobotMap {
         }
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
-		driveTalonLeft1 = new CANTalon(0);
-		driveTalonRight1 = new CANTalon(2);
+		driveTalonLeft1 = new CANTalon(4);
+		driveTalonLeft2 = new CANTalon(3);
+		driveTalonRight1 = new CANTalon(1);
+		driveTalonRight2 = new CANTalon(2);
+		prototype = new CANTalon(5);
+		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
+		prototype.reverseSensor(false);
 		driveEncLeft = new Encoder(0, 2);
 		driveEncRight = new Encoder(1, 3);
 		driveEncLeft.setDistancePerPulse(1);

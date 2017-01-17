@@ -16,6 +16,8 @@ import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,15 +25,20 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static OI oi;
 	private Logger logger;
-
+	
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
+    
     //public static double centerX = 0;
     
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
+		RobotMap.driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
+		RobotMap.driveTalonRight2.changeControlMode(TalonControlMode.Follower);
+		RobotMap.driveTalonLeft2.set(4);
+		RobotMap.driveTalonRight2.set(1);
 		SmartDashboard.putNumber("Drive P: ", 0.003);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
     	SmartDashboard.putNumber("Drive D: ", 0.01);
@@ -73,7 +80,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Hockey Stick", new HockeyStick());
         chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
-        //this.logger = logger.getInstance();
+        this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
         
         table = NetworkTable.getTable("RaspberryPi");
@@ -87,6 +94,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		this.logger.close();
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
@@ -97,7 +105,7 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
         autonomousCommand = (Command) chooser.getSelected();
-        //this.logger.openFile();
+        this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
         
     }
@@ -112,7 +120,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
-//        this.logger.logAll(); // write to logs
+        this.logger.logAll(); // write to logs
         
 		
     }
@@ -122,7 +130,7 @@ public class Robot extends IterativeRobot {
         //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
-//        this.logger.openFile();
+        this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
 		
@@ -133,34 +141,34 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
         Scheduler.getInstance().run();
-//        this.logger.logAll(); // write to logs
+        this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
-		double deadZone = 0.1;
-        double X = -driveStick.getRawAxis(0)*0.7;
-        double Y = -driveStick.getRawAxis(1)*0.7;
-        if (Math.abs(X)<deadZone){
+		double deadZone = 0.15;
+		double X = -driveStick.getRawAxis(0);
+        double Y = -driveStick.getRawAxis(1);
+        if (Math.abs(-driveStick.getRawAxis(0))<deadZone){
         	X = 0;
         }
-        if (Math.abs(Y)<deadZone){
+        if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
         	Y = 0;
         }
         double leftOutput;
         double rightOutput;
         if (Y > 0) {
             if (X > 0.0) {
-                leftOutput = Y - X;
-                rightOutput = Math.max(Y, X);
+                leftOutput = Math.pow(Y, 1) - Math.pow(X, 1);
+                rightOutput = Math.max(Math.pow(Y, 1), Math.pow(X, 1));
             } else {
-                leftOutput = Math.max(Y, -X);
-                rightOutput = Y + X;
+                leftOutput = Math.max(Math.pow(Y, 1), -(Math.pow(X, 1)));
+                rightOutput = Math.pow(Y, 1) + (Math.pow(X, 1));
             }
         } else{
             if (X > 0.0) {
-                leftOutput = -Math.max(-Y, X);
-                rightOutput = Y + X;
+                leftOutput = -Math.max(-(Math.pow(Y, 1)), Math.pow(X, 1));
+                rightOutput = (Math.pow(Y, 1)) + Math.pow(X, 1);
             } else {
-                leftOutput = Y - X;
-                rightOutput = -Math.max(-Y, -X);
+                leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
+                rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
             }
             	
 
