@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
 
 public class RobotMap {
@@ -39,17 +40,24 @@ public class RobotMap {
         }
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
-		driveTalonLeft1 = new CANTalon(4);
-		driveTalonLeft2 = new CANTalon(3);
+		driveTalonLeft1 = new CANTalon(3);
+		driveTalonLeft2 = new CANTalon(4);
 		driveTalonRight1 = new CANTalon(1);
 		driveTalonRight2 = new CANTalon(2);
+		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
+		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
+		driveTalonRight2.set(1); // Follows talon 1
+		driveTalonLeft2.set(3); // Follows talon 3
+		driveTalonLeft1.configEncoderCodesPerRev(350);
+		driveTalonRight1.configEncoderCodesPerRev(250);
 		prototype = new CANTalon(5);
 		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
 		prototype.reverseSensor(false);
-		driveEncLeft = new Encoder(0, 2);
-		driveEncRight = new Encoder(1, 3);
-		driveEncLeft.setDistancePerPulse(1);
-		driveEncRight.setDistancePerPulse(1.4);
+		
+		//driveEncLeft = new Encoder(0, 2);
+		//driveEncRight = new Encoder(1, 3);
+		//driveEncLeft.setDistancePerPulse(1);
+		//driveEncRight.setDistancePerPulse(1.4);
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
 		dio4 = new DigitalInput(9);

@@ -67,7 +67,7 @@ public class DriveEncoder extends Command {
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
     	double gyroYaw = RobotMap.ahrs.getYaw();
-    	Robot.drivetrain.driveStraight(RobotMap.driveEncLeft.get(), RobotMap.driveEncRight.get(), gyroYaw, drivePID, steeringPID);	
+    	Robot.drivetrain.driveStraight(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), gyroYaw, drivePID, steeringPID);	
     }
 
     protected boolean isFinished() {

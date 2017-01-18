@@ -35,15 +35,15 @@ public class Drivetrain extends Subsystem {
 		RobotMap.driveTalonRight1.disable();
 		RobotMap.driveTalonLeft1.disable();
     }
-    public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
+    public void driveStraight(double encLeft, double encRight, double steerInput, SimPID encPID, SimPID steerPID){
     	steerPIDOutput = steerPID.calcPID(steerInput);
     	drivePIDOutput = encPID.calcPID(encLeft);
     	System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
     	Robot.drivetrain.driveTank(drivePIDOutput+steerPIDOutput, -drivePIDOutput+steerPIDOutput);
     }
     public void resetDriveEncoders(){
-    	RobotMap.driveEncLeft.reset();
-    	RobotMap.driveEncRight.reset();
+    	RobotMap.driveTalonLeft1.setEncPosition(0);
+    	RobotMap.driveTalonRight1.setEncPosition(0);
     }
     
     public void gyroCameraTurn(SimPID rightPID, SimPID leftPID)
@@ -69,8 +69,9 @@ public class Drivetrain extends Subsystem {
     
     public void gyroTurn(SimPID rightPID, SimPID leftPID)
     {
+    	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
     	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
-    	double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
+    	//double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
     	driveTank(leftValue, rightValue);
     }
     

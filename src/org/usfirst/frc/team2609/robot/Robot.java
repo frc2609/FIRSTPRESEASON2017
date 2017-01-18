@@ -98,8 +98,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
+		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
@@ -113,10 +113,10 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-        SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
-		SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
-		SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
+        //SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
+		//SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
+		//SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
+		//SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
@@ -138,9 +138,9 @@ public class Robot extends IterativeRobot {
 
     public void teleopPeriodic() {
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
-        Scheduler.getInstance().run();
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+		Scheduler.getInstance().run();
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;

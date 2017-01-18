@@ -93,10 +93,10 @@ public class Logger {
 	        	//double ,%.3f
 	        	this.writer.write(String.format(",%.3fd", Timer.getFPGATimestamp()));
 	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
+	          //  this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));

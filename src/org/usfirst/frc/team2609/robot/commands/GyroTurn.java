@@ -46,7 +46,7 @@ public class GyroTurn extends Command {
     }
 
     protected void execute() {
-    	Robot.drivetrain.gyroTurn(gyroPID, pivotPID);
+    	Robot.drivetrain.gyroTurn(gyroPID, gyroPID);
     }
 
     protected boolean isFinished() {
