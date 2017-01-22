@@ -1,28 +1,26 @@
-
 package org.usfirst.frc.team2609.robot;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-import java.io.IOException;
-
 import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.HockeyStick;
 import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
-
-import com.ctre.CANTalon.TalonControlMode;
-
+import org.usfirst.frc.team2609.robot.subsystems.Shifter;
+import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
+	public static Shifter shifter;
+	public static VulcanClaw vulcanclaw;
 	public static OI oi;
 	private Logger logger;
 	
@@ -35,10 +33,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
-		RobotMap.driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		RobotMap.driveTalonRight2.changeControlMode(TalonControlMode.Follower);
-		RobotMap.driveTalonLeft2.set(4);
-		RobotMap.driveTalonRight2.set(1);
+
 		SmartDashboard.putNumber("Drive P: ", 0.003);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
     	SmartDashboard.putNumber("Drive D: ", 0.01);
@@ -72,29 +67,32 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("vision", valueVision);
         SmartDashboard.putNumber("Launcher Speed", 0);
 
-        
-        
+        shifter = new Shifter();
 		drivetrain = new Drivetrain();
+		vulcanclaw = new VulcanClaw();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
         chooser.addObject("Hockey Stick", new HockeyStick());
         chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = logger.getInstance();
-//      chooser.addObject("My Auto", new MyAutoCommand());
-        
+//      chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
-        
-
     }
 	
     public void disabledInit(){
-
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		this.logger.close();
+        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
+        	RobotMap.frameLights.showRGB(255, 0, 0);
+        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Blue) {
+        	RobotMap.frameLights.showRGB(0, 0, 255);
+        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Invalid) {
+        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow
+        }
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
@@ -146,12 +144,13 @@ public class Robot extends IterativeRobot {
 		double deadZone = 0.15;
 		double X = -driveStick.getRawAxis(0);
         double Y = -driveStick.getRawAxis(1);
-        if (Math.abs(-driveStick.getRawAxis(0))<deadZone){
+        if ((Math.abs(-driveStick.getRawAxis(0))<deadZone) && (Math.abs(-driveStick.getRawAxis(1))<deadZone)){
         	X = 0;
-        }
-        if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
         	Y = 0;
         }
+        /*if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
+        	Y = 0;
+        }*/
         double leftOutput;
         double rightOutput;
         if (Y > 0) {
@@ -176,8 +175,8 @@ public class Robot extends IterativeRobot {
 
         	
         
-            RobotMap.driveTalonLeft1.set(leftOutput);
-            RobotMap.driveTalonRight1.set(-rightOutput);
+            RobotMap.driveTalonLeft1.set(-leftOutput);
+            RobotMap.driveTalonRight1.set(rightOutput);
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             

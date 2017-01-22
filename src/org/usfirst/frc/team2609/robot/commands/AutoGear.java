@@ -1,6 +1,4 @@
 package org.usfirst.frc.team2609.robot.commands;
-
-import org.usfirst.frc.team2609.robot.RobotMap;
 import org.usfirst.frc.team2609.robot.subsystems.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

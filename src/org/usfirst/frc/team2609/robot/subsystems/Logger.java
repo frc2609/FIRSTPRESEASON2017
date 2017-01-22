@@ -1,10 +1,6 @@
 package org.usfirst.frc.team2609.robot.subsystems;
- 
 import java.io.*;
-import java.util.Date;
-
 import org.usfirst.frc.team2609.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
