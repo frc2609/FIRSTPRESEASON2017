@@ -128,6 +128,7 @@ public class Robot extends IterativeRobot {
         //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
+        RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
@@ -139,6 +140,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 		Scheduler.getInstance().run();
+		Boolean readyVulcanClaw = table.getBoolean("readyVulcanClaw", false);
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
