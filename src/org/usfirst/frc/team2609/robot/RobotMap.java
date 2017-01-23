@@ -35,7 +35,8 @@ public class RobotMap {
     public static DriverStation ds;
 
 	public static void init() {
-		// DONT DEFINE THE OBJECT TYPE HERE!!1111!ONE ex. Victor  driveVictorLeft1 = new Victor(0);
+		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
+		//ONE ex. Victor  driveVictorLeft1 = new Victor(0);
 		try {
             ahrs = new AHRS(SPI.Port.kMXP);
             LiveWindow.addSensor("Drivetrain", "AHRS", ahrs);
@@ -51,8 +52,8 @@ public class RobotMap {
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		driveTalonRight2.set(1); // Follows talon 1
-		driveTalonLeft2.set(3); // Follows talon 3
+		driveTalonRight2.set(1); // Follows talon 1 talon is the second best talon
+		driveTalonLeft2.set(3); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(250);
@@ -75,7 +76,7 @@ public class RobotMap {
 		ringLED.setDirection(Relay.Direction.kForward);
 		dio4 = new DigitalInput(9);
 		
-        frameLights = new CANLight(3);
+        frameLights = new CANLight(6);
         ds = DriverStation.getInstance();
 	}
 }

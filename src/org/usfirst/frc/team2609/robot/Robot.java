@@ -83,16 +83,24 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     }
 	
+	@SuppressWarnings("deprecation")
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		this.logger.close();
-        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
-        	RobotMap.frameLights.showRGB(255, 0, 0);
-        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Blue) {
-        	RobotMap.frameLights.showRGB(0, 0, 255);
-        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Invalid) {
-        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow
-        }
+//        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
+//        	RobotMap.frameLights.showRGB(255, 0, 0);
+//        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Blue) {
+//        	RobotMap.frameLights.showRGB(0, 0, 255);
+//        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Invalid) {
+//        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow
+//        }
+		Double readyVulcanClaw = table.getNumber("readyVulcanClaw");
+        if (readyVulcanClaw == 1) {
+			RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
+		}
+		else{
+			RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red otherwise yes this is good
+		}
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
@@ -135,12 +143,19 @@ public class Robot extends IterativeRobot {
 		
     }
 
-    public void teleopPeriodic() {
+    @SuppressWarnings("deprecation")
+	public void teleopPeriodic() {
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 		Scheduler.getInstance().run();
-		Boolean readyVulcanClaw = table.getBoolean("readyVulcanClaw", false);
+		Double readyVulcanClaw = table.getNumber("readyVulcanClaw");
+		if (readyVulcanClaw == 1) {
+			RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
+		}
+		else{
+			RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red otherwise yes this is good
+		}
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
@@ -168,6 +183,7 @@ public class Robot extends IterativeRobot {
                 leftOutput = -Math.max(-(Math.pow(Y, 1)), Math.pow(X, 1));
                 rightOutput = (Math.pow(Y, 1)) + Math.pow(X, 1);
             } else {
+            	//this is also vvv imborktant
                 leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
                 rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
             }

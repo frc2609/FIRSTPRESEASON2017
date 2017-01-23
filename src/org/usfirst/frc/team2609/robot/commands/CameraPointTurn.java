@@ -41,7 +41,7 @@ public class CameraPointTurn extends Command {
 
     protected void execute() {
     	this.centerXlocal = Robot.table.getNumber("centerX",0);
-        //errorX = (centerXlocal - 320)*(0.084375); //why can't java divide
+        //errorX = (centerXlocal - 320)*(0.084375); //why can't java divide because you will go into bork overdrive
     	Robot.drivetrain.cameraPointTurn(cameraPID, centerXlocal);
     	System.out.println(centerXlocal);
     	//Timer.delay(SmartDashboard.getNumber("camera Delay: "));
