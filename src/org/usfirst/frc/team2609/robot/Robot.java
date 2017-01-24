@@ -78,6 +78,7 @@ public class Robot extends IterativeRobot {
         this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
+        table.putNumber("display", 1); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
     }
 	
     public void disabledInit(){
@@ -94,12 +95,13 @@ public class Robot extends IterativeRobot {
 //        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Invalid) {
 //        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow
 //        }
-		Double readyVulcanClaw = table.getNumber("readyVulcanClaw");
+		Double readyVulcanClaw = table.getNumber("readyVulcanClaw",2);
         if (readyVulcanClaw == 1) {
-			RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
+        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
+			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
 		}
 		else{
-			RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red otherwise yes this is good
+			RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
 		}
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
@@ -151,10 +153,11 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw");
 		if (readyVulcanClaw == 1) {
-			RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
+			RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
+			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
 		}
 		else{
-			RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red otherwise yes this is good
+			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
