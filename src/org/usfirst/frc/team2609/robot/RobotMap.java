@@ -48,11 +48,17 @@ public class RobotMap {
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
 		driveTalonRight2.set(1); // Follows talon 1
 		driveTalonLeft2.set(3); // Follows talon 3
-		driveTalonLeft1.configEncoderCodesPerRev(350);
+		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+		driveTalonLeft1.configEncoderCodesPerRev(250);
 		driveTalonRight1.configEncoderCodesPerRev(250);
-		prototype = new CANTalon(5);
-		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
-		prototype.reverseSensor(false);
+		driveTalonLeft1.configNominalOutputVoltage(+0f, -0f);
+		driveTalonRight1.configNominalOutputVoltage(+0f, -0f);
+		driveTalonLeft1.configPeakOutputVoltage(+12f, -12f);
+		driveTalonRight1.configPeakOutputVoltage(+12f, -12f);
+//		prototype = new CANTalon(5);
+//		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
+//		prototype.reverseSensor(false);
 		
 		//driveEncLeft = new Encoder(0, 2);
 		//driveEncRight = new Encoder(1, 3);

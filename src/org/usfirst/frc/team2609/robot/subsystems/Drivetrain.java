@@ -35,11 +35,13 @@ public class Drivetrain extends Subsystem {
 		RobotMap.driveTalonRight1.disable();
 		RobotMap.driveTalonLeft1.disable();
     }
-    public void driveStraight(double encLeft, double encRight, double steerInput, SimPID encPID, SimPID steerPID){
-    	steerPIDOutput = steerPID.calcPID(steerInput);
-    	drivePIDOutput = encPID.calcPID(encLeft);
-    	System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
-    	Robot.drivetrain.driveTank(drivePIDOutput+steerPIDOutput, -drivePIDOutput+steerPIDOutput);
+    public void driveStraight(double encLeft, double encRight, double steerInput){
+    	RobotMap.driveTalonLeft1.set(encLeft);
+        RobotMap.driveTalonRight1.set(encRight);
+    	//steerPIDOutput = steerPID.calcPID(steerInput);
+    	//drivePIDOutput = encPID.calcPID(encLeft);
+    	//System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
+    	//Robot.drivetrain.driveTank(drivePIDOutput+steerPIDOutput, -drivePIDOutput+steerPIDOutput);
     }
     public void resetDriveEncoders(){
     	RobotMap.driveTalonLeft1.setEncPosition(0);

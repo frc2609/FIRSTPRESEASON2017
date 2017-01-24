@@ -3,6 +3,7 @@ package org.usfirst.frc.team2609.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -30,15 +31,17 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     public static NetworkTable table;
     
+    public static double t1 = 0;
+    public static double t2 = 0;
+    public static double dt = 0;
+    public static double gyroErrorSum = 0;
+    public static double gyroTarget = 0;
+    
     //public static double centerX = 0;
     
     public void robotInit() {
 		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
-		RobotMap.driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		RobotMap.driveTalonRight2.changeControlMode(TalonControlMode.Follower);
-		RobotMap.driveTalonLeft2.set(4);
-		RobotMap.driveTalonRight2.set(1);
 		SmartDashboard.putNumber("Drive P: ", 0.003);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
     	SmartDashboard.putNumber("Drive D: ", 0.01);
@@ -104,24 +107,76 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
-        autonomousCommand = (Command) chooser.getSelected();
-        this.logger.openFile();
+        //autonomousCommand = (Command) chooser.getSelected();
+        //this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
+        
+    	RobotMap.driveTalonRight1.setProfile(1);
+    	RobotMap.driveTalonRight1.setP(0.2);
+    	RobotMap.driveTalonRight1.setI(0.00);
+    	RobotMap.driveTalonRight1.setD(0.0);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(12);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.Position);
+    	RobotMap.driveTalonRight1.setAllowableClosedLoopErr(0);
+    	RobotMap.driveTalonRight1.setEncPosition(0);
+    	RobotMap.driveTalonRight1.reverseSensor(true);
+
+    	RobotMap.driveTalonLeft1.setProfile(1);
+    	RobotMap.driveTalonLeft1.setP(0.2);
+    	RobotMap.driveTalonLeft1.setI(0.00);
+    	RobotMap.driveTalonLeft1.setD(0.0);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(12);
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.Position);
+    	RobotMap.driveTalonLeft1.setAllowableClosedLoopErr(0);
+    	RobotMap.driveTalonLeft1.setEncPosition(0);
+    	RobotMap.driveTalonLeft1.reverseSensor(true);
         
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-        //SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
-		//SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
-		//SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
-		//SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
-		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
-		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
-		
-        this.logger.logAll(); // write to logs
         
+        
+        SmartDashboard.putNumber("driveTalonLeft1.get()", RobotMap.driveTalonLeft1.get());
+		SmartDashboard.putNumber("driveTalonRight1.get()", RobotMap.driveTalonRight1.get());
+		SmartDashboard.putNumber("pid mystery value left", RobotMap.driveTalonLeft1.pidGet());
+		SmartDashboard.putNumber("pid mystery value right", RobotMap.driveTalonRight1.pidGet());
+		SmartDashboard.putNumber("driveTalonLeft1.getClosedLoopError()", RobotMap.driveTalonLeft1.getClosedLoopError());
+		SmartDashboard.putNumber("driveTalonRight1.getClosedLoopError()", RobotMap.driveTalonRight1.getClosedLoopError());
+
+    	SmartDashboard.putNumber("driveTalonLeft1.getAnalogInPosition()", RobotMap.driveTalonLeft1.getAnalogInPosition());
+    	SmartDashboard.putNumber("driveTalonLeft1.getAnalogInRaw()", RobotMap.driveTalonLeft1.getAnalogInRaw());
+    	SmartDashboard.putNumber("driveTalonLeft1.getBusVoltage()", RobotMap.driveTalonLeft1.getBusVoltage());
+    	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+    	
+    	SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+    	SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
+        //this.logger.logAll(); // write to logs
+    	
+    	
+    	RobotMap.driveTalonRight1.setF(gyroErrorSum*0.0001);
+    	RobotMap.driveTalonLeft1.setF(-gyroErrorSum*0.0001);
+        RobotMap.driveTalonRight1.set(-1);
+        RobotMap.driveTalonLeft1.set(1);
+
+    	t2 = Timer.getFPGATimestamp();
+    	dt = t2 - t1;
+    	t1 = t2;
+    	
+    	gyroTarget = 0;
+    	
+    	if (Math.abs(gyroTarget - RobotMap.ahrs.getYaw()) < 0.1){
+    		gyroErrorSum = 0;
+    	}
+    	else{
+        	gyroErrorSum = gyroErrorSum + (gyroTarget - RobotMap.ahrs.getYaw())/dt;
+    	}
+    	
+    	SmartDashboard.putNumber("dt", dt);
+    	SmartDashboard.putNumber("gyroErrorSum", gyroErrorSum);
+    	
+    	
 		
     }
 
@@ -133,25 +188,35 @@ public class Robot extends IterativeRobot {
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
+        RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.Voltage);
+        RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.Voltage);
+
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(1000);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(1000);
 		
     }
 
     public void teleopPeriodic() {
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveTalonLeft1.get()", RobotMap.driveTalonLeft1.get());
+		SmartDashboard.putNumber("driveTalonRight1.get()", RobotMap.driveTalonRight1.get());
+		SmartDashboard.putNumber("pid mystery value left", RobotMap.driveTalonLeft1.pidGet());
+		SmartDashboard.putNumber("pid mystery value right", RobotMap.driveTalonRight1.pidGet());
+    	SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+    	SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
 		Scheduler.getInstance().run();
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
 		double X = -driveStick.getRawAxis(0);
         double Y = -driveStick.getRawAxis(1);
-        if (Math.abs(-driveStick.getRawAxis(0))<deadZone){
+        if ((Math.abs(-driveStick.getRawAxis(0))<deadZone) && (Math.abs(-driveStick.getRawAxis(1))<deadZone)){
         	X = 0;
-        }
-        if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
         	Y = 0;
         }
+        /*if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
+        	Y = 0;
+        }*/
         double leftOutput;
         double rightOutput;
         if (Y > 0) {
@@ -169,16 +234,17 @@ public class Robot extends IterativeRobot {
             } else {
                 leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
                 rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
-            }
-            	
+           }
 
         }
 
         	
         
-            RobotMap.driveTalonLeft1.set(leftOutput);
-            RobotMap.driveTalonRight1.set(-rightOutput);
+            RobotMap.driveTalonLeft1.set(leftOutput*10);
+            RobotMap.driveTalonRight1.set(-rightOutput*10);
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
+            
+        	
             
             
 }
