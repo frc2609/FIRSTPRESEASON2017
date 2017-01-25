@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -28,6 +29,8 @@ public class RobotMap {
 	public static SerialPort serialport;
 	public static Relay ringLED;
 	public static DigitalInput dio4;
+	
+	public static ADXRS450_Gyro FRCGyro;
 	
 
 	public static void init() {
@@ -67,5 +70,8 @@ public class RobotMap {
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
 		dio4 = new DigitalInput(9);
+		
+		FRCGyro = new ADXRS450_Gyro();
+		
 	}
 }

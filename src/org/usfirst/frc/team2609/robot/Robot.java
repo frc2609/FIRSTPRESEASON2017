@@ -31,9 +31,10 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     public static NetworkTable table;
     
-    public static double t1 = 0;
+    public static double t1 = Timer.getFPGATimestamp();
     public static double t2 = 0;
-    public static double dt = 0;
+    public static double d1 = 0;
+    public static double d2 = 0;
     public static double gyroErrorSum = 0;
     public static double gyroTarget = 0;
     
@@ -88,6 +89,7 @@ public class Robot extends IterativeRobot {
         
         table = NetworkTable.getTable("RaspberryPi");
         
+        RobotMap.FRCGyro.calibrate();
 
     }
 	
@@ -115,7 +117,7 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTalonRight1.setP(0.2);
     	RobotMap.driveTalonRight1.setI(0.00);
     	RobotMap.driveTalonRight1.setD(0.0);
-    	RobotMap.driveTalonRight1.setVoltageRampRate(12);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.Position);
     	RobotMap.driveTalonRight1.setAllowableClosedLoopErr(0);
     	RobotMap.driveTalonRight1.setEncPosition(0);
@@ -125,7 +127,7 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTalonLeft1.setP(0.2);
     	RobotMap.driveTalonLeft1.setI(0.00);
     	RobotMap.driveTalonLeft1.setD(0.0);
-    	RobotMap.driveTalonLeft1.setVoltageRampRate(12);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.Position);
     	RobotMap.driveTalonLeft1.setAllowableClosedLoopErr(0);
     	RobotMap.driveTalonLeft1.setEncPosition(0);
@@ -147,33 +149,35 @@ public class Robot extends IterativeRobot {
 
     	SmartDashboard.putNumber("driveTalonLeft1.getAnalogInPosition()", RobotMap.driveTalonLeft1.getAnalogInPosition());
     	SmartDashboard.putNumber("driveTalonLeft1.getAnalogInRaw()", RobotMap.driveTalonLeft1.getAnalogInRaw());
-    	SmartDashboard.putNumber("driveTalonLeft1.getBusVoltage()", RobotMap.driveTalonLeft1.getBusVoltage());
+    	SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
     	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
     	
     	SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
     	SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
         //this.logger.logAll(); // write to logs
     	
-    	
-    	RobotMap.driveTalonRight1.setF(gyroErrorSum*0.0001);
-    	RobotMap.driveTalonLeft1.setF(-gyroErrorSum*0.0001);
-        RobotMap.driveTalonRight1.set(-1);
-        RobotMap.driveTalonLeft1.set(1);
-
+        
     	t2 = Timer.getFPGATimestamp();
-    	dt = t2 - t1;
-    	t1 = t2;
-    	
     	gyroTarget = 0;
+    	d2 = gyroTarget - RobotMap.ahrs.getYaw();
     	
-    	if (Math.abs(gyroTarget - RobotMap.ahrs.getYaw()) < 0.1){
+    	
+    	if (Math.abs(gyroTarget - RobotMap.ahrs.getYaw()) < 0.5){
     		gyroErrorSum = 0;
     	}
     	else{
-        	gyroErrorSum = gyroErrorSum + (gyroTarget - RobotMap.ahrs.getYaw())/dt;
+        	gyroErrorSum = gyroErrorSum + (((d2 + d1)/2)*(t2 - t1));
     	}
     	
-    	SmartDashboard.putNumber("dt", dt);
+    	RobotMap.driveTalonRight1.setF(-gyroErrorSum*0.002);
+    	RobotMap.driveTalonLeft1.setF(gyroErrorSum*0.002);
+        RobotMap.driveTalonRight1.set(-10);
+        RobotMap.driveTalonLeft1.set(10);
+        
+    	t1 = t2;
+    	d1 = d2;
+    	
+    	SmartDashboard.putNumber("dt", t2 - t1);
     	SmartDashboard.putNumber("gyroErrorSum", gyroErrorSum);
     	
     	
@@ -193,6 +197,8 @@ public class Robot extends IterativeRobot {
 
     	RobotMap.driveTalonLeft1.setVoltageRampRate(1000);
     	RobotMap.driveTalonRight1.setVoltageRampRate(1000);
+    	
+    	RobotMap.FRCGyro.reset();
 		
     }
 
@@ -204,7 +210,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("pid mystery value right", RobotMap.driveTalonRight1.pidGet());
     	SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
     	SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
-		Scheduler.getInstance().run();
+    	SmartDashboard.putNumber("ADXRS450_Gyro.getAngle()", RobotMap.FRCGyro.getAngle());
+    	
+    	Scheduler.getInstance().run();
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
