@@ -151,7 +151,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 		Scheduler.getInstance().run();
-		Double readyVulcanClaw = table.getNumber("readyVulcanClaw");
+		Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
 		if (readyVulcanClaw == 1) {
 			RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
 			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
@@ -193,11 +193,11 @@ public class Robot extends IterativeRobot {
             	
 
         }
-
+        RobotMap.ballIntake.set(driveStick.getRawAxis(3));
         	
-        
-            RobotMap.driveTalonLeft1.set(-leftOutput);
-            RobotMap.driveTalonRight1.set(rightOutput);
+//        
+//            RobotMap.driveTalonLeft1.set(-leftOutput);
+//            RobotMap.driveTalonRight1.set(rightOutput);
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             

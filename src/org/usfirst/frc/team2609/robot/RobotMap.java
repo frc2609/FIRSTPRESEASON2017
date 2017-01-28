@@ -18,6 +18,7 @@ public class RobotMap {
 	public static CANTalon driveTalonLeft2;
 	public static CANTalon driveTalonRight1;
 	public static CANTalon driveTalonRight2;
+	public static CANTalon ballIntake;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -49,6 +50,7 @@ public class RobotMap {
 		driveTalonRight2 = new CANTalon(2);
 		driveTalonLeft1 = new CANTalon(3);
 		driveTalonLeft2 = new CANTalon(4);
+		ballIntake = new CANTalon(5);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
@@ -69,14 +71,14 @@ public class RobotMap {
 //		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
 //		prototype.reverseSensor(false);
         shifter = new DoubleSolenoid(0, 1, 0);
-        vulcanClaw = new DoubleSolenoid(0, 2, 3);
-        vulcanDeploy = new DoubleSolenoid(0, 4, 5);
+        vulcanClaw = new DoubleSolenoid(0, 5, 4);
+        vulcanDeploy = new DoubleSolenoid(0, 2, 3);
 		
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
 		dio4 = new DigitalInput(9);
 		
-        frameLights = new CANLight(6);
+        frameLights = new CANLight(7);
         ds = DriverStation.getInstance();
 	}
 }

@@ -42,7 +42,7 @@ public class Logger {
     	if(files != null) {
 	        for(File file : files) {
 	            if(file.isFile()) {
-	                System.out.println(file.getName());
+//	                System.out.println(file.getName());
 	                try {
 	                    int index = Integer.parseInt(file.getName().split("_")[0]);
 	                    if(index > max) {

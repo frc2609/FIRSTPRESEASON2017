@@ -16,13 +16,20 @@ public class VulcanClaw extends Subsystem {
 	DoubleSolenoid doubleSolenoid2 = RobotMap.vulcanClaw;
     
     public void toggleDeployClaw() {
-    	if (doubleSolenoid1.get()==DoubleSolenoid.Value.kReverse & doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse) {
+    	System.out.println("2.get"+ doubleSolenoid2.get());
+    	System.out.println("1.get"+doubleSolenoid1.get());
+
+    	
+    	if (doubleSolenoid1.get()==DoubleSolenoid.Value.kReverse && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse) {
     			doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
     			System.out.println("vulcanDeploy up "+ doubleSolenoid1.get());
     	}
-    	else if (doubleSolenoid1.get() == DoubleSolenoid.Value.kForward & doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse){
+    	else if (doubleSolenoid1.get() == DoubleSolenoid.Value.kForward && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse){
 			doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("vulcanDeploy down "+ doubleSolenoid1.get());
+    	}
+    	else if(doubleSolenoid1.get()==DoubleSolenoid.Value.kOff && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse){
+			doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);	
     	}
     	else {
     		//doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
