@@ -50,6 +50,45 @@ public class VulcanClaw extends Subsystem {
     		System.out.println("vulcanClaw close "+ doubleSolenoid2.get());
     	}    	
     }
+    
+    public void closeClaw() {
+    	doubleSolenoid2.set(DoubleSolenoid.Value.kReverse);
+		System.out.println("vulcanClaw close "+ doubleSolenoid2.get());
+    }
+    
+    public void openClaw() {
+		doubleSolenoid2.set(DoubleSolenoid.Value.kForward);
+		System.out.println("vulcanClaw open "+ doubleSolenoid2.get());
+    }
+    
+    public void downClaw() {
+    	doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
+		System.out.println("vulcanDeploy down "+ doubleSolenoid1.get());
+    }
+    
+    public void upClaw() {
+    	doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
+		System.out.println("vulcanDeploy up "+ doubleSolenoid1.get());
+    }
+    
+    public void scoreClaw() {
+    	if (RobotMap.clawUpSensor.get() && RobotMap.clawCloseSensor.get()){
+    		doubleSolenoid2.set(DoubleSolenoid.Value.kForward);
+    		System.out.println("vulcanClaw open "+ doubleSolenoid2.get());
+    	}
+    }
+    
+    /*if (RobotMap.gearSensor.get() == false){
+    	if (RobotMap.clawUpSensor.get() == true){
+        	if (RobotMap.clawDownSensor.get() == false){
+        	}
+        }
+        else if (RobotMap.clawUpSensor.get() == false){
+        	if (RobotMap.clawDownSensor.get() == true){
+        	}
+        }
+    }*/
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

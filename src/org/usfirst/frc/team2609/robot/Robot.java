@@ -8,13 +8,16 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.HockeyStick;
 import org.usfirst.frc.team2609.robot.commands.Swivel;
+import org.usfirst.frc.team2609.robot.commands.toggleClaw;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import org.usfirst.frc.team2609.robot.commands.*;
 
 
 public class Robot extends IterativeRobot {
@@ -22,8 +25,9 @@ public class Robot extends IterativeRobot {
 	public static Shifter shifter;
 	public static VulcanClaw vulcanclaw;
 	public static OI oi;
+//	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
-	
+	boolean gearSensorOld;
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
@@ -31,8 +35,8 @@ public class Robot extends IterativeRobot {
     //public static double centerX = 0;
     
     public void robotInit() {
-		oi = new OI();
 		RobotMap.init();// put this here when imports don't work / robots don't quit
+		oi = new OI();
 
 		SmartDashboard.putNumber("Drive P: ", 0.003);
     	SmartDashboard.putNumber("Drive I: ", 0.001);
@@ -79,6 +83,8 @@ public class Robot extends IterativeRobot {
 //      chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 1); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
+        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kForward);
     }
 	
     public void disabledInit(){
@@ -103,11 +109,16 @@ public class Robot extends IterativeRobot {
 		else{
 			RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
 		}
-		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
+		SmartDashboard.putBoolean("DIO9", RobotMap.dio9.get());
+		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+
+		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
@@ -150,7 +161,19 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+		
+		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
+		
 		Scheduler.getInstance().run();
+		if (!gearSensorOld){
+			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
+//				vulcangeargrab.start();
+				new VulcanGearGrab().start();
+			}
+		}
+		gearSensorOld = RobotMap.gearSensor.get();
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
 		if (readyVulcanClaw == 1) {
 			RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
@@ -163,7 +186,7 @@ public class Robot extends IterativeRobot {
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
 		double X = -driveStick.getRawAxis(0);
-        double Y = -driveStick.getRawAxis(1);
+        double Y = driveStick.getRawAxis(1);
         if ((Math.abs(-driveStick.getRawAxis(0))<deadZone) && (Math.abs(-driveStick.getRawAxis(1))<deadZone)){
         	X = 0;
         	Y = 0;
@@ -193,11 +216,11 @@ public class Robot extends IterativeRobot {
             	
 
         }
-        RobotMap.ballIntake.set(driveStick.getRawAxis(3));
+        RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
         	
 //        
-//            RobotMap.driveTalonLeft1.set(-leftOutput);
-//            RobotMap.driveTalonRight1.set(rightOutput);
+            RobotMap.driveTalonLeft1.set(-leftOutput);
+            RobotMap.driveTalonRight1.set(rightOutput);
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             

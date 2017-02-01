@@ -30,10 +30,15 @@ public class RobotMap {
 	public static AHRS ahrs;
 	public static SerialPort serialport;
 	public static Relay ringLED;
-	public static DigitalInput dio4;
+	public static DigitalInput dio9;
+	public static DigitalInput gearSensor;
 	
     public static CANLight frameLights;
     public static DriverStation ds;
+    
+    public static DigitalInput clawCloseSensor;
+    public static DigitalInput clawUpSensor;
+    public static DigitalInput clawDownSensor;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -71,12 +76,17 @@ public class RobotMap {
 //		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
 //		prototype.reverseSensor(false);
         shifter = new DoubleSolenoid(0, 1, 0);
-        vulcanClaw = new DoubleSolenoid(0, 5, 4);
-        vulcanDeploy = new DoubleSolenoid(0, 2, 3);
+        vulcanClaw = new DoubleSolenoid(0, 7, 6);
+        vulcanDeploy = new DoubleSolenoid(0, 4, 5);
 		
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
-		dio4 = new DigitalInput(9);
+		dio9 = new DigitalInput(9);
+		gearSensor = new DigitalInput(3);
+		
+		clawCloseSensor = new DigitalInput(0);
+		clawUpSensor = new DigitalInput(1);
+		clawDownSensor = new DigitalInput(2);
 		
         frameLights = new CANLight(7);
         ds = DriverStation.getInstance();
