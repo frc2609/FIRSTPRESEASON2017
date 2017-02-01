@@ -48,34 +48,6 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setEncPosition(0);
     }
     
-    public void gyroCameraTurn(SimPID rightPID, SimPID leftPID)
-    {
-    	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
-    	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
-    	driveTank(leftValue, rightValue);
-    }
-    
-    public void cameraPivotTurn(SimPID rightPID, SimPID pivotPID, double centerX)
-    {
-    	double rightValue = rightPID.calcPID(centerX);
-    	double leftValue = pivotPID.calcPID(RobotMap.driveEncLeft.getDistance());
-    	driveTank(leftValue, rightValue);
-    }
-    
-    public void cameraPointTurn(SimPID turnPID, double centerX)
-    {
-    	double rightValue = turnPID.calcPID(centerX);
-    	double leftValue = turnPID.calcPID(centerX);
-    	driveTank(leftValue, rightValue);
-    }
-    
-    public void gyroTurn(SimPID rightPID, SimPID leftPID)
-    {
-    	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
-    	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
-    	//double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
-    	driveTank(leftValue, rightValue);
-    }
     
     public void gyroYawZero(){
     	RobotMap.ahrs.zeroYaw();

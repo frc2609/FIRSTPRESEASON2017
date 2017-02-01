@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import java.io.IOException;
 
 import org.usfirst.frc.team2609.robot.commands.Auto1;
-import org.usfirst.frc.team2609.robot.commands.HockeyStick;
-import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 
@@ -31,12 +29,10 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     public static NetworkTable table;
     
-    public static double t1 = Timer.getFPGATimestamp();
-    public static double t2 = 0;
-    public static double d1 = 0;
-    public static double d2 = 0;
-    public static double gyroErrorSum = 0;
-    public static double gyroTarget = 0;
+    double t1 = Timer.getFPGATimestamp();
+    double t2 = 0;
+    public static double dt = 0;
+    
     
     //public static double centerX = 0;
     
@@ -81,8 +77,8 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
-        chooser.addObject("Hockey Stick", new HockeyStick());
-        chooser.addObject("Swivel", new Swivel());
+        //chooser.addObject("Hockey Stick", new HockeyStick());
+        //chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = logger.getInstance();
 //      chooser.addObject("My Auto", new MyAutoCommand());
@@ -102,42 +98,26 @@ public class Robot extends IterativeRobot {
 		this.logger.close();
 		SmartDashboard.putBoolean("DIO4", RobotMap.dio4.get());
 		SmartDashboard.putNumber("Gyro getAngle", RobotMap.ahrs.getAngle());
-		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
+		SmartDashboard.putNumber("gyrogetyaw", RobotMap.ahrs.getYaw());
 		SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
-        //autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = (Command) chooser.getSelected();
         //this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
         
-    	RobotMap.driveTalonRight1.setProfile(1);
-    	RobotMap.driveTalonRight1.setP(0.2);
-    	RobotMap.driveTalonRight1.setI(0.00);
-    	RobotMap.driveTalonRight1.setD(0.0);
-    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
-    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.Position);
-    	RobotMap.driveTalonRight1.setAllowableClosedLoopErr(0);
-    	RobotMap.driveTalonRight1.setEncPosition(0);
-    	RobotMap.driveTalonRight1.reverseSensor(true);
-
-    	RobotMap.driveTalonLeft1.setProfile(1);
-    	RobotMap.driveTalonLeft1.setP(0.2);
-    	RobotMap.driveTalonLeft1.setI(0.00);
-    	RobotMap.driveTalonLeft1.setD(0.0);
-    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
-    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.Position);
-    	RobotMap.driveTalonLeft1.setAllowableClosedLoopErr(0);
-    	RobotMap.driveTalonLeft1.setEncPosition(0);
-    	RobotMap.driveTalonLeft1.reverseSensor(true);
+        t1 = Timer.getFPGATimestamp();
+        t2 = 0;
+        dt = 0;
         
     }
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
+        SmartDashboard.putNumber("gyrogetyaw", RobotMap.ahrs.getYaw());
         
         
         SmartDashboard.putNumber("driveTalonLeft1.get()", RobotMap.driveTalonLeft1.get());
@@ -156,29 +136,9 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
         //this.logger.logAll(); // write to logs
     	
-        
     	t2 = Timer.getFPGATimestamp();
-    	gyroTarget = 0;
-    	d2 = gyroTarget - RobotMap.ahrs.getYaw();
-    	
-    	
-    	if (Math.abs(gyroTarget - RobotMap.ahrs.getYaw()) < 0.5){
-    		gyroErrorSum = 0;
-    	}
-    	else{
-        	gyroErrorSum = gyroErrorSum + (((d2 + d1)/2)*(t2 - t1));
-    	}
-    	
-    	RobotMap.driveTalonRight1.setF(-gyroErrorSum*0.002);
-    	RobotMap.driveTalonLeft1.setF(gyroErrorSum*0.002);
-        RobotMap.driveTalonRight1.set(-10);
-        RobotMap.driveTalonLeft1.set(10);
-        
+    	dt = t2 - t1;
     	t1 = t2;
-    	d1 = d2;
-    	
-    	SmartDashboard.putNumber("dt", t2 - t1);
-    	SmartDashboard.putNumber("gyroErrorSum", gyroErrorSum);
     	
     	
 		
@@ -203,7 +163,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
-    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
+    	SmartDashboard.putNumber("gyrogetyaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveTalonLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveTalonRight1.get()", RobotMap.driveTalonRight1.get());
 		SmartDashboard.putNumber("pid mystery value left", RobotMap.driveTalonLeft1.pidGet());
@@ -213,7 +173,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("ADXRS450_Gyro.getAngle()", RobotMap.FRCGyro.getAngle());
     	
     	Scheduler.getInstance().run();
-        this.logger.logAll(); // write to logs
+        //this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
 		double X = -driveStick.getRawAxis(0);

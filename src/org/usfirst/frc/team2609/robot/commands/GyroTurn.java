@@ -1,57 +1,52 @@
 package org.usfirst.frc.team2609.robot.commands;
-import org.usfirst.frc.team2609.robot.Robot;
-import org.usfirst.frc.team2609.robot.subsystems.SimPID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2609.robot.*;
+
+import com.ctre.CANTalon.TalonControlMode;
 
 public class GyroTurn extends Command {
-	private SimPID gyroPID;
-	private SimPID pivotPID;
-	double turnP = 0;
-	double turnI = 0;
-	double turnD = 0;
-	double turnMax = 0;
-	double turnEps = 0;
-	double maxPower = 0;
 	
-    public GyroTurn(double maxPower, double turnHeading) {
-        turnP = (double)SmartDashboard.getNumber("turn P: ");
-        turnI = (double)SmartDashboard.getNumber("turn I: ");
-        turnD = (double)SmartDashboard.getNumber("turn D: ");
-        turnMax = (double)SmartDashboard.getNumber("turn Max: ");
-        turnEps = (double)SmartDashboard.getNumber("turn Eps: ");
-        this.maxPower = maxPower;
-        this.gyroPID = new SimPID();
-        this.gyroPID.setDesiredValue(turnHeading);
-        this.gyroPID.setConstants(turnP, turnI, turnD);
-        this.gyroPID.setMaxOutput(maxPower);
-        this.gyroPID.setDoneRange(1);
-        this.pivotPID = new SimPID();
-        this.pivotPID.setDesiredValue(0);
-        this.pivotPID.setConstants(0.01, 0, 0);
-        this.pivotPID.setMaxOutput(1);
-        System.out.println("GYROTURN CLASS INITED");
-    }
- 
-    protected void initialize() {
-    	gyroPID.resetPreviousVal();
-        turnP = (double)SmartDashboard.getNumber("turn P: ");
-        turnI = (double)SmartDashboard.getNumber("turn I: ");
-        turnD = (double)SmartDashboard.getNumber("turn D: ");
-        turnMax = (double)SmartDashboard.getNumber("turn Max: ");
-        turnEps = (double)SmartDashboard.getNumber("turn Eps: ");
-        this.gyroPID.setConstants(turnP, turnI, turnD);
-        this.gyroPID.setErrorEpsilon(turnEps);
-        this.gyroPID.setMaxOutput(maxPower);
+	double driveTarget;
+	
+	public GyroTurn(double driveTarget, double drivePower, double driveHeading) {
+        requires(Robot.drivetrain);
+        driveTarget = this.driveTarget;
     }
 
+    protected void initialize() {
+    	RobotMap.driveTalonRight1.setProfile(1);
+    	RobotMap.driveTalonRight1.setP(0.25);
+    	RobotMap.driveTalonRight1.setI(0.00000);
+    	RobotMap.driveTalonRight1.setD(0.000);
+    	RobotMap.driveTalonRight1.setCloseLoopRampRate(24);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.Speed);
+    	RobotMap.driveTalonRight1.setAllowableClosedLoopErr(0);
+		RobotMap.driveTalonRight1.configEncoderCodesPerRev(250);
+    	RobotMap.driveTalonRight1.reverseOutput(true);
+    	RobotMap.driveTalonRight1.reverseSensor(false);
+    	
+    	RobotMap.driveTalonLeft1.setProfile(1);
+    	RobotMap.driveTalonLeft1.setP(0.25);
+    	RobotMap.driveTalonLeft1.setI(0.00000);
+    	RobotMap.driveTalonLeft1.setD(0.000);
+    	RobotMap.driveTalonLeft1.setCloseLoopRampRate(24);
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.Speed);
+    	RobotMap.driveTalonLeft1.setAllowableClosedLoopErr(0);
+		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(250);
+    	RobotMap.driveTalonLeft1.reverseOutput(false);
+    	RobotMap.driveTalonLeft1.reverseSensor(true);
+    	
+    }
+    
     protected void execute() {
-    	Robot.drivetrain.gyroTurn(gyroPID, gyroPID);
+        RobotMap.driveTalonRight1.set(driveTarget - (-RobotMap.ahrs.getYaw()));
+        RobotMap.driveTalonLeft1.set(driveTarget - RobotMap.ahrs.getYaw());
     }
 
     protected boolean isFinished() {
-    	//System.out.println("gyroPID.isDone "+ gyroPID.isDone());
-    	return gyroPID.isDone();
+    	return ((driveTarget - RobotMap.ahrs.getYaw())<0.1);
     }
 
     protected void end() {

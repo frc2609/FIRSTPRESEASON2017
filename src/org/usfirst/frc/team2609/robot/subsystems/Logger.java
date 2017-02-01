@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2609.robot.subsystems;
  
+import java.awt.Robot;
 import java.io.*;
 import java.util.Date;
 
@@ -67,7 +68,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("FPGATime,time, encLeft, encRight, rateLeft, rateRight, yaw, angle, victorLeft, victorRight");
+	            this.writer.write("FPGATime,deltaTime, encLeft, encRight, rateLeft, rateRight, yaw, angle");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -91,15 +92,15 @@ public class Logger {
 	        try {
 	        	//int ,%d
 	        	//double ,%.3f
-	        	this.writer.write(String.format(",%.3fd", Timer.getFPGATimestamp()));
-	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
-	          //  this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
+	        	this.writer.write(String.format("%.3f", Timer.getFPGATimestamp())); // deleted unknown 'd' from the end deleted comma from the beginning in hopes of it not putting a freaking comma in front of the line for no reason
+	        	this.writer.write(String.format(",%d", org.usfirst.frc.team2609.robot.Robot.dt));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
-	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
+	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle())); 
 	            
 	            
 	            

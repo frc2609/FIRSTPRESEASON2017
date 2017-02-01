@@ -53,8 +53,6 @@ public class RobotMap {
 		driveTalonLeft2.set(3); // Follows talon 3
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonLeft1.configEncoderCodesPerRev(250);
-		driveTalonRight1.configEncoderCodesPerRev(250);
 		driveTalonLeft1.configNominalOutputVoltage(+0f, -0f);
 		driveTalonRight1.configNominalOutputVoltage(+0f, -0f);
 		driveTalonLeft1.configPeakOutputVoltage(+12f, -12f);
