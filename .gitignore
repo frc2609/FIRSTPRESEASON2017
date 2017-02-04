@@ -52,3 +52,4 @@ sysProps.xml
 .recommenders/
 build/
 dist/
+.classpath
