@@ -1,11 +1,8 @@
 package org.usfirst.frc.team2609.robot.subsystems;
- 
 import java.io.*;
-import java.util.Date;
-
 import org.usfirst.frc.team2609.robot.RobotMap;
-
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  
 public class Logger {
@@ -32,19 +29,20 @@ public class Logger {
     private Logger() {
         this.ds = DriverStation.getInstance();
         SmartDashboard.putBoolean(this.loggerBoolean, this.logging);
-        this.logging= SmartDashboard.getBoolean(this.loggerBoolean);
+//        this.logging= SmartDashboard.getBoolean(this.loggerBoolean);
+        
         SmartDashboard.putString(this.SDFileName, this.fileName);
         this.fileName = SmartDashboard.getString(SDFileName);
-        File f = new File("/simlogs");
+        File f = new File("/home/lvuser/beaverlogs");
         if(!f.exists()) {
         	f.mkdir();
         }
         
-    	File[] files = new File("/simlogs").listFiles();
+    	File[] files = new File("/home/lvuser/beaverlogs").listFiles();
     	if(files != null) {
 	        for(File file : files) {
 	            if(file.isFile()) {
-	                System.out.println(file.getName());
+//	                System.out.println(file.getName());
 	                try {
 	                    int index = Integer.parseInt(file.getName().split("_")[0]);
 	                    if(index > max) {
@@ -65,7 +63,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("time, encLeft, encRight, rateLeft, rateRight, yaw, angle, victorLeft, victorRight");
+	            this.writer.write("FPGATime,time, encLeft, encRight, rateLeft, rateRight, yaw, angle, victorLeft, victorRight");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -76,11 +74,11 @@ public class Logger {
     private String getPath() {
     	this.fileName = SmartDashboard.getString(SDFileName);
         if(this.ds.isFMSAttached()) {
-            return String.format("/simlogs/%d_%s_%d_log.txt", ++this.max, this.ds.getAlliance().name(), this.ds.getLocation());
+            return String.format("/home/lvuser/beaverlogs/%d_%s_%d_log.txt", ++this.max, this.ds.getAlliance().name(), this.ds.getLocation());
         }else if(this.fileName != null){ 
-        	return String.format("/simlogs/%d_%s.txt",++this.max,this.fileName);
+        	return String.format("/home/lvuser/beaverlogs/%d_%s.txt",++this.max,this.fileName);
         }else {
-            return String.format("/simlogs/%d_log.txt", ++this.max);
+            return String.format("/home/lvuser/beaverlogs/%d_log.txt", ++this.max);
         }
     }
    
@@ -89,17 +87,15 @@ public class Logger {
 	        try {
 	        	//int ,%d
 	        	//double ,%.3f
-	        	this.writer.write(String.format("%d", new java.util.Date().getTime()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
+	        	this.writer.write(String.format(",%.3fd", Timer.getFPGATimestamp()));
+	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
+	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
+	          //  this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
-	            
-	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorLeft1.get()));
-	            this.writer.write(String.format(",%.3f",RobotMap.driveVictorRight1.get()));
 	            
 	            
 	            

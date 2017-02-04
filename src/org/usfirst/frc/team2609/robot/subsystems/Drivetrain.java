@@ -10,6 +10,14 @@ public class Drivetrain extends Subsystem {
 	private static double steerPIDOutput = 0;
 	double[] defaultval = new double[0];
     
+	public void toggleLED(){
+    	if (RobotMap.ringLED.get() == Relay.Value.kOff){
+    		RobotMap.ringLED.set(Relay.Value.kOn);
+    	}
+    	else{
+    		RobotMap.ringLED.set(Relay.Value.kOff);
+    	}
+	}
 	public void trackLED(boolean state){
     	if (state){
     		RobotMap.ringLED.set(Relay.Value.kOn);
@@ -21,35 +29,29 @@ public class Drivetrain extends Subsystem {
     public void humanDrive(){
     }
     public void driveTank(double left, double right){
-		RobotMap.driveVictorRight1.set(right);
-		RobotMap.driveVictorRight2.set(right);
-		RobotMap.driveVictorLeft1.set(left);
-		RobotMap.driveVictorLeft2.set(left);
+		RobotMap.driveTalonRight1.set(right);
+		RobotMap.driveTalonLeft1.set(left);
     }
     /*public void encoderDriveStraight(double driveTarget, double drivePower, double driveHeading){
 		double encAvg = ((RobotMap.driveEncLeft.getDistance()+(RobotMap.driveEncRight.getDistance()*-1))*0.5);
     } */   
     public void stopDrive(){
-		RobotMap.driveVictorRight1.set(0);
-		RobotMap.driveVictorRight2.set(0);
-		RobotMap.driveVictorLeft1.set(0);
-		RobotMap.driveVictorLeft2.set(0);
+		RobotMap.driveTalonRight1.set(0);
+		RobotMap.driveTalonLeft1.set(0);
     }
     public void disableDrive(){
-		RobotMap.driveVictorRight1.disable();
-		RobotMap.driveVictorRight2.disable();
-		RobotMap.driveVictorLeft1.disable();
-		RobotMap.driveVictorLeft2.disable();
+		RobotMap.driveTalonRight1.disable();
+		RobotMap.driveTalonLeft1.disable();
     }
-    public void driveStraight(int encLeft, int encRight, double steerInput, SimPID encPID, SimPID steerPID){
+    public void driveStraight(double encLeft, double encRight, double steerInput, SimPID encPID, SimPID steerPID){
     	steerPIDOutput = steerPID.calcPID(steerInput);
     	drivePIDOutput = encPID.calcPID(encLeft);
     	System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
     	Robot.drivetrain.driveTank(drivePIDOutput+steerPIDOutput, -drivePIDOutput+steerPIDOutput);
     }
     public void resetDriveEncoders(){
-    	RobotMap.driveEncLeft.reset();
-    	RobotMap.driveEncRight.reset();
+    	RobotMap.driveTalonLeft1.setEncPosition(0);
+    	RobotMap.driveTalonRight1.setEncPosition(0);
     }
     
     public void gyroCameraTurn(SimPID rightPID, SimPID leftPID)
