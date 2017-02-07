@@ -14,6 +14,9 @@ import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
+
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -72,6 +75,8 @@ public class Robot extends IterativeRobot {
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
         SmartDashboard.putNumber("Launcher Speed", 0);
+
+    	SmartDashboard.putNumber("climber speed", 0);
 
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
@@ -173,6 +178,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 		
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
+		
 		Scheduler.getInstance().run();
 		if (!gearSensorOld){
 			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
@@ -226,7 +234,19 @@ public class Robot extends IterativeRobot {
         	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
         }
         else{
-        	RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
+        	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
+        }
+        
+        
+    	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
+        if(OI.driverStick.getPOV() == 180){
+        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
+        }
+        else if (OI.driverStick.getPOV() == 0){
+        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
+        }
+        else{
+        	RobotMap.tsunamiMotor.set(0);
         }
         	
 //        

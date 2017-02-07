@@ -10,7 +10,6 @@ public class VulcanBallMode extends CommandGroup {
     public VulcanBallMode() {
         addSequential(new ClawClose());
         addSequential(new ClawUp());
-        addSequential(new ClawOpen());
         
     }
 }
