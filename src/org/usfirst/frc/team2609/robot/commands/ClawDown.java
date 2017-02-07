@@ -16,7 +16,7 @@ public class ClawDown extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vulcanclaw.downClaw();
+    	Robot.vulcanclaw.downClaw(); // Move down if you do not have a gear
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,8 +25,8 @@ public class ClawDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawDownSensor.get();
-    }
+        return !RobotMap.clawDownSensor.get() || timeSinceInitialized()>1;
+    } //Check if you already have a gear in the up position
 
     // Called once after isFinished returns true
     protected void end() {

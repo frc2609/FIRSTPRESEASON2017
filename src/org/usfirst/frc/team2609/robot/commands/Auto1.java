@@ -6,9 +6,11 @@ public class Auto1 extends CommandGroup {
     public Auto1() {
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.exampleSubsystem);
+    	addSequential(new CameraPointTurn(0.3));
+    	/*
     	addSequential(new RingLED(true));
     	addSequential(new TimerDelay(0.5));
         addSequential(new GearLeft());
-        addSequential(new RingLED(false));
+        addSequential(new RingLED(false));*/
     }
 }

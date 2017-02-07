@@ -8,15 +8,22 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawUp extends Command {
+public class ClawUpWithoutGear extends Command {
 
-    public ClawUp() {
+	boolean isFinished;
+	
+    public ClawUpWithoutGear() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vulcanclaw.upClaw();
+    	if (!RobotMap.gearSensor.get()){
+        	Robot.vulcanclaw.upClaw();
+    	}
+    	else{
+        	isFinished = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +32,7 @@ public class ClawUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawUpSensor.get() || timeSinceInitialized()>1;
+        return !RobotMap.clawUpSensor.get() || timeSinceInitialized()>1 || isFinished;
     }
 
     // Called once after isFinished returns true

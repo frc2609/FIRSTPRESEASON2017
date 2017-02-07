@@ -8,15 +8,23 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawUp extends Command {
+public class ClawDownWithoutGear extends Command {
 
-    public ClawUp() {
+	boolean isFinished;
+	
+    public ClawDownWithoutGear() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vulcanclaw.upClaw();
+    	/*if (!RobotMap.gearSensor.get()){
+        	Robot.vulcanclaw.downClaw(); // Move down if you do not have a gear
+    	}
+    	else{
+        	isFinished = true;
+    	}*/
+    	Robot.vulcanclaw.downClaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,8 +33,8 @@ public class ClawUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawUpSensor.get() || timeSinceInitialized()>1;
-    }
+        return !RobotMap.clawDownSensor.get() || timeSinceInitialized()>1;// || isFinished;
+    } //Check if you already have a gear in the up position
 
     // Called once after isFinished returns true
     protected void end() {

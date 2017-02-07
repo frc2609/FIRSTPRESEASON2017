@@ -9,7 +9,7 @@ public class VulcanGearGrab extends CommandGroup {
 
     public VulcanGearGrab() {
         addSequential(new ClawClose());
-        addSequential(new ClawUp());
+        addSequential(new ClawUpWithGear());
         
     }
 }

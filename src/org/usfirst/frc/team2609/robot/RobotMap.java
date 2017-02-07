@@ -19,6 +19,7 @@ public class RobotMap {
 	public static CANTalon driveTalonRight1;
 	public static CANTalon driveTalonRight2;
 	public static CANTalon ballIntake;
+	public static CANTalon tsunamiMotor;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -37,8 +38,13 @@ public class RobotMap {
     public static DriverStation ds;
     
     public static DigitalInput clawCloseSensor;
+    public static DigitalInput clawMissSensor;
+    public static DigitalInput clawOpenSensor;
     public static DigitalInput clawUpSensor;
     public static DigitalInput clawDownSensor;
+    
+    
+    public static AxisState axisState = AxisState.SCALER;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -56,6 +62,7 @@ public class RobotMap {
 		driveTalonLeft1 = new CANTalon(3);
 		driveTalonLeft2 = new CANTalon(4);
 		ballIntake = new CANTalon(5);
+		tsunamiMotor = new CANTalon(6);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
@@ -70,7 +77,8 @@ public class RobotMap {
 		driveTalonLeft1.configEncoderCodesPerRev(250);
 		driveTalonLeft1.reverseSensor(false);
 		driveTalonLeft1.reverseOutput(false);
-
+		
+		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
 
 //		prototype = new CANTalon(5);
 //		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
@@ -85,6 +93,8 @@ public class RobotMap {
 		gearSensor = new DigitalInput(3);
 		
 		clawCloseSensor = new DigitalInput(0);
+		clawMissSensor = new DigitalInput(4);
+		clawOpenSensor = new DigitalInput(5);
 		clawUpSensor = new DigitalInput(1);
 		clawDownSensor = new DigitalInput(2);
 		

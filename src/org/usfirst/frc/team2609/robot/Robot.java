@@ -12,6 +12,7 @@ import org.usfirst.frc.team2609.robot.commands.toggleClaw;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
+import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static Shifter shifter;
 	public static VulcanClaw vulcanclaw;
 	public static OI oi;
+	public static Tsunami tsunami;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
 	boolean gearSensorOld;
@@ -119,6 +121,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
+		SmartDashboard.putBoolean("little miss claw", RobotMap.clawMissSensor.get());
+		
+		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
+		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
+		
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
@@ -169,7 +176,6 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		if (!gearSensorOld){
 			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
-//				vulcangeargrab.start();
 				new VulcanGearGrab().start();
 			}
 		}
@@ -216,7 +222,12 @@ public class Robot extends IterativeRobot {
             	
 
         }
-        RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
+        if(RobotMap.axisState == AxisState.SCALER){
+        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
+        }
+        else{
+        	RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
+        }
         	
 //        
             RobotMap.driveTalonLeft1.set(-leftOutput);

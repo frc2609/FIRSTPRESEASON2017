@@ -25,7 +25,7 @@ public class ClawClose extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawCloseSensor.get();
+        return !RobotMap.clawCloseSensor.get() || !RobotMap.clawMissSensor.get() || timeSinceInitialized()>1;
     }
 
     // Called once after isFinished returns true
