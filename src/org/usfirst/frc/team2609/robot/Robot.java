@@ -11,16 +11,20 @@ import org.usfirst.frc.team2609.robot.commands.Swivel;
 import org.usfirst.frc.team2609.robot.commands.toggleClaw;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
+import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
 
+import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+
+import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.robot.commands.*;
 
 
@@ -165,6 +169,9 @@ public class Robot extends IterativeRobot {
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
+
+        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
+        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
 		
     }
 
@@ -248,10 +255,33 @@ public class Robot extends IterativeRobot {
         else{
         	RobotMap.tsunamiMotor.set(0);
         }
-        	
-//        
+        
+        
+        RobotMap._MotionPLeft.control();
+        RobotMap._MotionPRight.control();
+        
+        if(!RobotMap.drivetrainMPActive){
             RobotMap.driveTalonLeft1.set(-leftOutput);
             RobotMap.driveTalonRight1.set(rightOutput);
+        	RobotMap._MotionPLeft.reset();
+        	RobotMap._MotionPRight.reset();
+        }
+        else{
+        	this.logger.logAll();
+        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonRight1.getPosition());
+        	SmartDashboard.putNumber("MPRight", RobotMap.driveTalonRight1.getPosition());
+        	
+        	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.MotionProfile);
+        	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.MotionProfile);
+        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
+            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
+            RobotMap.driveTalonLeft1.set(leftSetOutput.value);
+            RobotMap.driveTalonRight1.set(rightSetOutput.value);
+//            RobotMap._MotionPRight.startMotionProfile();
+//            System.out.println("MP Running");
+            
+        }
+//        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             
@@ -259,5 +289,12 @@ public class Robot extends IterativeRobot {
     
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    public static void eStopMP(){
+    	RobotMap.MPLeftDisabled = true;
+    	RobotMap.MPRightDisabled = true;
+    	RobotMap.drivetrainMPActive = false;
+    	RobotMap._MotionPLeft.reset();
+    	RobotMap._MotionPRight.reset();
     }
 }

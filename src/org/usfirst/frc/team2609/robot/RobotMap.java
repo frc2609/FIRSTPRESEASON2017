@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
@@ -45,6 +48,13 @@ public class RobotMap {
     
     
     public static AxisState axisState = AxisState.SCALER;
+    
+    public static double[][] leftPath;
+    public static double[][] rightPath;
+    
+    public static MotionProfileSubsystem _MotionPLeft;
+    public static MotionProfileSubsystem _MotionPRight;
+    public static boolean MPLeftDisabled, MPRightDisabled, drivetrainMPActive;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -70,11 +80,11 @@ public class RobotMap {
 		driveTalonLeft2.set(3); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonRight1.configEncoderCodesPerRev(250);
+		driveTalonRight1.configEncoderCodesPerRev(611);
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonLeft1.configEncoderCodesPerRev(250);
+		driveTalonLeft1.configEncoderCodesPerRev(611);
 		driveTalonLeft1.reverseSensor(false);
 		driveTalonLeft1.reverseOutput(false);
 		

@@ -34,7 +34,7 @@ public class OI {
 
     public static Joystick opStick;
     
-    public static JoystickButton opButton1;// Button 1 is used in Drivetrain.java to 1/2 speed of driving/turning of the robot while held
+    public static JoystickButton opButton1;
     public static JoystickButton opButton2;
     public static JoystickButton opButton3;
     public static JoystickButton opButton4;
@@ -46,6 +46,7 @@ public class OI {
     
     public OI() {
     	driverStick = new Joystick(0);
+    	opStick = new Joystick(1);
         
         // Button 1 is used in Drivetrain.java to 1/2 speed of driving/turning of the robot while held
         //button1 = new JoystickButton(driverStick, 1);
@@ -70,6 +71,13 @@ public class OI {
     	
         VulcanGearScore = new JoystickButton(driverStick, 6);
     	VulcanGearScore.whenPressed(new VulcanGearScore());
+
+		opButton1 = new JoystickButton(opStick, 1);
+		opButton1.whenPressed(new GearAutonSpline());
+		opButton2 = new JoystickButton(opStick, 2);
+		opButton2.whenPressed(new LaunchMotionProfile());
+		opButton3 = new JoystickButton(opStick, 3);
+		opButton3.whenPressed(new MotionProfileEStop());
     	
         
     }
