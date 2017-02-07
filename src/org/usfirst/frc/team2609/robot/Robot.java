@@ -110,11 +110,11 @@ public class Robot extends IterativeRobot {
 //        }
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw",2);
         if (readyVulcanClaw == 1) {
-        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
+        	//RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
 			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
 		}
 		else{
-			RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
+			//RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
 		}
 		SmartDashboard.putBoolean("DIO9", RobotMap.dio9.get());
 		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
@@ -178,8 +178,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 		
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
 		
 		Scheduler.getInstance().run();
 		if (!gearSensorOld){
@@ -190,11 +190,11 @@ public class Robot extends IterativeRobot {
 		gearSensorOld = RobotMap.gearSensor.get();
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
 		if (readyVulcanClaw == 1) {
-			RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
+			//RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
 			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
 		}
 		else{
-			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
+			//RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
         this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
@@ -243,7 +243,7 @@ public class Robot extends IterativeRobot {
         	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
         }
         else if (OI.driverStick.getPOV() == 0){
-        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
+        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0)/5);
         }
         else{
         	RobotMap.tsunamiMotor.set(0);
