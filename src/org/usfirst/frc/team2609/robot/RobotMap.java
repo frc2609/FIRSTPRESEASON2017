@@ -3,6 +3,7 @@ package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -42,6 +43,7 @@ public class RobotMap {
     public static DigitalInput clawOpenSensor;
     public static DigitalInput clawUpSensor;
     public static DigitalInput clawDownSensor;
+    public static Joystick Dandyboy;
     
     
     public static AxisState axisState = AxisState.SCALER;
@@ -70,11 +72,11 @@ public class RobotMap {
 		driveTalonLeft2.set(3); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonRight1.configEncoderCodesPerRev(250);
+		driveTalonRight1.configEncoderCodesPerRev(611);
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonLeft1.configEncoderCodesPerRev(250);
+		driveTalonLeft1.configEncoderCodesPerRev(611);
 		driveTalonLeft1.reverseSensor(false);
 		driveTalonLeft1.reverseOutput(false);
 		
@@ -98,7 +100,8 @@ public class RobotMap {
 		clawUpSensor = new DigitalInput(1);
 		clawDownSensor = new DigitalInput(2);
 		
-        frameLights = new CANLight(7);
+        frameLights = new CANLight(12);
         ds = DriverStation.getInstance();
+        Dandyboy = new Joystick(0);
 	}
 }

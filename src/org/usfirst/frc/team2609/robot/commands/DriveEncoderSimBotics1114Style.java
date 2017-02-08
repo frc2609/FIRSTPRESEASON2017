@@ -16,6 +16,7 @@ public class DriveEncoderSimBotics1114Style extends Command {
 	double driveD = 0;
 	double driveMax = 0;
 	double driveEps = 0;
+	double driveTarget = 0;
 	//private double driveTarget;
 	// Number of minutes wasted on 1s vs ls:
 	// 30min 10/18/2016
@@ -33,6 +34,7 @@ public class DriveEncoderSimBotics1114Style extends Command {
         driveMax = (double)SmartDashboard.getNumber("Drive Max: ");
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ");
         this.steeringPID = new SimPID();
+        this.driveTarget = driveTarget;
         this.steeringPID.setDesiredValue(driveHeading);
         this.steeringPID.setConstants(gyroP, gyroI, gyroD);
         this.steeringPID.setMaxOutput(gyroMax);
@@ -40,7 +42,7 @@ public class DriveEncoderSimBotics1114Style extends Command {
         this.drivePID.setDesiredValue(driveTarget);
         this.drivePID.setConstants(driveP, driveI, driveD);
         this.drivePID.setMaxOutput(driveMax);
-        this.drivePID.setDoneRange(1);
+       // this.drivePID.setDoneRange(1);
         this.drivePID.setErrorEpsilon(driveEps);
     }
 
@@ -60,8 +62,9 @@ public class DriveEncoderSimBotics1114Style extends Command {
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ")															;
         this.drivePID.setConstants(driveP, driveI, driveD)																	;
         this.drivePID.setMaxOutput(driveMax)																				;
-        this.drivePID.setDoneRange(1)																						;
+        this.drivePID.setDoneRange(0.1)																						;
         this.drivePID.setErrorEpsilon(driveEps)																				;
+        this.drivePID.setDesiredValue(driveTarget);
     																													}
 
     protected void execute() {

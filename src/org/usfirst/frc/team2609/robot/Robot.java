@@ -5,24 +5,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import org.usfirst.frc.team2609.robot.commands.Auto1;
-import org.usfirst.frc.team2609.robot.commands.HockeyStick;
-import org.usfirst.frc.team2609.robot.commands.Swivel;
-import org.usfirst.frc.team2609.robot.commands.toggleClaw;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
-
 import com.ctre.CANTalon.TalonControlMode;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import org.usfirst.frc.team2609.robot.commands.*;
-
 
 public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
@@ -43,9 +36,9 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();// put this here when imports don't work / robots don't quit
 		oi = new OI();
 
-		SmartDashboard.putNumber("Drive P: ", 0.003);
-    	SmartDashboard.putNumber("Drive I: ", 0.001);
-    	SmartDashboard.putNumber("Drive D: ", 0.01);
+		SmartDashboard.putNumber("Drive P: ", 0.4);
+    	SmartDashboard.putNumber("Drive I: ", 0.05);
+    	SmartDashboard.putNumber("Drive D: ", 0.0);
     	SmartDashboard.putNumber("Drive Max: ", 0.8);
     	SmartDashboard.putNumber("Drive Eps: ", 1);
     	
@@ -83,15 +76,15 @@ public class Robot extends IterativeRobot {
 		vulcanclaw = new VulcanClaw();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new Auto1());
-        chooser.addObject("Hockey Stick", new HockeyStick());
-        chooser.addObject("Swivel", new Swivel());
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = logger.getInstance();
-//      chooser.addObject("My Auto", new MyAutoCommand());  
+        //chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 1); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kForward);
+        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
+        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
+
     }
 	
     public void disabledInit(){
@@ -135,6 +128,9 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
+        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
+        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         autonomousCommand = (Command) chooser.getSelected();
         this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
@@ -158,14 +154,14 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
-        //EncReset(); todo
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
         RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
-		
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     @SuppressWarnings("deprecation")
@@ -190,48 +186,16 @@ public class Robot extends IterativeRobot {
 		gearSensorOld = RobotMap.gearSensor.get();
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
 		if (readyVulcanClaw == 1) {
-			//RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
+			RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
 			//RobotMap.frameLights.showRGB(0, 255, 0);//set led's to green when ready i think that yellow means go
 		}
 		else{
-			//RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
+			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
         this.logger.logAll(); // write to logs
-        Joystick driveStick = new Joystick(0);
-		double deadZone = 0.15;
-		double X = -driveStick.getRawAxis(0);
-        double Y = driveStick.getRawAxis(1);
-        if ((Math.abs(-driveStick.getRawAxis(0))<deadZone) && (Math.abs(-driveStick.getRawAxis(1))<deadZone)){
-        	X = 0;
-        	Y = 0;
-        }
-        /*if (Math.abs(-driveStick.getRawAxis(1))<deadZone){
-        	Y = 0;
-        }*/
-        double leftOutput;
-        double rightOutput;
-        if (Y > 0) {
-            if (X > 0.0) {
-                leftOutput = Math.pow(Y, 1) - Math.pow(X, 1);
-                rightOutput = Math.max(Math.pow(Y, 1), Math.pow(X, 1));
-            } else {
-                leftOutput = Math.max(Math.pow(Y, 1), -(Math.pow(X, 1)));
-                rightOutput = Math.pow(Y, 1) + (Math.pow(X, 1));
-            }
-        } else{
-            if (X > 0.0) {
-                leftOutput = -Math.max(-(Math.pow(Y, 1)), Math.pow(X, 1));
-                rightOutput = (Math.pow(Y, 1)) + Math.pow(X, 1);
-            } else {
-            	//this is also vvv imborktant
-                leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
-                rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
-            }
-            	
-
-        }
+        drivetrain.humanDrive();
         if(RobotMap.axisState == AxisState.SCALER){
-        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
+        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
         }
         else{
         	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
@@ -250,8 +214,7 @@ public class Robot extends IterativeRobot {
         }
         	
 //        
-            RobotMap.driveTalonLeft1.set(-leftOutput);
-            RobotMap.driveTalonRight1.set(rightOutput);
+
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
             
