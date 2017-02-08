@@ -54,7 +54,8 @@ public class RobotMap {
     
     public static MotionProfileSubsystem _MotionPLeft;
     public static MotionProfileSubsystem _MotionPRight;
-    public static boolean MPLeftDisabled, MPRightDisabled, drivetrainMPActive;
+    public static boolean MPLeftDisabled, MPRightDisabled;
+    public static boolean drivetrainMPActive = false;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -82,11 +83,12 @@ public class RobotMap {
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(611);
 		driveTalonRight1.reverseSensor(false);
-		driveTalonRight1.reverseOutput(false);
+		driveTalonRight1.setInverted(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonLeft1.configEncoderCodesPerRev(611);
 		driveTalonLeft1.reverseSensor(false);
 		driveTalonLeft1.reverseOutput(false);
+		
 		
 		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
 
@@ -108,7 +110,7 @@ public class RobotMap {
 		clawUpSensor = new DigitalInput(1);
 		clawDownSensor = new DigitalInput(2);
 		
-        frameLights = new CANLight(7);
+        frameLights = new CANLight(12);
         ds = DriverStation.getInstance();
 	}
 }

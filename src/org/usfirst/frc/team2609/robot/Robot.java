@@ -99,6 +99,7 @@ public class Robot extends IterativeRobot {
     }
 	
     public void disabledInit(){
+		shifter.high();
     }
 	
 	@SuppressWarnings("deprecation")
@@ -134,7 +135,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
-		
+
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
@@ -170,6 +171,9 @@ public class Robot extends IterativeRobot {
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
 
+        RobotMap.driveTalonLeft1.setEncPosition(0);
+        RobotMap.driveTalonRight1.setEncPosition(0);
+        
         RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
         RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
 		
@@ -203,7 +207,6 @@ public class Robot extends IterativeRobot {
 		else{
 			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
-        this.logger.logAll(); // write to logs
         Joystick driveStick = new Joystick(0);
 		double deadZone = 0.15;
 		double X = -driveStick.getRawAxis(0);
@@ -246,22 +249,25 @@ public class Robot extends IterativeRobot {
         
         
     	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
-        if(OI.driverStick.getPOV() == 180){
-        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
-        }
-        else if (OI.driverStick.getPOV() == 0){
-        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
-        }
-        else{
-        	RobotMap.tsunamiMotor.set(0);
-        }
+//        if(OI.driverStick.getPOV() == 180){
+//        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
+//        }
+//        else if (OI.driverStick.getPOV() == 0){
+//        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
+//        }
+//        else{
+//        	RobotMap.tsunamiMotor.set(0);
+//        }
         
         
         RobotMap._MotionPLeft.control();
         RobotMap._MotionPRight.control();
-        
+//        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
+//        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
+//        System.out.println("LeftOutput: " + leftOutput);
+//        System.out.println("RightOutput: " + rightOutput);
         if(!RobotMap.drivetrainMPActive){
-            RobotMap.driveTalonLeft1.set(-leftOutput);
+            RobotMap.driveTalonLeft1.set(leftOutput);
             RobotMap.driveTalonRight1.set(rightOutput);
         	RobotMap._MotionPLeft.reset();
         	RobotMap._MotionPRight.reset();
