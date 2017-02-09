@@ -13,33 +13,23 @@ public class GyroTurn extends Command {
 	double turnMax = 0;
 	double turnEps = 0;
 	double maxPower = 0;
+	double turnHeading = 0;
 	
     public GyroTurn(double maxPower, double turnHeading) {
-        turnP = (double)SmartDashboard.getNumber("turn P: ");
-        turnI = (double)SmartDashboard.getNumber("turn I: ");
-        turnD = (double)SmartDashboard.getNumber("turn D: ");
-        turnMax = (double)SmartDashboard.getNumber("turn Max: ");
-        turnEps = (double)SmartDashboard.getNumber("turn Eps: ");
-        this.maxPower = maxPower;
-        this.gyroPID = new SimPID();
-        this.gyroPID.setDesiredValue(turnHeading);
-        this.gyroPID.setConstants(turnP, turnI, turnD);
-        this.gyroPID.setMaxOutput(maxPower);
-        this.gyroPID.setDoneRange(1);
-        this.pivotPID = new SimPID();
-        this.pivotPID.setDesiredValue(0);
-        this.pivotPID.setConstants(0.01, 0, 0);
-        this.pivotPID.setMaxOutput(1);
+    	this.maxPower = maxPower;
+    	this.turnHeading = turnHeading;
         System.out.println("GYROTURN CLASS INITED");
     }
  
     protected void initialize() {
+        this.gyroPID = new SimPID();
     	gyroPID.resetPreviousVal();
-        turnP = (double)SmartDashboard.getNumber("turn P: ");
-        turnI = (double)SmartDashboard.getNumber("turn I: ");
-        turnD = (double)SmartDashboard.getNumber("turn D: ");
-        turnMax = (double)SmartDashboard.getNumber("turn Max: ");
-        turnEps = (double)SmartDashboard.getNumber("turn Eps: ");
+        turnP = (double)SmartDashboard.getNumber("turn P: ",0);
+        turnI = (double)SmartDashboard.getNumber("turn I: ",0);
+        turnD = (double)SmartDashboard.getNumber("turn D: ",0);
+        turnEps = (double)SmartDashboard.getNumber("turn Eps: ",0);
+        this.gyroPID.setDoneRange(1);
+        this.gyroPID.setDesiredValue(SmartDashboard.getNumber("auton angle", 0));
         this.gyroPID.setConstants(turnP, turnI, turnD);
         this.gyroPID.setErrorEpsilon(turnEps);
         this.gyroPID.setMaxOutput(maxPower);

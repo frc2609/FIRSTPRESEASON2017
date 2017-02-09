@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawClose extends Command {
+public class ClawDown extends Command {
 
-    public ClawClose() {
+    public ClawDown() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vulcanclaw.closeClaw();
+    	Robot.vulcanclaw.downClaw(); // Move down if you do not have a gear
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,8 +25,8 @@ public class ClawClose extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawCloseSensor.get() || !RobotMap.clawMissSensor.get() || timeSinceInitialized()>0.2;
-    }
+        return !RobotMap.clawDownSensor.get() || timeSinceInitialized()>.2;
+    } //Check if you already have a gear in the up position
 
     // Called once after isFinished returns true
     protected void end() {

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
@@ -8,18 +8,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawUpWithoutGear extends Command {
+public class ClawOpenWithoutGear extends Command {
 
 	boolean isFinished;
 	
-    public ClawUpWithoutGear() {
+    public ClawOpenWithoutGear() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (!RobotMap.gearSensor.get()){
-        	Robot.vulcanclaw.upClaw();
+        	Robot.vulcanclaw.openClaw(); // Move close if you do not have a gear
     	}
     	else{
         	isFinished = true;
@@ -32,7 +32,7 @@ public class ClawUpWithoutGear extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawUpSensor.get() || timeSinceInitialized()>1 || isFinished;
+        return !RobotMap.clawOpenSensor.get() || timeSinceInitialized()>1 || isFinished;
     }
 
     // Called once after isFinished returns true

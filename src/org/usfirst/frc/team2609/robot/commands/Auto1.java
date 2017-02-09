@@ -1,4 +1,6 @@
 package org.usfirst.frc.team2609.robot.commands;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Auto1 extends CommandGroup {
@@ -12,10 +14,12 @@ public class Auto1 extends CommandGroup {
     	addSequential(new TimerDelay(0.5));
         addSequential(new GearLeft());
         addSequential(new RingLED(false));*/
-    	addSequential(new DriveEncoderSimBotics1114Style(-6.8, 0.3, 0));
+    	/*
+    	addSequential(new DriveEncoder(-6.8, 0.3, 0));
     	addSequential(new ClawOpen());
     	addSequential(new TimerDelay(0.2));
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoderSimBotics1114Style(3, 0.3, 0));
+    	addSequential(new DriveEncoder(3, 0.3, 0));*/
+    	addSequential(new GyroTurn(1,0));
     }
 }

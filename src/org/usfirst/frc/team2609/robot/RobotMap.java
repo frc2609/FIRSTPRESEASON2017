@@ -59,25 +59,27 @@ public class RobotMap {
         }
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
-		driveTalonRight1 = new CANTalon(1);
-		driveTalonRight2 = new CANTalon(2);
-		driveTalonLeft1 = new CANTalon(3);
-		driveTalonLeft2 = new CANTalon(4);
+		driveTalonRight1 = new CANTalon(3);
+		driveTalonRight2 = new CANTalon(4);
+		driveTalonLeft1 = new CANTalon(1);
+		driveTalonLeft2 = new CANTalon(2);
 		ballIntake = new CANTalon(5);
 		tsunamiMotor = new CANTalon(6);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		driveTalonRight2.set(1); // Follows talon 1 talon is the second best talon
-		driveTalonLeft2.set(3); // Follows talon 3 talon 3 is not the best talon
+		driveTalonRight2.set(3); // Follows talon 1 talon is the second best talon
+		driveTalonLeft2.set(1); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonRight1.configEncoderCodesPerRev(611);
+		driveTalonRight1.configEncoderCodesPerRev(960);
+		driveTalonRight1.setInverted(false);
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonLeft1.configEncoderCodesPerRev(611);
-		driveTalonLeft1.reverseSensor(false);
+		driveTalonLeft1.configEncoderCodesPerRev(960);
+		driveTalonLeft1.setInverted(true);
+		driveTalonLeft1.reverseSensor(true);
 		driveTalonLeft1.reverseOutput(false);
 		
 		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);

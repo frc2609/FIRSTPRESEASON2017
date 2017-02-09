@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

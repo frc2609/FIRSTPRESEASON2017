@@ -1,4 +1,8 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.autons;
+import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
+import org.usfirst.frc.team2609.robot.commands.EncReset;
+import org.usfirst.frc.team2609.robot.commands.TimerDelay;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearCenter extends CommandGroup {

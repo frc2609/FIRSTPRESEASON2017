@@ -1,32 +1,40 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 
 import org.usfirst.frc.team2609.robot.Robot;
+import org.usfirst.frc.team2609.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class toggleClaw extends Command {
+public class ClawDownWithoutGear extends Command {
 
-    public toggleClaw() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	boolean isFinished;
+	
+    public ClawDownWithoutGear() {
+        //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	/*if (!RobotMap.gearSensor.get()){
+        	Robot.vulcanclaw.downClaw(); // Move down if you do not have a gear
+    	}
+    	else{
+        	isFinished = true;
+    	}*/
+    	Robot.vulcanclaw.downClaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.vulcanclaw.toggleClaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
-    }
+        return !RobotMap.clawDownSensor.get() || timeSinceInitialized()>1;// || isFinished;
+    } //Check if you already have a gear in the up position
 
     // Called once after isFinished returns true
     protected void end() {

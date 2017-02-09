@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
@@ -8,17 +8,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawScore extends Command {
+public class ClawOpen extends Command {
 
-    public ClawScore() {
+    public ClawOpen() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (!RobotMap.clawUpSensor.get() && !RobotMap.clawCloseSensor.get()){
-    		Robot.vulcanclaw.openClaw();
-    	}
+    	Robot.vulcanclaw.openClaw();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,7 +25,7 @@ public class ClawScore extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timeSinceInitialized()>0.2;
+        return !RobotMap.clawOpenSensor.get() || timeSinceInitialized()>.2;
     }
 
     // Called once after isFinished returns true

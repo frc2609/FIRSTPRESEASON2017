@@ -3,6 +3,11 @@ package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team2609.robot.commands.*;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanBallMode;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearMode;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.toggleClaw;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.toggleDeployClaw;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 
 

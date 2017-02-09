@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Drivetrain extends Subsystem {
-	private static double drivePIDOutput = 0;
+	private static double drivePIDOutputLeft = 0;
+	private static double drivePIDOutputRight = 0;
 	private static double steerPIDOutput = 0;
 	private static double throttle = 0;
 	private static double turnValue = 0;
@@ -58,6 +59,10 @@ public class Drivetrain extends Subsystem {
     } else if (rightMtr < -1.0) {
     	rightMtr = rightMtr + (-((rightMtr + 1.0) * turningGain)*(leftMtr));
     }
+	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     RobotMap.driveTalonLeft1.set(-leftMtr);
     RobotMap.driveTalonRight1.set(rightMtr);
 
@@ -98,14 +103,22 @@ public class Drivetrain extends Subsystem {
                 leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
                 rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
             }
-            	
-        RobotMap.driveTalonLeft1.set(-leftOutput);
-        RobotMap.driveTalonRight1.set(rightOutput);
+            
+        	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+        	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+        	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+        	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
+        	RobotMap.driveTalonLeft1.set(-leftOutput);
+        	RobotMap.driveTalonRight1.set(rightOutput);
         }
     }
     
     
     public void driveTank(double left, double right){
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
 		RobotMap.driveTalonRight1.set(right);
 		RobotMap.driveTalonLeft1.set(left);
     }
@@ -120,14 +133,17 @@ public class Drivetrain extends Subsystem {
 		RobotMap.driveTalonRight1.disable();
 		RobotMap.driveTalonLeft1.disable();
     }
-    public void driveStraight(double encLeft, double encRight, double steerInput, SimPID encPID, SimPID steerPID){
+    public void driveStraight(double encLeft, double encRight, double steerInput, SimPID encPIDLeft, SimPID encPIDRight, SimPID steerPID){
     	steerPIDOutput = -steerPID.calcPID(steerInput);
-    	drivePIDOutput = encPID.calcPID(encLeft);
-    	System.out.println("drivePIDOutput " + drivePIDOutput + " steerPIDOutput " + steerPIDOutput);
+    	drivePIDOutputLeft = encPIDLeft.calcPID(encLeft);
+    	drivePIDOutputRight = encPIDLeft.calcPID(encLeft);
+    	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.driveTalonLeft1.set(-drivePIDOutput+steerPIDOutput);
-        RobotMap.driveTalonRight1.set(drivePIDOutput+steerPIDOutput);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
+        RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
 
     }
     public void resetDriveEncoders(){
@@ -137,30 +153,23 @@ public class Drivetrain extends Subsystem {
     
     public void gyroCameraTurn(SimPID rightPID, SimPID leftPID)
     {
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
     	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
-    	driveTank(leftValue, rightValue);
-    }
-    
-    public void cameraPivotTurn(SimPID rightPID, SimPID pivotPID, double centerX)
-    {
-    	double rightValue = rightPID.calcPID(centerX);
-    	double leftValue = pivotPID.calcPID(RobotMap.driveEncLeft.getDistance());
-    	driveTank(leftValue, rightValue);
-    }
-    
-    public void cameraPointTurn(SimPID turnPID, double centerX)
-    {
-    	double rightValue = turnPID.calcPID(centerX);
-    	double leftValue = turnPID.calcPID(centerX);
     	driveTank(leftValue, rightValue);
     }
     
     public void gyroTurn(SimPID rightPID, SimPID leftPID)
     {
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
-    	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
-    	//double leftValue = leftPID.calcPID(RobotMap.driveEncLeft.getDistance());
+    	double rightValue = -rightPID.calcPID(RobotMap.ahrs.getYaw());
     	driveTank(leftValue, rightValue);
     }
     
