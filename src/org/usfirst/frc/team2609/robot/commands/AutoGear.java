@@ -30,6 +30,6 @@ public class AutoGear extends CommandGroup {
     	//addSequential(new GyroTurn(0.4, GearPath.angleToDrive));
     	//addSequential(new DriveEncoder((GearPath.distanceToDrive)*33.33, 0.4, 0)); // TODO: convert feet to enc counts
     	//addSequential(new GyroTurn(0.4, endAngleToTarget)); // end angle to target!
-    	addSequential(new DriveEncoder(400, 0.4, 0));
+    	//addSequential(new DriveEncoder(400, 0.4, 0));
     }
 }

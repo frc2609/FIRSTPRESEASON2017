@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Drive P: ", 0.14);
     	SmartDashboard.putNumber("Drive I: ", 0.002);
     	SmartDashboard.putNumber("Drive D: ", 0.0);
-    	SmartDashboard.putNumber("Drive Max: ", 1.0);
+    	SmartDashboard.putNumber("Drive Max: ", 0.5);
     	SmartDashboard.putNumber("Drive Eps: ", 1);
     	
 		SmartDashboard.putNumber("Gyro P: ", 0.02);
@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
         this.logger = logger.getInstance();
         //chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
-        table.putNumber("display", 1); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
+        table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
@@ -103,6 +103,8 @@ public class Robot extends IterativeRobot {
 		else{
 			//RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
 		}
+        
+        
 		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());

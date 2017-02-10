@@ -20,6 +20,8 @@ public class Auto1 extends CommandGroup {
     	addSequential(new TimerDelay(0.2));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(3, 0.3, 0));*/
-    	addSequential(new GyroTurn(1,0));
+    	addSequential(new DriveEncoder(1.0,1.0,0.0));
+    	//addSequential(new GyroTurn(1,0));
+    	
     }
 }

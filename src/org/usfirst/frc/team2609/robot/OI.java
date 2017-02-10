@@ -56,7 +56,7 @@ public class OI {
         //button1 = new JoystickButton(driverStick, 1);
 
         button1 = new JoystickButton(driverStick, 1);
-        //button1.whenPressed(new GyroCameraTurn(.5));
+        button1.whenPressed(new GearSwerve());
         //toggleLED = new JoystickButton(driverStick, 7);
 //        toggleLED.whenReleased(new toggleLED());
         toggleDeployClaw = new JoystickButton(driverStick, 10);

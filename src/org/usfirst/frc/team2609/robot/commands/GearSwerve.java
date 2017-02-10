@@ -20,9 +20,9 @@ public class GearSwerve extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	gearPath = new GearPath();
-    	gearPath.gyro = RobotMap.ahrs.getAngle();
-    	gearPath.angleToDrive = Robot.table.getNumber("angleToTarget", 0);
-    	gearPath.distanceToTarget = 48; // Get the distance to target from networktables
+    	gearPath.gyro = RobotMap.ahrs.getYaw();
+    	gearPath.angleToTarget = Robot.table.getNumber("angleToTarget", 0);
+    	gearPath.distanceToTarget = Robot.table.getNumber("distanceToTarget",0); // Get the distance to target from networktables
     	gearPath.calc();
     	//RobotMap.gearPath = this.gearPath;
     	
@@ -35,7 +35,7 @@ public class GearSwerve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (this.gearPath.angleToDrive!=0 && this.gearPath.distanceToDrive!=0);
+    	return true;//(this.gearPath.angleToDrive!=0 && this.gearPath.distanceToDrive!=0);
     }
 
     // Called once after isFinished returns true
