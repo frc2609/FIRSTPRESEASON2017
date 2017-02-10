@@ -38,12 +38,14 @@ public class Drivetrain extends Subsystem {
 	}
 	
     public void humanDrive(){
-    throttle = RobotMap.Dandyboy.getRawAxis(1); 
-    turnValue = -RobotMap.Dandyboy.getRawAxis(0);
-    if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone));{
+    throttle = -RobotMap.Dandyboy.getRawAxis(1); 
+    turnValue = RobotMap.Dandyboy.getRawAxis(0);
+    deadZone = 0.15;
+    turningGain = 0.0;
+    /*if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone));{
     	throttle = 0;
     	turnValue = 0;
-    }
+    }*/
 	leftMtr = throttle + turnValue;
 	rightMtr = throttle - turnValue;
 
@@ -63,15 +65,18 @@ public class Drivetrain extends Subsystem {
 	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
 	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
 	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
-    RobotMap.driveTalonLeft1.set(-leftMtr);
+    RobotMap.driveTalonLeft1.set(leftMtr);
     RobotMap.driveTalonRight1.set(rightMtr);
 
     }
+    
+    
+    
     public void humanDriveII(){
 		double deadZone = 0.15;
 		double X = -RobotMap.Dandyboy.getRawAxis(0);
         double Y = RobotMap.Dandyboy.getRawAxis(1);
-        if ((Math.abs(-RobotMap.Dandyboy.getRawAxis(0))<deadZone) && (Math.abs(-RobotMap.Dandyboy.getRawAxis(1))<deadZone)){
+        if ((Math.abs(RobotMap.Dandyboy.getRawAxis(0))<deadZone) && (Math.abs(RobotMap.Dandyboy.getRawAxis(1))<deadZone)){
         	X = 0;
         	Y = 0;
         }

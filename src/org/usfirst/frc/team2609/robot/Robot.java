@@ -185,7 +185,9 @@ public class Robot extends IterativeRobot {
 			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
 //        this.logger.logAll(); // write to logs
-        drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
+		
+        //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
+		drivetrain.humanDrive();
         if(RobotMap.axisState == AxisState.SCALER){
         	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
         }
