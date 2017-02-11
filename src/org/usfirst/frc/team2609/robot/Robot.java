@@ -39,13 +39,13 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();// put this here when imports don't work / robots don't quit
 		oi = new OI();
 
-		SmartDashboard.putNumber("Drive P: ", 0.14);
+		SmartDashboard.putNumber("Drive P: ", 0.2);
     	SmartDashboard.putNumber("Drive I: ", 0.002);
     	SmartDashboard.putNumber("Drive D: ", 0.0);
     	SmartDashboard.putNumber("Drive Max: ", 0.5);
-    	SmartDashboard.putNumber("Drive Eps: ", 1);
+    	SmartDashboard.putNumber("Drive Eps: ", 0.001);
     	
-		SmartDashboard.putNumber("Gyro P: ", 0.02);
+		SmartDashboard.putNumber("Gyro P: ", 0.05);
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
     	SmartDashboard.putNumber("Gyro Max: ", 0.2);
@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn I: ",0.002);
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",1.0);
-        SmartDashboard.putNumber("turn Eps: ",1);
+        SmartDashboard.putNumber("turn Eps: ",0.01);
         
     	SmartDashboard.putNumber("auton distance", 0);
     	SmartDashboard.putNumber("auton heading", 0);
@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
-        RobotMap.shifter.set(DoubleSolenoid.Value.kReverse); //Low gear
+        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         autonomousCommand = (Command) chooser.getSelected();
@@ -136,6 +136,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+		SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 		
 //        this.logger.logAll(); // write to logs
         

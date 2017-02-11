@@ -9,7 +9,7 @@ public class GearPath {
 	public static double angleToDrive; // being calculated in calc()
 	
 	public void calc(){
-		double fi = 90-(Math.abs(gyro)+angleToTarget);
+		double fi = 90-(angleToTarget-gyro);
 		System.out.println("fi: " + Double.toString(fi));
 		System.out.println(fi);
 		double X = (Math.cos(Math.toRadians(fi)))*distanceToTarget;

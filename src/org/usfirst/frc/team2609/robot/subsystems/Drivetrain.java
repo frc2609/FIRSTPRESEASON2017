@@ -42,10 +42,10 @@ public class Drivetrain extends Subsystem {
     turnValue = RobotMap.Dandyboy.getRawAxis(0);
     deadZone = 0.15;
     turningGain = 0.0;
-    /*if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone));{
+    if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone)){
     	throttle = 0;
     	turnValue = 0;
-    }*/
+    }
 	leftMtr = throttle + turnValue;
 	rightMtr = throttle - turnValue;
 
@@ -149,6 +149,22 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
+
+    }
+    public void driveLeft(double encLeft, SimPID encPIDLeft){
+    	drivePIDOutputLeft = encPIDLeft.calcPID(encLeft);
+    	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft);
+
+    }
+    public void driveRight(double encRight, SimPID encPIDRight){
+    	drivePIDOutputLeft = encPIDRight.calcPID(encRight);
+    	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.set(drivePIDOutputRight);
 
     }
     public void resetDriveEncoders(){
