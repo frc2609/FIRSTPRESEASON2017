@@ -20,8 +20,26 @@ public class Auto1 extends CommandGroup {
     	addSequential(new TimerDelay(0.2));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(3, 0.3, 0));*/
-    	addSequential(new DriveEncoder(1.0,1.0,0.0));
-    	//addSequential(new GyroTurn(1,0));
+    	
+    	//left gear auton
+    	/*
+    	addSequential(new DriveEncoder(58.0,0.8,0.0));
+    	addSequential(new EncReset());
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new GyroTurn(1,30));
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(80.0,0.8,30.0));
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new ClawOpen());
+    	addSequential(new DriveEncoder(-40.0,0.8,30.0));
+    	*/
+    	
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
     	
     }
 }

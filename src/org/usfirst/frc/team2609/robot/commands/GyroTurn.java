@@ -29,7 +29,8 @@ public class GyroTurn extends Command {
         turnD = (double)SmartDashboard.getNumber("turn D: ",0);
         turnEps = (double)SmartDashboard.getNumber("turn Eps: ",0);
         this.gyroPID.setDoneRange(1);
-        this.gyroPID.setDesiredValue(SmartDashboard.getNumber("auton angle", 0));
+        this.gyroPID.setMinDoneCycles(100);
+        this.gyroPID.setDesiredValue(turnHeading);
         this.gyroPID.setConstants(turnP, turnI, turnD);
         this.gyroPID.setErrorEpsilon(turnEps);
         this.gyroPID.setMaxOutput(maxPower);

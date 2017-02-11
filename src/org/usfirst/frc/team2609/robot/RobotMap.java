@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.ctre.CANTalon;
@@ -25,6 +26,7 @@ public class RobotMap {
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
     public static DoubleSolenoid vulcanClaw;
+    
     
 	public static CANTalon prototype;
 	public static Encoder driveEncLeft;
@@ -90,6 +92,7 @@ public class RobotMap {
         shifter = new DoubleSolenoid(0, 1, 0);
         vulcanClaw = new DoubleSolenoid(0, 7, 6);
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
+        
 		
 		ringLED = new Relay(0);
 		ringLED.setDirection(Relay.Direction.kForward);
