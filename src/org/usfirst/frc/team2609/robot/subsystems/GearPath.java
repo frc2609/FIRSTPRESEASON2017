@@ -24,7 +24,7 @@ public class GearPath {
 		distanceToDrive = Math.sqrt(Math.pow(X, 2)+Math.pow(Y2, 2));
 		System.out.println("distanceToDrive: " + Double.toString(distanceToDrive));
 		System.out.println(distanceToDrive);
-		angleToDrive = Math.toDegrees(Math.asin(Y2/distanceToDrive));
+		angleToDrive = 90-Math.toDegrees(Math.asin(Y2/distanceToDrive));
 		System.out.println("angleToDrive: " + Double.toString(angleToDrive));
 		System.out.println(angleToDrive);
 		

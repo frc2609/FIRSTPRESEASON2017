@@ -128,7 +128,8 @@ public class Robot extends IterativeRobot {
         autonomousCommand = (Command) chooser.getSelected();
         this.logger.openFile();
         if (autonomousCommand != null) autonomousCommand.start();
-        
+
+    	
     }
 
     public void autonomousPeriodic() {
@@ -156,10 +157,13 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
+    	
+    	
     }
 
     @SuppressWarnings("deprecation")
 	public void teleopPeriodic() {
+    	
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
 		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
