@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroTurn extends Command {
 	private SimPID gyroPID;
-	private SimPID pivotPID;
 	double turnP = 0;
 	double turnI = 0;
 	double turnD = 0;
@@ -20,7 +19,6 @@ public class GyroTurn extends Command {
     public GyroTurn(double maxPower, double turnHeading) {
     	this.maxPower = maxPower;
     	this.turnHeading = turnHeading;
-        //System.out.println("GYROTURN CLASS INITED");
     }
  
     protected void initialize() {
@@ -46,7 +44,6 @@ public class GyroTurn extends Command {
     }
 
     protected boolean isFinished() {
-    	//System.out.println("gyroPID.isDone "+ gyroPID.isDone());
     	return gyroPID.isDone();
     }
 
