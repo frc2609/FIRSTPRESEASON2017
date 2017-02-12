@@ -43,6 +43,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Drive D: ", 0.0);
     	SmartDashboard.putNumber("Drive Max: ", 0.5);
     	SmartDashboard.putNumber("Drive Eps: ", 0.001);
+    	SmartDashboard.putNumber("Drive DR: ", 0.053053);
+    	SmartDashboard.putNumber("Drive DC: ", 100);
     	
 		SmartDashboard.putNumber("Gyro P: ", 0.05);
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
@@ -55,6 +57,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",1.0);
         SmartDashboard.putNumber("turn Eps: ",0.01);
+        SmartDashboard.putNumber("turn DR: ",1);
+        SmartDashboard.putNumber("turn DC: ",100);
         
     	SmartDashboard.putNumber("auton distance 1", 0);
     	SmartDashboard.putNumber("auton distance 2", 0);
@@ -74,10 +78,10 @@ public class Robot extends IterativeRobot {
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
-        chooser = new SendableChooser();
+        chooser = new SendableChooser<Auto1>();
         chooser.addDefault("Default Auto", new Auto1());
         SmartDashboard.putData("Auto mode", chooser);
-        this.logger = logger.getInstance();
+        this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         //chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
