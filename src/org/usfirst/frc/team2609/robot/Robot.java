@@ -158,7 +158,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
 		SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 
-    	RobotMap.ringLED.set(Relay.Value.kReverse);
+    	//RobotMap.ringLED.set(Relay.Value.kReverse);
 //        this.logger.logAll(); // write to logs
         
 		
