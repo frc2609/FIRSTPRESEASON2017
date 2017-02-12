@@ -19,6 +19,8 @@ public class DriveEncoder extends Command {
 	double driveEps = 0;
 	double driveTarget = 0;
 	double driveHeading = 0;
+	double driveDR = 0;
+	int driveDC = 0;
 	//private double driveTarget;
 	// Number of minutes wasted on 1s vs ls:
 	// 30min 10/18/2016
@@ -51,15 +53,17 @@ public class DriveEncoder extends Command {
         driveI = (double)SmartDashboard.getNumber("Drive I: ",0);
         driveD = (double)SmartDashboard.getNumber("Drive D: ",0);
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ",0);
+        driveDR = (double)SmartDashboard.getNumber("Drive DR: ",0);
+        driveDC = (int)SmartDashboard.getNumber("Drive DC: ",0);
         this.drivePIDLeft.setConstants(driveP, driveI, driveD);
         this.drivePIDLeft.setMaxOutput(drivePower);
-        this.drivePIDLeft.setDoneRange(1/(Math.PI*6));
-        this.drivePIDLeft.setMinDoneCycles(100);
+        this.drivePIDLeft.setDoneRange(driveDR);
+        this.drivePIDLeft.setMinDoneCycles(driveDC);
         this.drivePIDLeft.setErrorEpsilon(driveEps);
         this.drivePIDRight.setConstants(driveP, driveI, driveD);
         this.drivePIDRight.setMaxOutput(drivePower);
-        this.drivePIDRight.setDoneRange(1/(Math.PI*6));
-        this.drivePIDRight.setMinDoneCycles(100);
+        this.drivePIDRight.setDoneRange(driveDR);
+        this.drivePIDRight.setMinDoneCycles(driveDC);
         this.drivePIDRight.setErrorEpsilon(driveEps);
         }
 
