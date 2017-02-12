@@ -21,6 +21,7 @@ import org.usfirst.frc.team2609.robot.commands.*;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
 public class Robot extends IterativeRobot {
+	public static LedControl LedControl;
 	public static Drivetrain drivetrain;
 	public static Shifter shifter;
 	public static VulcanClaw vulcanclaw;
@@ -201,14 +202,12 @@ public class Robot extends IterativeRobot {
 		
         //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
 		drivetrain.humanDrive();
-        if(RobotMap.axisState == AxisState.SCALER){
-        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
-        }
-        else{
-        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
-        }
-        
-        
+//        if(RobotMap.axisState == AxisState.SCALER){
+//        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
+//        }
+//        else{
+//        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
+//        }
     	
         if(OI.driverStick.getPOV() == 180){
         	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
