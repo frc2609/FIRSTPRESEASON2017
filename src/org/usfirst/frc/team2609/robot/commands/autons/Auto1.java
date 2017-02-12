@@ -1,4 +1,7 @@
-package org.usfirst.frc.team2609.robot.commands;
+package org.usfirst.frc.team2609.robot.commands.autons;
+import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
+import org.usfirst.frc.team2609.robot.commands.EncReset;
+import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
