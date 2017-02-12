@@ -70,7 +70,7 @@ public class DriveEncoder extends Command {
     }
 
     protected boolean isFinished() {
-    	return drivePIDLeft.isDone();
+    	return drivePIDLeft.isDone() && drivePIDRight.isDone(); //Should wait for both PID to finish
     }
 
     protected void end() {
