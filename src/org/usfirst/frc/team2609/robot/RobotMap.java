@@ -1,5 +1,4 @@
 package org.usfirst.frc.team2609.robot;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -7,7 +6,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.ctre.CANTalon;
@@ -27,7 +25,6 @@ public class RobotMap {
     public static DoubleSolenoid vulcanDeploy;
     public static DoubleSolenoid vulcanClaw;
     
-    
 	public static CANTalon prototype;
 	public static Encoder driveEncLeft;
 	public static Encoder driveEncRight;
@@ -46,7 +43,6 @@ public class RobotMap {
     public static DigitalInput clawUpSensor;
     public static DigitalInput clawDownSensor;
     public static Joystick Dandyboy;
-    
     
     public static AxisState axisState = AxisState.BALL;
 
@@ -92,8 +88,7 @@ public class RobotMap {
         shifter = new DoubleSolenoid(0, 1, 0);
         vulcanClaw = new DoubleSolenoid(0, 7, 6);
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
-        
-		
+        	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kForward);
 		dio9 = new DigitalInput(9);
