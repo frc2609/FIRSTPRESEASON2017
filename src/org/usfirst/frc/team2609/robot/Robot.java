@@ -26,7 +26,6 @@ public class Robot extends IterativeRobot {
 	public static VulcanClaw vulcanclaw;
 	public static OI oi;
 	public static Tsunami tsunami;
-	public static LedControl LedControl;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
 	boolean gearSensorOld;
@@ -210,7 +209,7 @@ public class Robot extends IterativeRobot {
         }
         
         
-    	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
+    	
         if(OI.driverStick.getPOV() == 180){
         	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
         }
@@ -223,11 +222,6 @@ public class Robot extends IterativeRobot {
 
     	//RobotMap.ringLED.set(Relay.Value.kReverse);
         	
-//        
-
-//            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
-            
-            
 }
     
     public void testPeriodic() {
