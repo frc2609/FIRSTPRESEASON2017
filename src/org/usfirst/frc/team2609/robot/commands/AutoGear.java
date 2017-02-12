@@ -1,10 +1,6 @@
 package org.usfirst.frc.team2609.robot.commands;
-import org.usfirst.frc.team2609.robot.subsystems.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class AutoGear extends CommandGroup {
 
     public AutoGear(double endAngleToTarget) {

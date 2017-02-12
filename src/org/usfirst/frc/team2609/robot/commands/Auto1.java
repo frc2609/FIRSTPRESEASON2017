@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2609.robot.commands;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Auto1 extends CommandGroup {
