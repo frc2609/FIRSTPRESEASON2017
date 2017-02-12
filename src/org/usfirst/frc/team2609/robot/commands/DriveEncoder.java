@@ -15,6 +15,7 @@ public class DriveEncoder extends Command {
 	double driveP = 0;
 	double driveI = 0;
 	double driveD = 0;
+	double driveMax = 0;
 	double drivePower = 0;
 	double driveEps = 0;
 	double driveTarget = 0;
@@ -52,16 +53,17 @@ public class DriveEncoder extends Command {
         driveP = (double)SmartDashboard.getNumber("Drive P: ",0);
         driveI = (double)SmartDashboard.getNumber("Drive I: ",0);
         driveD = (double)SmartDashboard.getNumber("Drive D: ",0);
+        driveMax = (double)SmartDashboard.getNumber("Drive Max: ",0);
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ",0);
         driveDR = (double)SmartDashboard.getNumber("Drive DR: ",0);
         driveDC = (int)SmartDashboard.getNumber("Drive DC: ",0);
         this.drivePIDLeft.setConstants(driveP, driveI, driveD);
-        this.drivePIDLeft.setMaxOutput(drivePower);
+        this.drivePIDLeft.setMaxOutput(drivePower*driveMax);
         this.drivePIDLeft.setDoneRange(driveDR);
         this.drivePIDLeft.setMinDoneCycles(driveDC);
         this.drivePIDLeft.setErrorEpsilon(driveEps);
         this.drivePIDRight.setConstants(driveP, driveI, driveD);
-        this.drivePIDRight.setMaxOutput(drivePower);
+        this.drivePIDRight.setMaxOutput(drivePower*driveMax);
         this.drivePIDRight.setDoneRange(driveDR);
         this.drivePIDRight.setMinDoneCycles(driveDC);
         this.drivePIDRight.setErrorEpsilon(driveEps);
