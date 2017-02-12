@@ -48,7 +48,7 @@ public class RobotMap {
     public static Joystick Dandyboy;
     
     
-    public static AxisState axisState = AxisState.SCALER;
+    public static AxisState axisState = AxisState.BALL;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -95,7 +95,7 @@ public class RobotMap {
         
 		
 		ringLED = new Relay(0);
-		ringLED.setDirection(Relay.Direction.kForward);
+		ringLED.set(Relay.Value.kForward);
 		dio9 = new DigitalInput(9);
 		gearSensor = new DigitalInput(3);
 		

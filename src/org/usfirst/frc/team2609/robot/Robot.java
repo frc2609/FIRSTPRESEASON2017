@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -139,7 +140,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
     	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
 		SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
-		
+
+    	RobotMap.ringLED.set(Relay.Value.kReverse);
 //        this.logger.logAll(); // write to logs
         
 		
@@ -198,7 +200,7 @@ public class Robot extends IterativeRobot {
         	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
         }
         else{
-        	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
+        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
         }
         
         
@@ -207,11 +209,13 @@ public class Robot extends IterativeRobot {
         	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
         }
         else if (OI.driverStick.getPOV() == 0){
-        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0)/5);
+        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
         }
         else{
         	RobotMap.tsunamiMotor.set(0);
         }
+
+    	RobotMap.ringLED.set(Relay.Value.kReverse);
         	
 //        
 

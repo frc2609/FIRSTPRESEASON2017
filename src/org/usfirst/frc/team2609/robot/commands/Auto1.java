@@ -34,12 +34,35 @@ public class Auto1 extends CommandGroup {
     	addSequential(new DriveEncoder(-40.0,0.8,30.0));
     	*/
     	
-    	addSequential(new DriveEncoderLeft(5.0,0.8));
-    	addSequential(new DriveEncoderRight(5.0,0.8));
-    	addSequential(new DriveEncoderLeft(5.0,0.8));
-    	addSequential(new DriveEncoderRight(5.0,0.8));
-    	addSequential(new DriveEncoderLeft(5.0,0.8));
-    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	//right gear auton
     	
+    	addSequential(new DriveEncoder(80.0,0.5,0.0));
+    	addSequential(new EncReset());
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new GyroTurn(1,-60));
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(45.0,0.5,-60.0));
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new ClawOpen());
+    	addSequential(new EncReset());
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(-50.0,0.5,-60.0));
+
+    	//right gear auton with vision
+    	
+//    	addSequential(new DriveEncoder(80.0,0.5,0.0));
+//    	addSequential(new EncReset());
+//    	addSequential(new TimerDelay(0.2));
+//    	addSequential(new GyroTurn(1,-60));
+//    	addSequential(new TimerDelay(0.2));
+    	
+    	/*
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	addSequential(new DriveEncoderLeft(5.0,0.8));
+    	addSequential(new DriveEncoderRight(5.0,0.8));
+    	*/
     }
 }

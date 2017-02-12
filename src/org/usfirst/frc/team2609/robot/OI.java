@@ -61,7 +61,7 @@ public class OI {
 //        toggleLED.whenReleased(new toggleLED());
         toggleDeployClaw = new JoystickButton(driverStick, 10);
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
-        toggleClaw = new JoystickButton(driverStick, 9);
+        toggleClaw = new JoystickButton(driverStick, 6);
         toggleClaw.whenReleased(new toggleClaw());
         
         shift = new JoystickButton(driverStick, 2);
@@ -73,7 +73,7 @@ public class OI {
         VulcanBallMode = new JoystickButton(driverStick, 7);
     	VulcanBallMode.whenPressed(new VulcanBallMode());
     	
-        VulcanGearScore = new JoystickButton(driverStick, 6);
+        VulcanGearScore = new JoystickButton(driverStick, 9);
     	VulcanGearScore.whenPressed(new VulcanGearScore());
     	
         
