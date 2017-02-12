@@ -15,7 +15,9 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import org.usfirst.frc.team2609.robot.commands.Auto1;
+
+import org.usfirst.frc.team2609.robot.commands.AutoGear;
+import org.usfirst.frc.team2609.robot.commands.autons.*;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
 public class Robot extends IterativeRobot {
@@ -29,7 +31,7 @@ public class Robot extends IterativeRobot {
 	private Logger logger;
 	boolean gearSensorOld;
     Command autonomousCommand;
-    SendableChooser<Auto1> chooser;
+    SendableChooser chooser;
     public static NetworkTable table;
     
     //public static double centerX = 0;
@@ -78,11 +80,14 @@ public class Robot extends IterativeRobot {
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
-        chooser = new SendableChooser<Auto1>();
-        chooser.addDefault("Default Auto", new Auto1());
+        chooser = new SendableChooser();
+        chooser.addDefault("Default Auto - Dont move", new Auto1());
+        chooser.addObject("Left peg Red", new LeftPRed());
+        chooser.addObject("Right peg Red", new RightPRed());
+        chooser.addObject("Left peg Blue", new LeftPBlue());
+        chooser.addObject("Right peg Blue", new RightPBlue());
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
-        //chooser.addObject("My Auto", new MyAutoCommand());  
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
