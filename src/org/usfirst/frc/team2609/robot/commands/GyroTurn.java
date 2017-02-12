@@ -14,11 +14,13 @@ public class GyroTurn extends Command {
 	double turnEps = 0;
 	double maxPower = 0;
 	double turnHeading = 0;
+	double turnDR = 0;
+	int turnDC = 0;
 	
     public GyroTurn(double maxPower, double turnHeading) {
     	this.maxPower = maxPower;
     	this.turnHeading = turnHeading;
-        System.out.println("GYROTURN CLASS INITED");
+        //System.out.println("GYROTURN CLASS INITED");
     }
  
     protected void initialize() {
@@ -27,13 +29,16 @@ public class GyroTurn extends Command {
         turnP = (double)SmartDashboard.getNumber("turn P: ",0);
         turnI = (double)SmartDashboard.getNumber("turn I: ",0);
         turnD = (double)SmartDashboard.getNumber("turn D: ",0);
+        turnMax = (double)SmartDashboard.getNumber("turn Max: ",0);
         turnEps = (double)SmartDashboard.getNumber("turn Eps: ",0);
-        this.gyroPID.setDoneRange(1);
-        this.gyroPID.setMinDoneCycles(100);
+        turnDR = (double)SmartDashboard.getNumber("turn DR: ",0);
+        turnDC = (int)SmartDashboard.getNumber("turn DC: ",0);
+        this.gyroPID.setDoneRange(turnDR);
+        this.gyroPID.setMinDoneCycles(turnDC);
         this.gyroPID.setDesiredValue(turnHeading);
         this.gyroPID.setConstants(turnP, turnI, turnD);
         this.gyroPID.setErrorEpsilon(turnEps);
-        this.gyroPID.setMaxOutput(maxPower);
+        this.gyroPID.setMaxOutput(maxPower*turnMax);
     }
 
     protected void execute() {
