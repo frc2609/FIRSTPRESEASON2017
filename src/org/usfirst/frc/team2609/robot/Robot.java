@@ -60,15 +60,15 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn DR: ",1);
         SmartDashboard.putNumber("turn DC: ",100);
         
-    	SmartDashboard.putNumber("auton distance 1", 0);
-    	SmartDashboard.putNumber("auton distance 2", 0);
-    	SmartDashboard.putNumber("auton distance 3", 0);
-    	SmartDashboard.putNumber("auton heading 1", 0);
-    	SmartDashboard.putNumber("auton heading 2", 0);
-    	SmartDashboard.putNumber("auton heading 3", 0);
-    	SmartDashboard.putNumber("auton angle 1", 0);
-    	SmartDashboard.putNumber("auton angle 2", 0);
-    	SmartDashboard.putNumber("auton angle 3", 0);
+    	SmartDashboard.putNumber("auton distance 1: ", 80);
+    	SmartDashboard.putNumber("auton distance 2: ", 45);
+    	SmartDashboard.putNumber("auton distance 3: ", -50);
+    	SmartDashboard.putNumber("auton heading 1: ", 0);
+    	SmartDashboard.putNumber("auton heading 2: ", -60);
+    	SmartDashboard.putNumber("auton heading 3: ", -60);
+    	SmartDashboard.putNumber("auton angle 1: ", -60);
+    	SmartDashboard.putNumber("auton angle 2:", 0);
+    	SmartDashboard.putNumber("auton angle 3: ", 0);
         
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
