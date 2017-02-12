@@ -108,8 +108,10 @@ public class Robot extends IterativeRobot {
         
 		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
+//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
+//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
 		
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
@@ -136,8 +138,10 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
+//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
+//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
     	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
 		SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 
@@ -167,8 +171,10 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
     	
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
+//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
+//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
 		
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
@@ -215,7 +221,7 @@ public class Robot extends IterativeRobot {
         	RobotMap.tsunamiMotor.set(0);
         }
 
-    	RobotMap.ringLED.set(Relay.Value.kReverse);
+    	//RobotMap.ringLED.set(Relay.Value.kReverse);
         	
 //        
 
