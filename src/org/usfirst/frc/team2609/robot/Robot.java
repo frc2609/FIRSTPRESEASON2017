@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,8 +15,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
-import org.usfirst.frc.team2609.robot.commands.*;
+import org.usfirst.frc.team2609.robot.commands.Auto1;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
 public class Robot extends IterativeRobot {
@@ -31,7 +29,7 @@ public class Robot extends IterativeRobot {
 	private Logger logger;
 	boolean gearSensorOld;
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser<Auto1> chooser;
     public static NetworkTable table;
     
     //public static double centerX = 0;
@@ -50,6 +48,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
     	SmartDashboard.putNumber("Gyro Max: ", 0.2);
+//    	SmartDashboard.putNumber("Gyro Eps: ", 0.2); If needed later
 		
         SmartDashboard.putNumber("turn P: ",0.02);
         SmartDashboard.putNumber("turn I: ",0.002);
@@ -57,9 +56,15 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Max: ",1.0);
         SmartDashboard.putNumber("turn Eps: ",0.01);
         
-    	SmartDashboard.putNumber("auton distance", 0);
-    	SmartDashboard.putNumber("auton heading", 0);
-    	SmartDashboard.putNumber("auton angle", 0);
+    	SmartDashboard.putNumber("auton distance 1", 0);
+    	SmartDashboard.putNumber("auton distance 2", 0);
+    	SmartDashboard.putNumber("auton distance 3", 0);
+    	SmartDashboard.putNumber("auton heading 1", 0);
+    	SmartDashboard.putNumber("auton heading 2", 0);
+    	SmartDashboard.putNumber("auton heading 3", 0);
+    	SmartDashboard.putNumber("auton angle 1", 0);
+    	SmartDashboard.putNumber("auton angle 2", 0);
+    	SmartDashboard.putNumber("auton angle 3", 0);
         
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
@@ -79,13 +84,11 @@ public class Robot extends IterativeRobot {
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
-
     }
 	
     public void disabledInit(){
     }
 	
-	@SuppressWarnings("deprecation")
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		this.logger.close();
@@ -167,7 +170,6 @@ public class Robot extends IterativeRobot {
     	
     }
 
-    @SuppressWarnings("deprecation")
 	public void teleopPeriodic() {
     	
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
