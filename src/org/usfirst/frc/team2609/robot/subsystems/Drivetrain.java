@@ -53,8 +53,7 @@ public class Drivetrain extends Subsystem {
         leftMtr = leftMtr + (-((leftMtr - 1.0) * turningGain)*(rightMtr));
     } else if (leftMtr < -1.0) {
     	leftMtr = leftMtr + (-((leftMtr + 1.0) * turningGain)*(rightMtr));
-    }else { leftMtr = leftMtr; 
-    }	
+    }
 	
 	if (rightMtr > 1.0) {
 		rightMtr = rightMtr + (-((rightMtr - 1.0) * turningGain)*(leftMtr));
@@ -67,11 +66,8 @@ public class Drivetrain extends Subsystem {
 	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     RobotMap.driveTalonLeft1.set(leftMtr);
     RobotMap.driveTalonRight1.set(rightMtr);
-
     }
-    
-    
-    
+ 
     public void humanDriveII(){
 		double deadZone = 0.15;
 		double X = -RobotMap.Dandyboy.getRawAxis(0);
@@ -149,24 +145,24 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
-
     }
+    
     public void driveLeft(double encLeft, SimPID encPIDLeft){
     	drivePIDOutputLeft = encPIDLeft.calcPID(encLeft);
     	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
     	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft);
-
     }
+    
     public void driveRight(double encRight, SimPID encPIDRight){
     	drivePIDOutputLeft = encPIDRight.calcPID(encRight);
     	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.set(drivePIDOutputRight);
-
     }
+    
     public void resetDriveEncoders(){
     	RobotMap.driveTalonLeft1.setEncPosition(0);
     	RobotMap.driveTalonRight1.setEncPosition(0);
@@ -196,6 +192,14 @@ public class Drivetrain extends Subsystem {
     
     public void gyroYawZero(){
     	RobotMap.ahrs.zeroYaw();
+    }
+    
+    public double encoderInchLeft(){
+    	return (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition();
+    }
+    
+    public double encoderInchRight(){
+    	return (Math.PI*6)*RobotMap.driveTalonRight1.getPosition();
     }
     
     public void initDefaultCommand() {
