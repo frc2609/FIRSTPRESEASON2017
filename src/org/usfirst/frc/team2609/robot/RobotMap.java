@@ -90,7 +90,7 @@ public class RobotMap {
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
         	
 		ringLED = new Relay(0);
-		ringLED.set(Relay.Value.kForward);
+		ringLED.set(Relay.Value.kOff);
 		dio9 = new DigitalInput(9);
 		gearSensor = new DigitalInput(3);
 		

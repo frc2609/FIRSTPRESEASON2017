@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class TsunamiControl extends Command {
 	TsunamiDirection direction;
     public TsunamiControl(TsunamiDirection direction) {
-    	requires(Robot.tsunami);
+    	//requires(Robot.tsunami);
     	this.direction = direction;
     }
 

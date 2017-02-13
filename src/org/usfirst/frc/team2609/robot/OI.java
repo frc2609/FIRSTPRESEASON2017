@@ -66,10 +66,10 @@ public class OI {
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
         
         TsunamiUp = new JoystickButton(opStick, 1);
-        TsunamiUp.whenPressed(new TsunamiControl(TsunamiDirection.UP));
+        TsunamiUp.whileHeld(new TsunamiControl(TsunamiDirection.UP));
         
         TsunamiDown = new JoystickButton(opStick, 2);
-        TsunamiDown.whenPressed(new TsunamiControl(TsunamiDirection.DOWN));
+        TsunamiDown.whileHeld(new TsunamiControl(TsunamiDirection.DOWN));
 
     }
     public Joystick getdriverStick() {

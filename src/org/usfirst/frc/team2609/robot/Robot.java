@@ -82,6 +82,7 @@ public class Robot extends IterativeRobot {
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
+		LedControl = new LedControl();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
         chooser.addObject("Straight Peg", new StraightPeg());
