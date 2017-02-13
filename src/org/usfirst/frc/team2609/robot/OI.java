@@ -28,17 +28,10 @@ public class OI {
     public JoystickButton VulcanGearScore;
     public JoystickButton VulcanGearMode;
     public JoystickButton VulcanBallMode;
-    public JoystickButton TsunamiUp;
+
     public static Joystick opStick;
-    public static JoystickButton opButton1;
-    public static JoystickButton opButton2;
-    public static JoystickButton opButton3;
-    public static JoystickButton opButton4;
-    public static JoystickButton opButton5;
-    public static JoystickButton opButton6;
-    public static JoystickButton opButton7;
-    public static JoystickButton opButton9;
-    public static JoystickButton opButton10;
+    public JoystickButton TsunamiUp;
+    public JoystickButton TsunamiDown;
     
     public OI() {
     	driverStick = new Joystick(0);
@@ -71,6 +64,12 @@ public class OI {
         
         toggleDeployClaw = new JoystickButton(driverStick, 10);
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
+        
+        TsunamiUp = new JoystickButton(opStick, 1);
+        TsunamiUp.whenPressed(new TsunamiControl(TsunamiDirection.UP));
+        
+        TsunamiDown = new JoystickButton(opStick, 2);
+        TsunamiDown.whenPressed(new TsunamiControl(TsunamiDirection.DOWN));
 
     }
     public Joystick getdriverStick() {
