@@ -36,8 +36,10 @@ public class TsunamiControl extends Command {
     }
 
     protected void end() {
+    	RobotMap.tsunamiMotor.set(0);
     }
 
     protected void interrupted() {
+    	RobotMap.tsunamiMotor.set(0);
     }
 }
