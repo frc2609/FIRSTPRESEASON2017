@@ -42,6 +42,7 @@ public class OI {
     
     public OI() {
     	driverStick = new Joystick(0);
+    	opStick = new Joystick(1);
         
         button1 = new JoystickButton(driverStick, 1);
         button1.whenPressed(new GearSwerve());
@@ -70,7 +71,7 @@ public class OI {
         
         toggleDeployClaw = new JoystickButton(driverStick, 10);
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
-    
+
     }
     public Joystick getdriverStick() {
         return driverStick;
