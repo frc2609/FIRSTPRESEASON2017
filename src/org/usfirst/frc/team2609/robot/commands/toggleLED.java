@@ -9,10 +9,10 @@ public class toggleLED extends Command {
     }
  
     protected void initialize() {
+    	Robot.LedControl.toggleLED();
     }
 
     protected void execute() {
-    	Robot.drivetrain.toggleLED();
     }
 
     protected boolean isFinished() {
