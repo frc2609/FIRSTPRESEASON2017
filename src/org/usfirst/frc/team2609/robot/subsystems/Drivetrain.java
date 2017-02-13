@@ -19,23 +19,6 @@ public class Drivetrain extends Subsystem {
 	private static double turningGain = 0;  // 0 is no change, larger has greater effect
 	private static double deadZone = 0.15; //Deadband for the controller
 	double[] defaultval = new double[0];
-    
-	public void toggleLED(){
-    	if (RobotMap.ringLED.get() == Relay.Value.kOff){
-    		RobotMap.ringLED.set(Relay.Value.kOn);
-    	}
-    	else{
-    		RobotMap.ringLED.set(Relay.Value.kOff);
-    	}
-	}
-	public void trackLED(boolean state){
-    	if (state){
-    		RobotMap.ringLED.set(Relay.Value.kOn);
-    	}
-    	else{
-    		RobotMap.ringLED.set(Relay.Value.kOff);
-    	}
-	}
 	
     public void humanDrive(){
     throttle = -RobotMap.Dandyboy.getRawAxis(1); 
