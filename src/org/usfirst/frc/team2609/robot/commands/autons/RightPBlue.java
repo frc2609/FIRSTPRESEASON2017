@@ -29,7 +29,15 @@ public class RightPBlue extends CommandGroup {
 	}
 	
     public RightPBlue() {
-    	
+		autonDistance1 = (double)SmartDashboard.getNumber("auton distance 1: ",0);
+		autonDistance2 = (double)SmartDashboard.getNumber("auton distance 2: ",0);
+		autonDistance3 = (double)SmartDashboard.getNumber("auton distance 3: ",0);
+		autonHeading1 = (double)SmartDashboard.getNumber("auton heading 1: ",0);
+		autonHeading2 = (double)SmartDashboard.getNumber("auton heading 2: ",0);
+		autonHeading3 = (double)SmartDashboard.getNumber("auton heading 3: ",0);
+		autonAngle1 = (double)SmartDashboard.getNumber("auton angle 1: ",0);
+		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
+		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
     	//right gear auton with dashboard variables	
     	addSequential(new DriveEncoder(autonDistance1,0.5,autonHeading1));
     	addSequential(new EncReset());

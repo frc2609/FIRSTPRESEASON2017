@@ -2,6 +2,8 @@ package org.usfirst.frc.team2609.robot.commands.autons;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
 import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
+import org.usfirst.frc.team2609.robot.commands.RingLED;
+import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +19,10 @@ public class Auto1 extends CommandGroup {
 	double autonAngle2 = 0;
 	double autonAngle3 = 0;
 	protected void initialize(){
+
+	}
+	
+    public Auto1() {
 		autonDistance1 = (double)SmartDashboard.getNumber("auton distance 1: ",0);
 		autonDistance2 = (double)SmartDashboard.getNumber("auton distance 2: ",0);
 		autonDistance3 = (double)SmartDashboard.getNumber("auton distance 3: ",0);
@@ -26,9 +32,24 @@ public class Auto1 extends CommandGroup {
 		autonAngle1 = (double)SmartDashboard.getNumber("auton angle 1: ",0);
 		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
 		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
-	}
-	
-    public Auto1() {
+    	
+    	addSequential(new RingLED(true));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(false));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(true));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(false));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(true));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(false));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(true));
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new RingLED(false));
+    	addSequential(new TimerDelay(0.5));
+    	
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.exampleSubsystem);
     	//addSequential(new CameraPointTurn(0.3));
@@ -66,18 +87,18 @@ public class Auto1 extends CommandGroup {
     	addSequential(new DriveEncoder(-40.0,0.8,30.0));
     	*/
     	
-    	//right gear auton with dashboard variables	
-    	addSequential(new DriveEncoder(autonDistance1,0.5,autonHeading1));
-    	addSequential(new EncReset());
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new GyroTurn(1,autonAngle1));
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance2,0.5,autonHeading2));
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new ClawOpen());
-    	addSequential(new EncReset());
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance3,0.5,autonHeading3)); 	
+//    	//right gear auton with dashboard variables	
+//    	addSequential(new DriveEncoder(80,1,0.0));
+//    	addSequential(new EncReset());
+//    	//addSequential(new TimerDelay(0.2));
+//    	addSequential(new GyroTurn(1,-60));
+//    	//addSequential(new TimerDelay(0.2));
+//    	addSequential(new DriveEncoder(45,1,-60));
+//    	//addSequential(new TimerDelay(0.2));
+//    	addSequential(new ClawOpen());
+//    	addSequential(new EncReset());
+//    	//addSequential(new TimerDelay(0.2));
+//    	addSequential(new DriveEncoder(-50,1,-60)); 	
 //    	addSequential(new DriveEncoder(80.0,0.5,0.0));
 //    	addSequential(new EncReset());
 //    	addSequential(new TimerDelay(0.2));
