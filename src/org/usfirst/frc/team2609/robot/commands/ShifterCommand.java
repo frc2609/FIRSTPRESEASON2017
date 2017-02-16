@@ -9,13 +9,15 @@ public class ShifterCommand extends Command {
 
     protected void initialize() {
     	Robot.shifter.toggle();
+    	
     }
 
     protected void execute() {
+    	//Robot.LedControl.setLed(255,235,59);
     }
 
     protected boolean isFinished() {
-        return true;
+        return true;//timeSinceInitialized()>1;
     }
 
     protected void end() {

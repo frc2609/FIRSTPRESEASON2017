@@ -43,10 +43,12 @@ public class OI {
         shift = new JoystickButton(driverStick, 2);
         shift.whenReleased(new ShifterCommand());
         
-//        xxx = new JoystickButton(driverStick, 3);
+        toggleLED = new JoystickButton(driverStick, 3);
+        toggleLED.whileHeld(new SetLED(63,81,181));
 //        
         toggleLED = new JoystickButton(driverStick, 4);
-		toggleLED.whenReleased(new toggleLED());
+        toggleLED.whileHeld(new SetLED(255,152,0));
+		//toggleLED.whenReleased(new toggleLED());
 //        
 //        xxx = new JoystickButton(driverStick, 5);
         

@@ -196,15 +196,21 @@ public class Robot extends IterativeRobot {
 				new VulcanGearGrab().start();
 			}
 		}
+		if (RobotMap.gearSensor.get()){
+			LedControl.setLed(33,150,243);
+		}
+		else{
+			LedControl.setLed(244,67,54);
+		}
 		gearSensorOld = RobotMap.gearSensor.get();
-		Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
+		/*Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
 		if (readyVulcanClaw == 1) {
 			new SetLED(255, 200, 0).start(); // yellow For the peanut gallery
 		}
 		else{
 //			new SetLED(156,39,176).start();//set led's to red otherwise yes this is good
-			new SetLED(0,255,0).start();//set led's to red otherwise yes this is good
-		}
+			new SetLED(255,0,0).start();//set led's to red otherwise yes this is good
+		}*/
 
 		drivetrain.humanDrive();
 		
