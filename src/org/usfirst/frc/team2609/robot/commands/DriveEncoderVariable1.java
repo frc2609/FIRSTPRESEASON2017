@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2609.robot.*;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
-public class DriveEncoder extends Command {
+public class DriveEncoderVariable1 extends Command {
 	SimPID drivePIDLeft;
 	SimPID drivePIDRight;
 	SimPID steeringPID;
@@ -18,8 +18,8 @@ public class DriveEncoder extends Command {
 	double driveMax = 0;
 	double drivePower = 0;
 	double driveEps = 0;
-	double driveTarget = 0;
-	double driveHeading = 0;
+	double autonDistance1 = 0;
+	double autonHeading1 = 0;
 	double driveDR = 0;
 	int driveDC = 0;
 	//private double driveTarget;
@@ -27,23 +27,23 @@ public class DriveEncoder extends Command {
 	// 30min 10/18/2016
 	// 30min total
 	
-	public DriveEncoder(double driveTarget, double drivePower, double driveHeading) {
+	public DriveEncoderVariable1(double drivePower) {
         requires(Robot.drivetrain);
-        this.driveTarget = driveTarget;
-        this.driveHeading = driveHeading;
         this.drivePower = drivePower;
     }
 
     protected void initialize(){
+		autonDistance1 = (double)SmartDashboard.getNumber("auton distance 1: ",0);
+		autonHeading1 = (double)SmartDashboard.getNumber("auton heading 1: ",0);
         this.drivePIDLeft = new SimPID();
         this.drivePIDRight = new SimPID();
         this.steeringPID = new SimPID();
     	steeringPID.resetPreviousVal();
     	drivePIDLeft.resetPreviousVal();
     	drivePIDRight.resetPreviousVal();
-        this.steeringPID.setDesiredValue(driveHeading);
-        this.drivePIDLeft.setDesiredValue(driveTarget);
-        this.drivePIDRight.setDesiredValue(driveTarget);
+        this.steeringPID.setDesiredValue(autonHeading1);
+        this.drivePIDLeft.setDesiredValue(autonDistance1);
+        this.drivePIDRight.setDesiredValue(autonDistance1);
         gyroP = (double)SmartDashboard.getNumber("Gyro P: ",0);
         gyroI = (double)SmartDashboard.getNumber("Gyro I: ",0);
         gyroD = (double)SmartDashboard.getNumber("Gyro D: ",0);
@@ -57,8 +57,6 @@ public class DriveEncoder extends Command {
 ;
 ;
         driveDC = (int)SmartDashboard.getNumber("Drive DC: ",0);
-        driveDR = SmartDashboard.getNumber("Drive DR: ",0);
-        driveEps = SmartDashboard.getNumber("Drive Eps: ",0);
         this.drivePIDLeft.setConstants(driveP, driveI, driveD);
         this.drivePIDLeft.setMaxOutput(drivePower*driveMax);
         this.drivePIDLeft.setDoneRange(driveDR);

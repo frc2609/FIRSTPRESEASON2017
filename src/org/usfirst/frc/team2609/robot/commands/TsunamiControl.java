@@ -24,7 +24,7 @@ public class TsunamiControl extends Command {
 //    		RobotMap.tsunamiMotor.set(0);
     	}
     	else if(direction == TsunamiDirection.UP){
-    		Tsunami.pullUp(1);
+    		//Tsunami.pullUp(1);	Don't drive this way
 //    		RobotMap.tsunamiMotor.set(1);
     	}
     	else if(direction == TsunamiDirection.DOWN){

@@ -42,13 +42,13 @@ public class Robot extends IterativeRobot {
 		RobotMap.init();// put this here when imports don't work / robots don't quit
 		oi = new OI();
 
-		SmartDashboard.putNumber("Drive P: ", 0.2);
-    	SmartDashboard.putNumber("Drive I: ", 0.002);
+		SmartDashboard.putNumber("Drive P: ", 0.02); //low gear 0.02, 0.0005 for 30" to 100"
+    	SmartDashboard.putNumber("Drive I: ", 0.0005);
     	SmartDashboard.putNumber("Drive D: ", 0.0);
-    	SmartDashboard.putNumber("Drive Max: ", 0.5);
-    	SmartDashboard.putNumber("Drive Eps: ", 0.001);
-    	SmartDashboard.putNumber("Drive DR: ", 0.053053);
-    	SmartDashboard.putNumber("Drive DC: ", 100);
+    	SmartDashboard.putNumber("Drive Max: ", 0.8);
+    	SmartDashboard.putNumber("Drive Eps: ", 1.0);
+    	SmartDashboard.putNumber("Drive DR: ", 1.0);
+    	SmartDashboard.putNumber("Drive DC: ", 20);
     	
 		SmartDashboard.putNumber("Gyro P: ", 0.05);
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
@@ -60,13 +60,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn I: ",0.002);
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",1.0);
-        SmartDashboard.putNumber("turn Eps: ",0.01);
-        SmartDashboard.putNumber("turn DR: ",1);
-        SmartDashboard.putNumber("turn DC: ",100);
+        SmartDashboard.putNumber("turn Eps: ",1.0);
+        SmartDashboard.putNumber("turn DR: ",1.0);
+        SmartDashboard.putNumber("turn DC: ",20);
         
     	SmartDashboard.putNumber("auton distance 1: ", 80);
     	SmartDashboard.putNumber("auton distance 2: ", 45);
-    	SmartDashboard.putNumber("auton distance 3: ", -50);
+    	SmartDashboard.putNumber("auton distance 3: ", -30);
     	SmartDashboard.putNumber("auton heading 1: ", 0);
     	SmartDashboard.putNumber("auton heading 2: ", -60);
     	SmartDashboard.putNumber("auton heading 3: ", -60);
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
 
-    	SmartDashboard.putNumber("climber speed", 0);
+    	SmartDashboard.putNumber("climber speed", 1);
 
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
@@ -124,10 +124,8 @@ public class Robot extends IterativeRobot {
         
 		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
-    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
-//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
 		
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
@@ -154,12 +152,10 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
-    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
-//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
-    	SmartDashboard.putNumber("driveTalonLeft1.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
-		SmartDashboard.putNumber("driveTalonRight1.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 
     	//RobotMap.ringLED.set(Relay.Value.kReverse);
 //        this.logger.logAll(); // write to logs
@@ -186,10 +182,10 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", drivetrain.encoderInchLeft());
-    	SmartDashboard.putNumber("driveEncRight.getDistance()", drivetrain.encoderInchRight());
-//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition());
-//		SmartDashboard.putNumber("driveEncRight.getDistance()", (Math.PI*6)*RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
@@ -206,7 +202,8 @@ public class Robot extends IterativeRobot {
 			new SetLED(255, 200, 0).start(); // yellow For the peanut gallery
 		}
 		else{
-			new SetLED(156,39,176).start();//set led's to red otherwise yes this is good
+//			new SetLED(156,39,176).start();//set led's to red otherwise yes this is good
+			new SetLED(0,255,0).start();//set led's to red otherwise yes this is good
 		}
 
 		drivetrain.humanDrive();

@@ -14,14 +14,14 @@ public class GearPath {
 			fi = 90-(angleToTarget+gyro);
 		}
 		else if (angleToTarget<0){
-			fi = -(90+(angleToTarget+gyro));
+			fi = 90+(angleToTarget+gyro);
 		}
 		else{
 			if (gyro>0){
 				fi = 90-(angleToTarget+gyro);
 			}
 			else if (gyro<0){
-				fi = -(90+(angleToTarget+gyro));
+				fi = 90+(angleToTarget+gyro);
 			}
 			else{
 				fi = 0;

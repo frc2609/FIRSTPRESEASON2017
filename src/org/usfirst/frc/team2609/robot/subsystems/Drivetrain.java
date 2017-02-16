@@ -177,13 +177,6 @@ public class Drivetrain extends Subsystem {
     	RobotMap.ahrs.zeroYaw();
     }
     
-    public double encoderInchLeft(){
-    	return (Math.PI*6)*RobotMap.driveTalonLeft1.getPosition();
-    }
-    
-    public double encoderInchRight(){
-    	return (Math.PI*6)*RobotMap.driveTalonRight1.getPosition();
-    }
     
     public void initDefaultCommand() {
     }

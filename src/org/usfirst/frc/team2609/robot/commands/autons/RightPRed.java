@@ -2,6 +2,7 @@ package org.usfirst.frc.team2609.robot.commands.autons;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
 import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
+import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,15 +40,18 @@ public class RightPRed extends CommandGroup {
 		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
 		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
     	//left gear auton with dashboard variables
-    	addSequential(new DriveEncoder(autonDistance1,0.5,autonHeading1));
     	addSequential(new EncReset());
-    	//addSequential(new TimerDelay(0.2));
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(autonDistance1,1.0,autonHeading1));
     	addSequential(new GyroTurn(1,autonAngle1));
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance2,0.5,autonHeading2));
-    	//addSequential(new TimerDelay(0.2));
-    	addSequential(new ClawOpen());
-    	addSequential(new DriveEncoder(autonDistance3,0.5,autonHeading3)); 	
+    	addSequential(new EncReset());
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(autonDistance2,1.0,autonHeading2));
+    	addSequential(new TimerDelay(0.2));
+    	//addSequential(new ClawOpen());
+    	addSequential(new EncReset());
+    	addSequential(new TimerDelay(0.2));
+    	addSequential(new DriveEncoder(autonDistance3,1.0,autonHeading3)); 	
     	
     }
 }

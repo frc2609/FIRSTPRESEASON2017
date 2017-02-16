@@ -70,12 +70,12 @@ public class RobotMap {
 		driveTalonLeft2.set(1); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonRight1.configEncoderCodesPerRev(960);
+		driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
 		driveTalonRight1.setInverted(false);
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-		driveTalonLeft1.configEncoderCodesPerRev(960);
+		driveTalonLeft1.configEncoderCodesPerRev(51);
 		driveTalonLeft1.setInverted(true);
 		driveTalonLeft1.reverseSensor(true);
 		driveTalonLeft1.reverseOutput(false);

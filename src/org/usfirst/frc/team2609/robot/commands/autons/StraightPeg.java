@@ -39,11 +39,13 @@ public class StraightPeg extends CommandGroup {
 		autonAngle1 = (double)SmartDashboard.getNumber("auton angle 1: ",0);
 		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
 		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
-    	addSequential(new DriveEncoder(-6.8, 0.3, 0));
+    	/*
+		addSequential(new DriveEncoder(-6.8, 0.3, 0));
     	addSequential(new ClawOpen());
     	addSequential(new TimerDelay(0.2));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(3, 0.3, 0));
-
+    	*/
+		addSequential(new DriveEncoder(80, 1, autonHeading1));
     }
 }

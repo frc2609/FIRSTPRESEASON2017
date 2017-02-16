@@ -26,14 +26,14 @@ public class DriveEncoderRight extends Command {
     protected void initialize(){
         this.drivePIDRight = new SimPID();
         drivePIDRight.resetPreviousVal();
-        this.drivePIDRight.setDesiredValue(driveTarget/(Math.PI*6));
+        this.drivePIDRight.setDesiredValue(driveTarget);
         driveP = (double)SmartDashboard.getNumber("Drive P: ",0);
         driveI = (double)SmartDashboard.getNumber("Drive I: ",0);
         driveD = (double)SmartDashboard.getNumber("Drive D: ",0);
         driveEps = (double)SmartDashboard.getNumber("Drive Eps: ",0);
         this.drivePIDRight.setConstants(driveP, driveI, driveD);
         this.drivePIDRight.setMaxOutput(drivePower);
-        this.drivePIDRight.setDoneRange(1/(Math.PI*6));
+        this.drivePIDRight.setDoneRange(1);
         this.drivePIDRight.setMinDoneCycles(100);
         this.drivePIDRight.setErrorEpsilon(driveEps);
         }
