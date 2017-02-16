@@ -60,8 +60,8 @@ public class OI {
 //        toggleClaw = new JoystickButton(driverStick, 9);
 //        toggleClaw.whenReleased(new toggleClaw());
 //        
-//        shift = new JoystickButton(driverStick, 2);
-//        shift.whenReleased(new ShifterCommand());
+        shift = new JoystickButton(opStick, 4);
+        shift.whenReleased(new ShifterCommand());
 //        
 //        VulcanGearMode = new JoystickButton(driverStick, 8);
 //    	VulcanGearMode.whenPressed(new VulcanGearMode());
@@ -78,6 +78,8 @@ public class OI {
 		opButton2.whenPressed(new LaunchMotionProfile());
 		opButton3 = new JoystickButton(opStick, 3);
 		opButton3.whenPressed(new MotionProfileEStop());
+		opButton5 = new JoystickButton(opStick, 5);
+		opButton5.whenPressed(new GyroPathFollower());
     	
         
     }

@@ -63,7 +63,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("FPGATime, encLeft, encRight, yaw, angle");
+	            this.writer.write("FPGATime, encLeft, encRight,leftVel, rightVel, yaw, angle");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -91,6 +91,8 @@ public class Logger {
 //	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonLeft1.getPosition()));
 	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getPosition()));
+	            this.writer.write(String.format(",%d", RobotMap.driveTalonLeft1.getEncVelocity()));
+	            this.writer.write(String.format(",%d", RobotMap.driveTalonRight1.getEncVelocity()));
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));

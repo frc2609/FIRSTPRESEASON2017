@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 1); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kForward);
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
     }
 	
     public void disabledInit(){
@@ -142,6 +142,10 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.resetDriveEncoders();
         autonomousCommand = (Command) chooser.getSelected();
         this.logger.openFile();
+
+        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+		shifter.high();
         if (autonomousCommand != null) autonomousCommand.start();
         
     }
@@ -153,6 +157,8 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 		//SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
 		//SmartDashboard.putNumber("driveEncRight.getRate()", RobotMap.driveEncRight.getRate());
+		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
@@ -170,6 +176,9 @@ public class Robot extends IterativeRobot {
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
+        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
+        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+		shifter.high();
 
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
@@ -192,6 +201,10 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
 		
+
+		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
+    	
 		Scheduler.getInstance().run();
 		if (!gearSensorOld){
 			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
@@ -208,9 +221,9 @@ public class Robot extends IterativeRobot {
 			RobotMap.frameLights.showRGB(156,39,176);//set led's to red otherwise yes this is good
 		}
         Joystick driveStick = new Joystick(0);
-		double deadZone = 0.15;
+		double deadZone = 0.1;
 		double X = -driveStick.getRawAxis(0);
-        double Y = driveStick.getRawAxis(1);
+        double Y = -driveStick.getRawAxis(1);
         if ((Math.abs(-driveStick.getRawAxis(0))<deadZone) && (Math.abs(-driveStick.getRawAxis(1))<deadZone)){
         	X = 0;
         	Y = 0;
@@ -222,26 +235,30 @@ public class Robot extends IterativeRobot {
         double rightOutput;
         if (Y > 0) {
             if (X > 0.0) {
-                leftOutput = Math.pow(Y, 1) - Math.pow(X, 1);
-                rightOutput = Math.max(Math.pow(Y, 1), Math.pow(X, 1));
+                leftOutput = Y - X;
+                rightOutput = Math.max(Y, X);
+//                System.out.println("X+ Y+");
             } else {
-                leftOutput = Math.max(Math.pow(Y, 1), -(Math.pow(X, 1)));
-                rightOutput = Math.pow(Y, 1) + (Math.pow(X, 1));
+
+//                System.out.println("X- Y+");
+                leftOutput = Math.max(Y, -X);
+                rightOutput = Y + X;
             }
         } else{
             if (X > 0.0) {
-                leftOutput = -Math.max(-(Math.pow(Y, 1)), Math.pow(X, 1));
-                rightOutput = (Math.pow(Y, 1)) + Math.pow(X, 1);
+//                System.out.println("X+ Y-");
+                leftOutput = -Math.max(-Y, X);
+                rightOutput = Y + X;
             } else {
-            	//this is also vvv imborktant
-                leftOutput = (Math.pow(Y, 1)) - (Math.pow(X, 1));
-                rightOutput = -Math.max(-(Math.pow(Y, 1)), -(Math.pow(X, 1)));
+                leftOutput = Y - X;
+                rightOutput = -Math.max(-Y, -X);
+//                System.out.println("X- Y-");
             }
             	
 
         }
         if(RobotMap.axisState == AxisState.SCALER){
-        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
+//        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
         }
         else{
         	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
@@ -260,21 +277,21 @@ public class Robot extends IterativeRobot {
 //        }
         
         
-        RobotMap._MotionPLeft.control();
-        RobotMap._MotionPRight.control();
+//        RobotMap._MotionPLeft.control();
+//        RobotMap._MotionPRight.control();
 //        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
         if(!RobotMap.drivetrainMPActive){
-            RobotMap.driveTalonLeft1.set(leftOutput);
-            RobotMap.driveTalonRight1.set(rightOutput);
+            RobotMap.driveTalonLeft1.set(-OI.opStick.getRawAxis(1));
+            RobotMap.driveTalonRight1.set(-OI.opStick.getRawAxis(3));
         	RobotMap._MotionPLeft.reset();
         	RobotMap._MotionPRight.reset();
         }
         else{
         	this.logger.logAll();
-        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonRight1.getPosition());
+        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonLeft1.getPosition());
         	SmartDashboard.putNumber("MPRight", RobotMap.driveTalonRight1.getPosition());
         	
         	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.MotionProfile);

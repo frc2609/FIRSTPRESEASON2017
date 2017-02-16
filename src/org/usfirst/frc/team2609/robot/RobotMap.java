@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import jaci.pathfinder.modifiers.TankModifier;
 
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 
@@ -52,6 +53,8 @@ public class RobotMap {
     public static double[][] leftPath;
     public static double[][] rightPath;
     
+    public static TankModifier gearPath; 
+    
     public static MotionProfileSubsystem _MotionPLeft;
     public static MotionProfileSubsystem _MotionPRight;
     public static boolean MPLeftDisabled, MPRightDisabled;
@@ -68,26 +71,28 @@ public class RobotMap {
         }
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
-		driveTalonRight1 = new CANTalon(1);
-		driveTalonRight2 = new CANTalon(2);
-		driveTalonLeft1 = new CANTalon(3);
-		driveTalonLeft2 = new CANTalon(4);
+		driveTalonRight1 = new CANTalon(3);
+		driveTalonRight2 = new CANTalon(4);
+		driveTalonLeft1 = new CANTalon(1);
+		driveTalonLeft2 = new CANTalon(2);
 		ballIntake = new CANTalon(5);
 		tsunamiMotor = new CANTalon(6);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		driveTalonRight2.set(1); // Follows talon 1 talon is the second best talon
-		driveTalonLeft2.set(3); // Follows talon 3 talon 3 is not the best talon
+		driveTalonRight2.set(3); // Follows talon 1 talon is the second best talon
+		driveTalonLeft2.set(1); // Follows talon 3 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(611);
 		driveTalonRight1.reverseSensor(false);
+		driveTalonRight1.reverseOutput(false);
 		driveTalonRight1.setInverted(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonLeft1.configEncoderCodesPerRev(611);
 		driveTalonLeft1.reverseSensor(false);
 		driveTalonLeft1.reverseOutput(false);
+		driveTalonLeft1.setInverted(true);
 		
 		
 		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);

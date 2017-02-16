@@ -267,16 +267,19 @@ public class MotionProfileSubsystem {
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
 			/* for each point, fill our structure and pass it to API */
+
 			if(_side == DriveSide.LEFT){
-				point.position = profile[i][0];
-				point.velocity = profile[i][1];
-				point.timeDurMs = (int) profile[i][2];
-			}
-			else if (_side == DriveSide.RIGHT){
 				point.position = -profile[i][0];
-				point.velocity = -profile[i][1];
+				point.velocity = -profile[i][1]*60;
 				point.timeDurMs = (int) profile[i][2];
 			}
+			else if(_side == DriveSide.RIGHT)
+			{
+				point.position = profile[i][0];
+				point.velocity = profile[i][1]*60;
+				point.timeDurMs = (int) profile[i][2];	
+			}
+			System.out.println(point.timeDurMs);
 			point.profileSlotSelect = 0; /* which set of gains would you like to use? */
 			point.velocityOnly = false; /* set true to not do any position
 										 * servo, just velocity feedforward
