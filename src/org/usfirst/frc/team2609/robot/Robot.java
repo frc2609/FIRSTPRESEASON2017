@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
 		else{
 			//RobotMap.frameLights.showRGB(156,39,176);//set led's to purple otherwise yes this is good
 		}
-        
+        table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
         
 		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
@@ -157,6 +157,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
     	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
 
+        table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
     	//RobotMap.ringLED.set(Relay.Value.kReverse);
 //        this.logger.logAll(); // write to logs
         
@@ -191,6 +192,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
+        table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
 		if (!gearSensorOld){
 			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
 				new VulcanGearGrab().start();

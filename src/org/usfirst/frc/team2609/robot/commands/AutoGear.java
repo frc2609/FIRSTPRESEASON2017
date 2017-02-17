@@ -1,4 +1,7 @@
 package org.usfirst.frc.team2609.robot.commands;
+import org.usfirst.frc.team2609.robot.Robot;
+import org.usfirst.frc.team2609.robot.subsystems.GearPath;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoGear extends CommandGroup {
@@ -22,10 +25,10 @@ public class AutoGear extends CommandGroup {
         // arm.
 
     	//addSequential(new RingLED(true));
-    	addSequential(new GearSwerve()); // calculate gearPath
-    	//addSequential(new GyroTurn(0.4, GearPath.angleToDrive));
-    	//addSequential(new DriveEncoder((GearPath.distanceToDrive)*33.33, 0.4, 0)); // TODO: convert feet to enc counts
-    	//addSequential(new GyroTurn(0.4, endAngleToTarget)); // end angle to target!
-    	//addSequential(new DriveEncoder(400, 0.4, 0));
+    	//addSequential(new GearSwerve()); // calculate gearPath
+    	addSequential(new GyroTurn(1.0, Robot.table.getNumber("angleToDrive", 0)));
+    	addSequential(new DriveEncoder(Robot.table.getNumber("distanceToDrive",0), 1.0, Robot.table.getNumber("angleToDrive",0))); // TODO: convert feet to enc counts
+    	addSequential(new GyroTurn(1.0, 0)); // end angle to target!
+    	addSequential(new DriveEncoder(12, 1.0, 0));
     }
 }

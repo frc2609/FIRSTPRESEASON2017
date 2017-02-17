@@ -28,6 +28,7 @@ public class OI {
     public JoystickButton VulcanGearScore;
     public JoystickButton VulcanGearMode;
     public JoystickButton VulcanBallMode;
+    public JoystickButton autoGear;
 
     public static Joystick opStick;
     public JoystickButton TsunamiUp;
@@ -44,10 +45,10 @@ public class OI {
         shift.whenReleased(new ShifterCommand());
         
         toggleLED = new JoystickButton(driverStick, 3);
-        toggleLED.whileHeld(new SetLED(63,81,181));
+        toggleLED.whenPressed(new toggleLED());
 //        
-        toggleLED = new JoystickButton(driverStick, 4);
-        toggleLED.whileHeld(new SetLED(255,152,0));
+        autoGear = new JoystickButton(driverStick, 4);
+        //autoGear.whenPressed(new AutoGear(0));
 		//toggleLED.whenReleased(new toggleLED());
 //        
 //        xxx = new JoystickButton(driverStick, 5);
