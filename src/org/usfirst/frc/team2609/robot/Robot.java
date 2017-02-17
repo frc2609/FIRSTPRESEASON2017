@@ -300,8 +300,8 @@ public class Robot extends IterativeRobot {
             CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
             RobotMap.driveTalonLeft1.set(leftSetOutput.value);
             RobotMap.driveTalonRight1.set(rightSetOutput.value);
-            RobotMap._MotionPRight.startMotionProfile();
-            RobotMap._MotionPLeft.startMotionProfile();
+//            RobotMap._MotionPRight.startMotionProfile();
+//            RobotMap._MotionPLeft.startMotionProfile();
             System.out.println("MP Running");
             
         }
