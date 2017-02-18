@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import jaci.pathfinder.modifiers.TankModifier;
+
+import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
@@ -45,6 +49,16 @@ public class RobotMap {
     public static Joystick Dandyboy;
     
     public static AxisState axisState = AxisState.BALL;
+    
+    public static double[][] leftPath;
+    public static double[][] rightPath;
+    
+    public static TankModifier gearPath; 
+    
+    public static MotionProfileSubsystem _MotionPLeft;
+    public static MotionProfileSubsystem _MotionPRight;
+    public static boolean MPLeftDisabled, MPRightDisabled;
+    public static boolean drivetrainMPActive = false;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
@@ -72,13 +86,17 @@ public class RobotMap {
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
 		driveTalonRight1.setInverted(false);
+//		driveTalonRight1.configEncoderCodesPerRev(611); TODO: Enable if Motion profiling
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonLeft1.configEncoderCodesPerRev(51);
 		driveTalonLeft1.setInverted(true);
 		driveTalonLeft1.reverseSensor(true);
+//		driveTalonLeft1.configEncoderCodesPerRev(611); TODO: Enable if Motion profiling
+//		driveTalonLeft1.reverseSensor(false); TODO: Enable if Motion profiling
 		driveTalonLeft1.reverseOutput(false);
+		
 		
 		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
 
