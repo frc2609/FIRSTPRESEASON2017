@@ -159,7 +159,7 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     	double rightValue = rightPID.calcPID(RobotMap.ahrs.getYaw());
     	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
-    	driveTank(leftValue, rightValue);
+    	driveTank(leftValue, -rightValue);
     }
     
     public void gyroTurn(SimPID rightPID, SimPID leftPID)

@@ -31,7 +31,7 @@ public class LedControl extends Subsystem {
 	}
 	public void trackLED(boolean state){
     	if (state){
-    		RobotMap.ringLED.set(Relay.Value.kOn);
+    		RobotMap.ringLED.set(Relay.Value.kReverse);
     	}
     	else{
     		RobotMap.ringLED.set(Relay.Value.kOff);

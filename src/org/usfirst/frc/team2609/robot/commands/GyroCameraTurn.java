@@ -37,6 +37,7 @@ public class GyroCameraTurn extends Command {
     }
  
     protected void initialize() {
+    	Robot.LedControl.trackLED(true);
     	cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(gyroCameraP, gyroCameraI, gyroCameraD);
         this.cameraPID.setErrorEpsilon(gyroCameraEps);
@@ -77,6 +78,7 @@ public class GyroCameraTurn extends Command {
 
     protected void end() {
     	System.out.println("CameraPID.isDone "+ cameraPID.isDone());
+//    	Robot.LedControl.trackLED(false);
     	Robot.drivetrain.stopDrive();
     }
 

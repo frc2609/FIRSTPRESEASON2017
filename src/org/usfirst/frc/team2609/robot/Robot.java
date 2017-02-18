@@ -159,6 +159,10 @@ public class Robot extends IterativeRobot {
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
 		shifter.high();
         if (autonomousCommand != null) autonomousCommand.start();
+        
+        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
+        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
+ 
 
     	
     }
@@ -183,7 +187,31 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
-        this.logger.logAll(); // write to logs
+
+        RobotMap._MotionPLeft.control();
+        RobotMap._MotionPRight.control();
+		
+//        this.logger.logAll(); // write to logs
+        if(!RobotMap.drivetrainMPActive){
+        	RobotMap._MotionPLeft.reset();
+        	RobotMap._MotionPRight.reset();
+        }
+        else{
+        	this.logger.logAll();
+        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonLeft1.getPosition());
+        	SmartDashboard.putNumber("MPRight", RobotMap.driveTalonRight1.getPosition());
+        	
+        	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.MotionProfile);
+        	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.MotionProfile);
+        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
+            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
+            RobotMap.driveTalonLeft1.set(leftSetOutput.value);
+            RobotMap.driveTalonRight1.set(rightSetOutput.value);
+//            RobotMap._MotionPRight.startMotionProfile();
+//            RobotMap._MotionPLeft.startMotionProfile();
+            System.out.println("MP Running");
+            
+        }
         
 		
     }
