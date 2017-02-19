@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import jaci.pathfinder.modifiers.TankModifier;
 
+import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 
 import com.ctre.CANTalon;
@@ -49,6 +50,7 @@ public class RobotMap {
     public static Joystick Dandyboy;
     
     public static AxisState axisState = AxisState.BALL;
+    public static TalonState talonState = TalonState.ARCADE;
     
     public static double[][] leftPath;
     public static double[][] rightPath;

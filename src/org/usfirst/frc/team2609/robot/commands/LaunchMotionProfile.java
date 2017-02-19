@@ -3,6 +3,7 @@ package org.usfirst.frc.team2609.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
@@ -21,6 +22,8 @@ public class LaunchMotionProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	RobotMap.talonState = TalonState.MOTION_PROFILE;
+    	Robot.drivetrain.handleTalonState(); // Handle state change
     	RobotMap._MotionPLeft.reset();
     	RobotMap._MotionPRight.reset();
     	if(RobotMap.MPLeftDisabled && RobotMap.MPRightDisabled && !RobotMap.drivetrainMPActive){
@@ -59,6 +62,9 @@ public class LaunchMotionProfile extends Command {
     protected void end() {
     	Robot.eStopMP();
     	System.out.println("Launch ended");
+    	RobotMap.talonState = TalonState.ARCADE;
+    	// Theoretically there shouldn't be a need to handle the state here, because teleop/autonomous periodic calls it.
+//    	Robot.drivetrain.handleTalonState(); // I'll still leave this here just in case
     }
 
     // Called when another command which requires one or more of the same

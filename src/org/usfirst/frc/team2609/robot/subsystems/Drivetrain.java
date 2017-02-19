@@ -2,6 +2,7 @@ package org.usfirst.frc.team2609.robot.subsystems;
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 
+import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -176,7 +177,51 @@ public class Drivetrain extends Subsystem {
     public void gyroYawZero(){
     	RobotMap.ahrs.zeroYaw();
     }
-    
+    public void handleTalonState(){
+    	switch(RobotMap.talonState){
+    	case ARCADE:
+    		RobotMap.driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
+    		RobotMap.driveTalonRight1.setInverted(false);
+    		RobotMap.driveTalonRight1.reverseSensor(false);
+    		RobotMap.driveTalonRight1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(51);
+    		RobotMap.driveTalonLeft1.setInverted(true);
+    		RobotMap.driveTalonLeft1.reverseSensor(true);
+    		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		// TODO: Set the magic voltage ramp rate
+    		break;
+    	case SIMPID:
+    		RobotMap.driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
+    		RobotMap.driveTalonRight1.setInverted(false);
+    		RobotMap.driveTalonRight1.reverseSensor(false);
+    		RobotMap.driveTalonRight1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(51);
+    		RobotMap.driveTalonLeft1.setInverted(true);
+    		RobotMap.driveTalonLeft1.reverseSensor(true);
+    		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		// TODO: Set the magic voltage ramp rate
+    		break;
+    	case MOTION_PROFILE:
+    		RobotMap.driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonRight1.configEncoderCodesPerRev(611);
+    		RobotMap.driveTalonRight1.setInverted(false);
+    		RobotMap.driveTalonRight1.reverseSensor(false);
+    		RobotMap.driveTalonRight1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(611);
+    		RobotMap.driveTalonLeft1.setInverted(true);
+    		RobotMap.driveTalonLeft1.reverseSensor(false);
+    		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		// TODO: Set the magic voltage ramp rate
+    		break;
+    	default:
+    		System.out.println("Unexpected Talon state: " + RobotMap.talonState);
+    	}
+    }
     
     public void initDefaultCommand() {
     }

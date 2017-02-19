@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import org.usfirst.frc.team2609.enums.DriveSide;
+import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.robot.commands.*;
 
 import org.usfirst.frc.team2609.robot.commands.AutoGear;
@@ -176,6 +177,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        drivetrain.handleTalonState();
         SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
@@ -249,6 +251,7 @@ public class Robot extends IterativeRobot {
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+        drivetrain.handleTalonState();
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
@@ -373,5 +376,6 @@ public class Robot extends IterativeRobot {
     	RobotMap.drivetrainMPActive = false;
     	RobotMap._MotionPLeft.reset();
     	RobotMap._MotionPRight.reset();
+    	RobotMap.talonState = TalonState.ARCADE;
     }
 }
