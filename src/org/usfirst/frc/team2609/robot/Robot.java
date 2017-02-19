@@ -33,6 +33,7 @@ import org.usfirst.frc.team2609.robot.commands.autons.*;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
 public class Robot extends IterativeRobot {
+
 	public static LedControl LedControl;
 	public static Drivetrain drivetrain;
 	public static Shifter shifter;
@@ -46,7 +47,15 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
-    
+	double autonDistance1 = 0;
+	double autonDistance2 = 0;
+	double autonDistance3 = 0;
+	double autonAngle1 = 0;
+	double autonAngle2 = 0;
+	double autonAngle3 = 0;
+//	double autonHeading1 = 0;
+//	double autonHeading2 = 0;
+//	double autonHeading3 = 0;
     //public static double centerX = 0;
     
     public void robotInit() {
@@ -74,20 +83,33 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Eps: ",1.0);
         SmartDashboard.putNumber("turn DR: ",1.0);
         SmartDashboard.putNumber("turn DC: ",20);
-        
-    	SmartDashboard.putNumber("auton distance 1: ", 80);
-    	SmartDashboard.putNumber("auton distance 2: ", 45);
-    	SmartDashboard.putNumber("auton distance 3: ", -30);
-    	SmartDashboard.putNumber("auton heading 1: ", 0);
-    	SmartDashboard.putNumber("auton heading 2: ", -60);
-    	SmartDashboard.putNumber("auton heading 3: ", -60);
-    	SmartDashboard.putNumber("auton angle 1: ", -60);
-    	SmartDashboard.putNumber("auton angle 2:", 0);
-    	SmartDashboard.putNumber("auton angle 3: ", 0);
-        
+    	
+    	String LeftPRed = SmartDashboard.getString("LeftPRed: ", "75,60,65,40,-118");
+    	String[] LeftPRedarr = LeftPRed.split(",");
+    	int[] LeftPRednumArr = new int[LeftPRedarr.length];
+    	for(int i = 0; i < LeftPRednumArr.length; i++){
+    		LeftPRednumArr[i] = Integer.parseInt(LeftPRedarr[i]);
+    	}
+//    	SmartDashboard.putNumber("auton distance 1: ", 80);
+//    	SmartDashboard.putNumber("auton distance 2: ", 45);
+//    	SmartDashboard.putNumber("auton distance 3: ", -30);
+//    	SmartDashboard.putNumber("auton heading 1: ", 0);
+//    	SmartDashboard.putNumber("auton heading 2: ", -60);
+//    	SmartDashboard.putNumber("auton heading 3: ", -60);
+//    	SmartDashboard.putNumber("auton angle 1: ", -60);
+//    	SmartDashboard.putNumber("auton angle 2:", 0);
+//    	SmartDashboard.putNumber("auton angle 3: ", 0);
+		autonDistance1 = (double)SmartDashboard.getNumber("auton distance 1: ",0);
+		autonDistance2 = (double)SmartDashboard.getNumber("auton distance 2: ",0);
+		autonDistance3 = (double)SmartDashboard.getNumber("auton distance 3: ",0);
+		autonAngle1 = (double)SmartDashboard.getNumber("auton angle 1: ",0);
+		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
+		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
+//		autonHeading1 = (double)SmartDashboard.getNumber("auton heading 1: ",0);
+//		autonHeading2 = (double)SmartDashboard.getNumber("auton heading 2: ",0);
+//		autonHeading3 = (double)SmartDashboard.getNumber("auton heading 3: ",0);
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
-
     	SmartDashboard.putNumber("climber speed", 1);
 
         shifter = new Shifter();
@@ -98,10 +120,10 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
         chooser.addObject("Straight Peg", new StraightPeg());
-        chooser.addObject("Left peg Red", new LeftPRed());
-        chooser.addObject("Right peg Red", new RightPRed());
-        chooser.addObject("Left peg Blue", new LeftPBlue());
-        chooser.addObject("Right peg Blue", new RightPBlue());
+        chooser.addObject("Left peg Red", new LeftPRed(LeftPRednumArr[0],LeftPRednumArr[1],LeftPRednumArr[2],LeftPRednumArr[3],LeftPRednumArr[4]));
+        chooser.addObject("Right peg Red", new RightPRed(autonDistance1,autonAngle1,autonDistance2,autonAngle2,autonDistance3));
+        chooser.addObject("Left peg Blue", new LeftPBlue(autonDistance1,autonAngle1,autonDistance2,autonAngle2,autonDistance3));
+        chooser.addObject("Right peg Blue", new RightPBlue(70,-60,75,-42,-120));
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         table = NetworkTable.getTable("RaspberryPi");
