@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
+import org.usfirst.frc.team2609.robot.subsystems.BallIntake;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.LedControl;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot {
 	public static VulcanClaw vulcanclaw;
 	public static OI oi;
 	public static Tsunami tsunami;
+	public static BallIntake ballIntake;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
 	boolean gearSensorOld;
@@ -90,6 +93,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
 		LedControl = new LedControl();
+		ballIntake = new BallIntake();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
         chooser.addObject("Straight Peg", new StraightPeg());
@@ -114,6 +118,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		LedControl.setLed(255, 255, 0);
 		this.logger.close();
 //        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
 //        	RobotMap.frameLights.showRGB(255, 0, 0);
@@ -136,6 +141,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
 		
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
@@ -157,7 +164,7 @@ public class Robot extends IterativeRobot {
 
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
-		shifter.high();
+		shifter.low();
         if (autonomousCommand != null) autonomousCommand.start();
         
         RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
@@ -247,6 +254,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
     	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
     	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
@@ -268,10 +277,10 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		if (RobotMap.gearSensor.get()){
-			LedControl.setLed(33,150,243);
+			LedControl.setLed(0,255,0);
 		}
 		else{
-			LedControl.setLed(244,67,54);
+			LedControl.setLed(255,0,0);
 		}
 		gearSensorOld = RobotMap.gearSensor.get();
 		/*Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
@@ -285,12 +294,12 @@ public class Robot extends IterativeRobot {
 		
 //        this.logger.logAll(); // write to logs
         //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
-//        if(RobotMap.axisState == AxisState.SCALER){
-//        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
-//        }
-//        else{
-//        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
-//        }
+        if(RobotMap.axisState == AxisState.SCALER){
+        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
+        }
+        else{
+        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
+        }
     	
 //        if(OI.driverStick.getPOV() == 180){
 //        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));

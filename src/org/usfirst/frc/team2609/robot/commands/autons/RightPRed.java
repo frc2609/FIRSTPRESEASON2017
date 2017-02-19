@@ -42,16 +42,15 @@ public class RightPRed extends CommandGroup {
     	//left gear auton with dashboard variables
     	addSequential(new EncReset());
     	addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance1,1.0,autonHeading1));
-    	addSequential(new GyroTurn(1,autonAngle1));
+    	addSequential(new DriveEncoder(75,1.0,0));
+    	addSequential(new GyroTurn(1,-60));
     	addSequential(new EncReset());
     	addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance2,1.0,autonHeading2));
-    	addSequential(new TimerDelay(0.2));
-    	//addSequential(new ClawOpen());
+    	addSequential(new DriveEncoder(63,1.0,-60));
+    	addSequential(new ClawOpen());
     	addSequential(new EncReset());
     	addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(autonDistance3,1.0,autonHeading3)); 	
+    	//addSequential(new DriveEncoder(autonDistance3,1.0,autonHeading3)); 	
     	
     }
 }

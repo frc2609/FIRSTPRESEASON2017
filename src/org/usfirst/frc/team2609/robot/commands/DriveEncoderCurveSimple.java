@@ -19,10 +19,13 @@ public class DriveEncoderCurveSimple extends Command {
 	double drivePower = 0;
 	double driveEps = 0;
 	double driveTarget = 0;
-	double driveHeadingStart = 0;
-	double driveHeadingEnd = 0;
-	double curveStart = 0;
-	double curveEnd = 0;
+	double driveHeading1 = 0;
+	double driveHeading2 = 0;
+	double driveHeading3 = 0;
+	double driveHeading4 = 0;
+	double curvePoint1 = 0;
+	double curvePoint2 = 0;
+	double curvePoint3 = 0;
 	double driveDR = 0;
 	int driveDC = 0;
 	//private double driveTarget;
@@ -30,13 +33,16 @@ public class DriveEncoderCurveSimple extends Command {
 	// 30min 10/18/2016
 	// 30min total
 	
-	public DriveEncoderCurveSimple(double driveTarget, double drivePower, double driveHeadingStart, double driveHeadingEnd, double curveStart) {
+	public DriveEncoderCurveSimple(double driveTarget, double drivePower, double driveHeading1, double driveHeading2, double driveHeading3, double driveHeading4, double curvePoint1, double curvePoint2, double curvePoint3) {
         requires(Robot.drivetrain);
         this.driveTarget = driveTarget;
-        this.driveHeadingStart = driveHeadingStart;
-        this.driveHeadingEnd = driveHeadingEnd;
-        this.curveStart = curveStart;
-        this.curveEnd = curveEnd;
+        this.driveHeading1 = driveHeading1;
+        this.driveHeading2 = driveHeading2;
+        this.driveHeading3 = driveHeading3;
+        this.driveHeading4 = driveHeading4;
+        this.curvePoint1 = curvePoint1;
+        this.curvePoint2 = curvePoint2;
+        this.curvePoint3 = curvePoint3;
         this.drivePower = drivePower;
     }
 
@@ -79,11 +85,17 @@ public class DriveEncoderCurveSimple extends Command {
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
     	double gyroYaw = RobotMap.ahrs.getYaw();
-    	if (RobotMap.driveTalonLeft1.getPosition()<curveStart){
-            this.steeringPID.setDesiredValue(driveHeadingStart);
+    	if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint1){
+            this.steeringPID.setDesiredValue(driveHeading1);
+    	}
+    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint2){
+            this.steeringPID.setDesiredValue(driveHeading2);
+    	}
+    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint3){
+            this.steeringPID.setDesiredValue(driveHeading3);
     	}
     	else{
-            this.steeringPID.setDesiredValue(driveHeadingEnd);
+            this.steeringPID.setDesiredValue(driveHeading4);
     	}
     	Robot.drivetrain.driveStraight(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), gyroYaw, drivePIDLeft, drivePIDRight, steeringPID);	
     }

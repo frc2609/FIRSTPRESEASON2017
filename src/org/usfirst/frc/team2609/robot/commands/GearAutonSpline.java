@@ -35,7 +35,9 @@ public class GearAutonSpline extends Command {
         Trajectory.Config configFast = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 0.02, 10, 5, 120.0);
         Waypoint[] points = new Waypoint[] {
                 new Waypoint(0, 0, Pathfinder.d2r(0)),
-                new Waypoint(105/12, -70/12, Pathfinder.d2r(-60))
+                new Waypoint(-55, 0, Pathfinder.d2r(0)),
+                new Waypoint(-143, -29, Pathfinder.d2r(-15))
+//                new Waypoint(105/12, -70/12, Pathfinder.d2r(-60)) // In front of the peg
 //                new Waypoint(111/12, -82/12, Pathfinder.d2r(-60)) // HITTING THE WALL IN HAMILTON
 //              new Waypoint(76.3/12, 131/12, Pathfinder.d2r(30))
 //              new Waypoint(76.3/12, 114/12, Pathfinder.d2r(30))

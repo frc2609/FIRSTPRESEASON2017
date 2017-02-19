@@ -77,7 +77,10 @@ public class OI {
         
         toggleClaw = new JoystickButton(driverStick, 6);
         toggleClaw.whenReleased(new toggleClaw());
-//        
+        
+        TsunamiDown = new JoystickButton(driverStick, 5);
+        TsunamiDown.whileHeld(new TsunamiControl(TsunamiDirection.DOWN));
+        TsunamiDown.whileHeld(new SetLED(0,0,255));
 //        VulcanGearMode = new JoystickButton(driverStick, 8);
 //    	VulcanGearMode.whenPressed(new VulcanGearMode());
 //
@@ -101,8 +104,7 @@ public class OI {
 		opButton2.whenPressed(new LaunchMotionProfile());
 		opButton3 = new JoystickButton(opStick, 3);
 		opButton3.whenPressed(new MotionProfileEStop());
-        TsunamiDown = new JoystickButton(opStick, 4);
-        TsunamiDown.whileHeld(new TsunamiControl(TsunamiDirection.DOWN));
+
 		opButton5 = new JoystickButton(opStick, 5);
 		opButton5.whenPressed(new GyroPathFollower());
         
