@@ -268,6 +268,8 @@ public class Robot extends IterativeRobot {
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
         
+        RobotMap.talonState = TalonState.ARCADE;
+        
         RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
         RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
     }
