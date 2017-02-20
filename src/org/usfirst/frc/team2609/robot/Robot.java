@@ -220,8 +220,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
 
-        RobotMap._MotionPLeft.control();
-        RobotMap._MotionPRight.control();
+//        RobotMap._MotionPLeft.control();
+//        RobotMap._MotionPRight.control();
 		
 //        this.logger.logAll(); // write to logs
         if(!RobotMap.drivetrainMPActive){
@@ -357,8 +357,8 @@ public class Robot extends IterativeRobot {
 //        }
         
         
-        RobotMap._MotionPLeft.control();
-        RobotMap._MotionPRight.control();
+//        RobotMap._MotionPLeft.control();
+//        RobotMap._MotionPRight.control();
 //        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);

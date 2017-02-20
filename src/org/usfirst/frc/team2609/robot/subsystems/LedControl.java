@@ -21,6 +21,16 @@ public class LedControl extends Subsystem {
     	RobotMap.frameLights.showRGB(red, green, blue);
     }
     
+    public void flash(boolean On){
+    	if (On){
+    		RobotMap.frameLights.blinkLED(1);
+    	}
+    	else{
+    		RobotMap.frameLights.blinkLED(0);
+    	}
+    	
+    }
+    
 	public void toggleLED(){
     	if (RobotMap.ringLED.get() == Relay.Value.kOff){
     		RobotMap.ringLED.set(Relay.Value.kReverse);

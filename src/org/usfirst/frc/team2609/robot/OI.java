@@ -49,12 +49,10 @@ public class OI {
     	opStick = new Joystick(1);
         
         button1 = new JoystickButton(driverStick, 1);
-        button1.whenPressed(new GearSwerve());
+        button1.whenPressed(new ShifterCommandHigh());
         
         shift = new JoystickButton(driverStick, 2);
-        shift.whenReleased(new ShifterCommand());
-        // Button 1 is used in Drivetrain.java to 1/2 speed of driving/turning of the robot while held
-        //button1 = new JoystickButton(driverStick, 1);
+        shift.whenPressed(new ShifterCommandLow());
 
 //        button1 = new JoystickButton(driverStick, 1);
 //        //button1.whenPressed(new GyroCameraTurn(.5));
