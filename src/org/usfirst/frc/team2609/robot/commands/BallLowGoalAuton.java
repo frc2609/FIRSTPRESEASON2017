@@ -20,7 +20,7 @@ public class BallLowGoalAuton extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (RobotMap.driveTalonLeft1.getPosition()<-115){
+    	if (RobotMap.driveTalonLeft1.getPosition()<-128){
         	Robot.ballIntake.ballIntake();
     	}
     }

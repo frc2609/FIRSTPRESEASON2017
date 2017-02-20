@@ -33,7 +33,7 @@ public class DriveEncoderCurveSimple extends Command {
 	// 30min 10/18/2016
 	// 30min total
 	
-	public DriveEncoderCurveSimple(double driveTarget, double drivePower, double driveHeading1, double driveHeading2, double driveHeading3, double driveHeading4, double curvePoint1, double curvePoint2, double curvePoint3) {
+	public DriveEncoderCurveSimple(double driveTarget, double drivePower, double gyroMax, double driveHeading1, double driveHeading2, double driveHeading3, double driveHeading4, double curvePoint1, double curvePoint2, double curvePoint3) {
         requires(Robot.drivetrain);
         this.driveTarget = driveTarget;
         this.driveHeading1 = driveHeading1;
@@ -44,6 +44,7 @@ public class DriveEncoderCurveSimple extends Command {
         this.curvePoint2 = curvePoint2;
         this.curvePoint3 = curvePoint3;
         this.drivePower = drivePower;
+        this.gyroMax = gyroMax;
     }
 
     protected void initialize(){
@@ -58,7 +59,6 @@ public class DriveEncoderCurveSimple extends Command {
         gyroP = (double)SmartDashboard.getNumber("Gyro P: ",0);
         gyroI = (double)SmartDashboard.getNumber("Gyro I: ",0);
         gyroD = (double)SmartDashboard.getNumber("Gyro D: ",0);
-        gyroMax = (double)SmartDashboard.getNumber("Gyro Max: ",0);
         this.steeringPID.setConstants(gyroP, gyroI, gyroD);
         this.steeringPID.setMaxOutput(gyroMax);
         driveP = (double)SmartDashboard.getNumber("Drive P: ",0);
@@ -71,12 +71,12 @@ public class DriveEncoderCurveSimple extends Command {
         driveDR = SmartDashboard.getNumber("Drive DR: ",0);
         driveEps = SmartDashboard.getNumber("Drive Eps: ",0);
         this.drivePIDLeft.setConstants(driveP, driveI, driveD);
-        this.drivePIDLeft.setMaxOutput(drivePower*driveMax);
+        this.drivePIDLeft.setMaxOutput(drivePower);
         this.drivePIDLeft.setDoneRange(driveDR);
         this.drivePIDLeft.setMinDoneCycles(driveDC);
         this.drivePIDLeft.setErrorEpsilon(driveEps);
         this.drivePIDRight.setConstants(driveP, driveI, driveD);
-        this.drivePIDRight.setMaxOutput(drivePower*driveMax);
+        this.drivePIDRight.setMaxOutput(drivePower);
         this.drivePIDRight.setDoneRange(driveDR);
         this.drivePIDRight.setMinDoneCycles(driveDC);
         this.drivePIDRight.setErrorEpsilon(driveEps);
@@ -85,16 +85,20 @@ public class DriveEncoderCurveSimple extends Command {
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
     	double gyroYaw = RobotMap.ahrs.getYaw();
-    	if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint1){
+    	if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<Math.abs(curvePoint1)){
+    		System.out.println("curvepoint1---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading1);
     	}
-    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint2){
+    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<Math.abs(curvePoint2)){
+    		System.out.println("curvepoint2---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading2);
     	}
-    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<curvePoint3){
+    	else if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<Math.abs(curvePoint3)){
+    		System.out.println("curvepoint3---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading3);
     	}
     	else{
+    		System.out.println("curvepoint4---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading4);
     	}
     	Robot.drivetrain.driveStraight(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), gyroYaw, drivePIDLeft, drivePIDRight, steeringPID);	

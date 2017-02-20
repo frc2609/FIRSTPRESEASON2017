@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TsunamiControl extends Command {
 	TsunamiDirection direction;
-    public TsunamiControl(TsunamiDirection direction) {
+	double speed;
+	
+    public TsunamiControl(TsunamiDirection direction, double speed) {
     	//requires(Robot.tsunami);
     	this.direction = direction;
+    	this.speed = speed;
     }
 
     protected void initialize() {
@@ -28,7 +31,7 @@ public class TsunamiControl extends Command {
 //    		RobotMap.tsunamiMotor.set(1);
     	}
     	else if(direction == TsunamiDirection.DOWN){
-    		Tsunami.pullUp(-1);
+    		Tsunami.pullUp(-speed);
 //    		RobotMap.tsunamiMotor.set(-1);
     	}
     	else{

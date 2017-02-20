@@ -93,8 +93,8 @@ public class Drivetrain extends Subsystem {
         	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
         	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
         	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
-        	RobotMap.driveTalonLeft1.set(-leftOutput);
-        	RobotMap.driveTalonRight1.set(rightOutput);
+//        	RobotMap.driveTalonLeft1.set(-leftOutput);
+//        	RobotMap.driveTalonRight1.set(rightOutput);
         }
     }
     
@@ -190,6 +190,8 @@ public class Drivetrain extends Subsystem {
     		RobotMap.driveTalonLeft1.setInverted(true);
     		RobotMap.driveTalonLeft1.reverseSensor(true);
     		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+        	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     		// TODO: Set the magic voltage ramp rate
     		break;
     	case SIMPID:
@@ -203,6 +205,8 @@ public class Drivetrain extends Subsystem {
     		RobotMap.driveTalonLeft1.setInverted(true);
     		RobotMap.driveTalonLeft1.reverseSensor(true);
     		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+        	RobotMap.driveTalonRight1.setVoltageRampRate(24);
     		// TODO: Set the magic voltage ramp rate
     		break;
     	case MOTION_PROFILE:
@@ -216,6 +220,8 @@ public class Drivetrain extends Subsystem {
     		RobotMap.driveTalonLeft1.setInverted(true);
     		RobotMap.driveTalonLeft1.reverseSensor(false);
     		RobotMap.driveTalonLeft1.reverseOutput(false);
+    		RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+        	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     		// TODO: Set the magic voltage ramp rate
     		break;
     	default:

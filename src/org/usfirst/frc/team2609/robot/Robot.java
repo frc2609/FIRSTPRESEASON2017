@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Drive Max: ", 0.8);
     	SmartDashboard.putNumber("Drive Eps: ", 1.0);
     	SmartDashboard.putNumber("Drive DR: ", 1.0);
-    	SmartDashboard.putNumber("Drive DC: ", 20);
+    	SmartDashboard.putNumber("Drive DC: ", 5);
     	
 		SmartDashboard.putNumber("Gyro P: ", 0.05);
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
@@ -82,8 +82,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Max: ",1.0);
         SmartDashboard.putNumber("turn Eps: ",1.0);
         SmartDashboard.putNumber("turn DR: ",1.0);
-        SmartDashboard.putNumber("turn DC: ",20);
-    	
+        SmartDashboard.putNumber("turn DC: ",5);
+        SmartDashboard.putString("LeftPRed: ", "75,60,65,40,-118");
     	String LeftPRed = SmartDashboard.getString("LeftPRed: ", "75,60,65,40,-118");
     	String[] LeftPRedarr = LeftPRed.split(",");
     	int[] LeftPRednumArr = new int[LeftPRedarr.length];
@@ -119,7 +119,8 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
-        chooser.addObject("Straight Peg", new StraightPeg());
+        chooser.addObject("Straight Peg Red", new StraightPegRed());
+        chooser.addObject("Straight Peg Blue", new StraightPegBlue());
         chooser.addObject("Left peg Red", new LeftPRed(LeftPRednumArr[0],LeftPRednumArr[1],LeftPRednumArr[2],LeftPRednumArr[3],LeftPRednumArr[4]));
         chooser.addObject("Right peg Red", new RightPRed(autonDistance1,autonAngle1,autonDistance2,autonAngle2,autonDistance3));
         chooser.addObject("Left peg Blue", new LeftPBlue(autonDistance1,autonAngle1,autonDistance2,autonAngle2,autonDistance3));

@@ -82,8 +82,8 @@ public class RobotMap {
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		driveTalonRight2.set(3); // Follows talon 1 talon is the second best talon
-		driveTalonLeft2.set(1); // Follows talon 3 talon 3 is not the best talon
+		driveTalonRight2.set(3); // Follows talon 3 talon is the second best talon
+		driveTalonLeft2.set(1); // Follows talon 1 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(51);//this is haram

@@ -16,34 +16,30 @@ public class LeftPRed extends CommandGroup {
 		// POINT TURNS
 
 //    	//left gear and balls auton with dashboard variables
-    	addSequential(new EncReset());
-    	addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(Move1,1.0,0));
-    	addSequential(new GyroTurn(1,Angle1));
-    	addSequential(new EncReset());
-    	addSequential(new TimerDelay(0.2));
-    	addSequential(new DriveEncoder(Move2,1.0,Angle1));
-    	addSequential(new ClawOpen());
-    	addSequential(new EncReset());
-    	addSequential(new TimerDelay(0.2));
-    	addParallel(new DriveEncoderCurveSimple(Move3, 1.0, Angle1, Angle2, Angle2, Angle2, -20, Move3, Move3));
-    	addParallel(new BallLowGoalAuton());
+//    	addSequential(new EncReset());
+//    	addSequential(new TimerDelay(0.2));
+//    	addSequential(new DriveEncoder(Move1,1.0,0));
+//    	addSequential(new GyroTurn(1,Angle1));
+//    	addSequential(new EncReset());
+//    	addSequential(new TimerDelay(0.2));
+//    	addSequential(new DriveEncoder(Move2,1.0,Angle1));
+//    	addSequential(new ClawOpen());
+//    	addSequential(new EncReset());
+//    	addSequential(new TimerDelay(0.2));
+//    	addParallel(new DriveEncoderCurveSimple(Move3, 1.0, Angle1, Angle2, Angle2, Angle2, -20, Move3, Move3));
+//    	addParallel(new BallLowGoalAuton());
 		
 		// Curves
     	//left gear auton with dashboard variables
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addSequential(new DriveEncoder(75,1.0,0));
-//    	addSequential(new GyroTurn(1,-60));
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addSequential(new DriveEncoder(65,1.0,-60));
-//    	addSequential(new ClawOpen());
-//    	addSequential(new GyroTurn(1,-40));
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addParallel(new DriveEncoder(-118,1.0,-40));
-//    	addParallel(new BallLowGoalAuton());
+    	addSequential(new EncReset());
+    	addSequential(new DriveEncoder(75,1.0,0));
+    	addSequential(new GyroTurn(1,60));
+    	addSequential(new EncReset());
+    	addSequential(new DriveEncoder(65,1.0,60));
+    	addSequential(new ClawOpen());
+    	addSequential(new EncReset());
+    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
+    	addParallel(new BallLowGoalAuton());
     	
     	
     	

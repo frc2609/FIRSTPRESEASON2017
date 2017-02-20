@@ -67,7 +67,9 @@ public class OI {
 //        
         
         toggleLED = new JoystickButton(driverStick, 3);
-        toggleLED.whenPressed(new toggleLED());
+        toggleLED.whileHeld(new RingLED(true));
+        toggleLED.whileHeld(new GyroCameraTurn(1.0));
+        toggleLED.whenReleased(new RingLED(false));
 //        
         autoGear = new JoystickButton(driverStick, 4);
         //autoGear.whenPressed(new AutoGear(0));
@@ -79,8 +81,7 @@ public class OI {
         toggleClaw.whenReleased(new toggleClaw());
         
         TsunamiDown = new JoystickButton(driverStick, 5);
-        TsunamiDown.whileHeld(new TsunamiControl(TsunamiDirection.DOWN));
-        TsunamiDown.whileHeld(new SetLED(0,0,255));
+        
 //        VulcanGearMode = new JoystickButton(driverStick, 8);
 //    	VulcanGearMode.whenPressed(new VulcanGearMode());
 //
@@ -101,12 +102,18 @@ public class OI {
 		opButton1 = new JoystickButton(opStick, 1);
 		opButton1.whenPressed(new GearAutonSpline());
 		opButton2 = new JoystickButton(opStick, 2);
-		opButton2.whenPressed(new LaunchMotionProfile());
+//		opButton2.whenPressed(new LaunchMotionProfile());
+		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
+		opButton2.whileHeld(new SetLED(0,0,255));
 		opButton3 = new JoystickButton(opStick, 3);
 		opButton3.whenPressed(new MotionProfileEStop());
-
+		opButton4 = new JoystickButton(opStick, 4);
+		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
+		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
 		opButton5.whenPressed(new GyroPathFollower());
+		
+
         
         toggleDeployClaw = new JoystickButton(driverStick, 10);
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
