@@ -14,7 +14,7 @@ public class SetLED extends Command {
     }
 
     protected void initialize() {
-    	Robot.LedControl.setLed(red, green, blue);
+    	Robot.LedControl.setLed();
     }
     	
     protected void execute() {

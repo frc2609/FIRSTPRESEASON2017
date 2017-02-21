@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn DC: ",5);
 
         SmartDashboard.putString("LED Colour: ", "Red");
+        SmartDashboard.putBoolean("LED Flash: ", false);
         
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
@@ -120,7 +121,7 @@ public class Robot extends IterativeRobot {
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		LedControl.setLed(255, 255, 0);
+		//LedControl.setLed(255, 255, 0);
 		this.logger.close();
 //        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
 //        	RobotMap.frameLights.showRGB(255, 0, 0);
@@ -276,17 +277,21 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
 		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
     	
-		Scheduler.getInstance().run();
 		if (!gearSensorOld){
 			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
 				new VulcanGearGrab().start();
 			}
 		}
+		
+		Robot.LedControl.setLed();
+		
 		if (RobotMap.gearSensor.get()){
-			LedControl.setLed(0,255,0);
+			SmartDashboard.putString("LED Colour: ", "Green");
+//			LedControl.setLed(0,255,0);
 		}
 		else{
-			LedControl.setLed(255,0,0);
+			SmartDashboard.putString("LED Colour: ", "Red");
+//			LedControl.setLed(255,0,0);
 		}
 		gearSensorOld = RobotMap.gearSensor.get();
 		/*Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2609.robot.commands;
 import org.usfirst.frc.team2609.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShifterCommandLow extends Command {
 
@@ -9,6 +10,7 @@ public class ShifterCommandLow extends Command {
 
     protected void initialize() {
     	Robot.shifter.low();
+    	SmartDashboard.putBoolean("LED Flash: ", false);
     	//Robot.LedControl.flash(false);
     }
 
