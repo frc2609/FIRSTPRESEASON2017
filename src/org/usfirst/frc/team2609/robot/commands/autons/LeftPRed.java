@@ -12,23 +12,16 @@ public class LeftPRed extends CommandGroup {
 	protected void initialize(){
 	}
 	
-    public LeftPRed(double Move1,double Angle1,double Move2,double Angle2,double Move3) {
-		// POINT TURNS
-
-//    	//left gear and balls auton with dashboard variables
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addSequential(new DriveEncoder(Move1,1.0,0));
-//    	addSequential(new GyroTurn(1,Angle1));
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addSequential(new DriveEncoder(Move2,1.0,Angle1));
-//    	addSequential(new ClawOpen());
-//    	addSequential(new EncReset());
-//    	addSequential(new TimerDelay(0.2));
-//    	addParallel(new DriveEncoderCurveSimple(Move3, 1.0, Angle1, Angle2, Angle2, Angle2, -20, Move3, Move3));
-//    	addParallel(new BallLowGoalAuton());
-		
+    public LeftPRed() {
+    	double point1 = -20;
+    	double point2 = -128;
+    	double point3 = -128;
+    	double totalArc = -135;
+    	
+    	double heading1 = 60;
+    	double heading2 = 42;
+    	double heading3 = 42;
+    	double heading4 = 42;
 		// Curves
     	//left gear auton with dashboard variables
     	addSequential(new EncReset());
@@ -38,8 +31,9 @@ public class LeftPRed extends CommandGroup {
     	addSequential(new DriveEncoder(65,1.0,60));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
-    	addParallel(new BallLowGoalAuton());
+    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
+//    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
+    	addParallel(new BallLowGoalAuton(-128));
     	
     	
     	

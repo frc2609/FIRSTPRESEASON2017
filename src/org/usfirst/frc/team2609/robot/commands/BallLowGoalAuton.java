@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class BallLowGoalAuton extends Command {
+	double Distance = 0;
 
-    public BallLowGoalAuton() {
+    public BallLowGoalAuton(double Distance) {
+    	this.Distance = Distance;
         //requires(Robot.vulcanclaw);
     }
 
@@ -20,7 +22,7 @@ public class BallLowGoalAuton extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (RobotMap.driveTalonLeft1.getPosition()<-128){
+    	if (RobotMap.driveTalonLeft1.getPosition()<Distance){//-128){
         	Robot.ballIntake.ballIntake();
     	}
     }

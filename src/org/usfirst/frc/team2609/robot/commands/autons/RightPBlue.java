@@ -13,7 +13,17 @@ public class RightPBlue extends CommandGroup {
 	protected void initialize(){
 	}
 	
-    public RightPBlue(double Move1,double Angle1,double Move2,double Angle2,double Move3) {
+    public RightPBlue() {
+    	double point1 = -10;
+    	double point2 = -120;
+    	double point3 = -120;
+    	double totalArc = -125;
+    	
+    	double heading1 = -60;
+    	double heading2 = -42;
+    	double heading3 = -42;
+    	double heading4 = -42;
+    	
     	//right gear and balls auton with dashboard variables	
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(70,1.0,0));
@@ -22,8 +32,9 @@ public class RightPBlue extends CommandGroup {
     	addSequential(new DriveEncoder(75,1.0,-60));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(-125, 0.8, 0.2, -60, -42, -42, -42, -10, -120, -120));
-    	addParallel(new BallLowGoalAuton());
+    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
+//    	addParallel(new DriveEncoderCurveSimple(-125, 0.8, 0.2, -60, -42, -42, -42, -10, -120, -120));
+    	addParallel(new BallLowGoalAuton(-120));
     	
 //    	addSequential(new EncReset());
 //    	addSequential(new TimerDelay(0.2));
