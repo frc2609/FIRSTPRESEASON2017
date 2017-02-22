@@ -1,4 +1,5 @@
 package org.usfirst.frc.team2609.robot.commands.autons;
+import org.usfirst.frc.team2609.robot.commands.BallDoorOpen;
 import org.usfirst.frc.team2609.robot.commands.BallLowGoalAuton;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoderCurveSimple;
@@ -39,6 +40,7 @@ public class StraightPegBlue extends CommandGroup {
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.7, 0.3, heading1, heading2, heading3, heading4, point1, point2, point3));
+    	addParallel(new BallDoorOpen());
     	addParallel(new BallLowGoalAuton(point3));
     	
     	

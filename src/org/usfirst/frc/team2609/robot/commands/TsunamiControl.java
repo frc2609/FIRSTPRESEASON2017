@@ -6,6 +6,7 @@ import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 
 import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TsunamiControl extends Command {
 	TsunamiDirection direction;
@@ -32,6 +33,7 @@ public class TsunamiControl extends Command {
     	}
     	else if(direction == TsunamiDirection.DOWN){
     		Tsunami.pullUp(-speed);
+    		SmartDashboard.putNumber("LED Colour: ", 3);
 //    		RobotMap.tsunamiMotor.set(-1);
     	}
     	else{

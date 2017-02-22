@@ -29,7 +29,7 @@ public class BallLowGoalAuton extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timeSinceInitialized()>5.0;
+        return timeSinceInitialized()>15.0;
     }
 
     // Called once after isFinished returns true

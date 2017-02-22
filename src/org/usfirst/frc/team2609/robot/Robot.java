@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+import org.usfirst.frc.team2609.robot.subsystems.BallDoor;
 import org.usfirst.frc.team2609.robot.subsystems.BallIntake;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.LedControl;
@@ -41,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Tsunami tsunami;
 	public static BallIntake ballIntake;
+	public static BallDoor ballDoor;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
 	boolean gearSensorOld;
@@ -84,7 +86,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn DR: ",1.0);
         SmartDashboard.putNumber("turn DC: ",5);
 
-        SmartDashboard.putString("LED Colour: ", "Red");
+        SmartDashboard.putNumber("LED Colour: ", 1);
         SmartDashboard.putBoolean("LED Flash: ", false);
         
         boolean valueVision = false;
@@ -96,6 +98,7 @@ public class Robot extends IterativeRobot {
 		vulcanclaw = new VulcanClaw();
 		LedControl = new LedControl();
 		ballIntake = new BallIntake();
+		ballDoor = new BallDoor();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
         chooser.addObject("Straight Peg Red", new StraightPegRed());
@@ -117,12 +120,14 @@ public class Robot extends IterativeRobot {
 	
     public void disabledInit(){
 		shifter.high();
+		SmartDashboard.putNumber("LED Colour: ", 4);
     }
 	
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		//LedControl.setLed(255, 255, 0);
 		this.logger.close();
+		Robot.LedControl.setLed();
 //        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
 //        	RobotMap.frameLights.showRGB(255, 0, 0);
 //        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Blue) {
@@ -231,7 +236,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
-        RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
+//        RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
         this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
@@ -248,7 +253,6 @@ public class Robot extends IterativeRobot {
         RobotMap.driveTalonRight1.setEncPosition(0);
         
         RobotMap.talonState = TalonState.ARCADE;
-        
         RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
         RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
     }
@@ -283,14 +287,15 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		
+
 		Robot.LedControl.setLed();
 		
 		if (RobotMap.gearSensor.get()){
-			SmartDashboard.putString("LED Colour: ", "Green");
+			SmartDashboard.putNumber("LED Colour: ", 2);
 //			LedControl.setLed(0,255,0);
 		}
 		else{
-			SmartDashboard.putString("LED Colour: ", "Red");
+			SmartDashboard.putNumber("LED Colour: ", 1);
 //			LedControl.setLed(255,0,0);
 		}
 		gearSensorOld = RobotMap.gearSensor.get();

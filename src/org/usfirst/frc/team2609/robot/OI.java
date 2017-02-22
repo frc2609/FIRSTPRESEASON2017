@@ -70,6 +70,7 @@ public class OI {
         toggleLED.whenReleased(new RingLED(false));
 //        
         autoGear = new JoystickButton(driverStick, 4);
+        autoGear.whenPressed(new BallDoorToggle());
         //autoGear.whenPressed(new AutoGear(0));
 		//toggleLED.whenReleased(new toggleLED());
 //        
@@ -98,16 +99,16 @@ public class OI {
     	VulcanGearScore.whenPressed(new VulcanGearScore());
     	
 		opButton1 = new JoystickButton(opStick, 1);
-		opButton1.whenPressed(new GearAutonSpline());
+//		opButton1.whenPressed(new BallDoorClose());
 		opButton2 = new JoystickButton(opStick, 2);
 //		opButton2.whenPressed(new LaunchMotionProfile());
 		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
-		opButton2.whileHeld(new SetLED(0,0,255));
+//		opButton2.whileHeld(new SetLED(0,0,255));
 		opButton3 = new JoystickButton(opStick, 3);
-		opButton3.whenPressed(new MotionProfileEStop());
+//		opButton3.whenPressed(new BallDoorOpen());
 		opButton4 = new JoystickButton(opStick, 4);
 		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
-		opButton4.whileHeld(new SetLED(0,0,255));
+//		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
 		opButton5.whenPressed(new GyroPathFollower());
 		
