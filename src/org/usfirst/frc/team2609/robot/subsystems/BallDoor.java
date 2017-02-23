@@ -1,4 +1,5 @@
 package org.usfirst.frc.team2609.robot.subsystems;
+import org.usfirst.frc.team2609.enums.BallDoorState;
 import org.usfirst.frc.team2609.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -16,18 +17,31 @@ public class BallDoor extends Subsystem {
     DoubleSolenoid doubleSolenoid1 = RobotMap.ballDoor;
     
     public void toggle() {
-    	if (doubleSolenoid1.get() == DoubleSolenoid.Value.kReverse){
-    			doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
-    			System.out.println("high gear "+ doubleSolenoid1.get());
+    	BallDoorState currentState = this.getState();
+    	switch(currentState){
+    	case OPEN:
+    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSE));
+    		break;
+    	case CLOSE:
+    		doubleSolenoid1.set(this.setDoor(BallDoorState.OPEN));
+    		break;
+    	case NEUTRAL:
+    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSE));
+    		break;
+    	default:
+    		System.out.println("Unknown BallDoor state!");
+    		break;
     	}
-    	else if (doubleSolenoid1.get() == DoubleSolenoid.Value.kForward){
-			doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("low gear "+ doubleSolenoid1.get());
-    	}
-    	else {
-    		doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
-    		System.out.println("low gear "+ doubleSolenoid1.get());
-    	}    	
+//    	if (doubleSolenoid1.get() == DoubleSolenoid.Value.kReverse){
+//    		doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
+//    	}
+//    	else if (doubleSolenoid1.get() == DoubleSolenoid.Value.kForward){
+//			doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
+//    	}
+//    	else {
+//    		doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
+//    	}    	
+//    	I will keep this in until the state machine is tested
     }
     public void open() {
     	doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
@@ -38,8 +52,31 @@ public class BallDoor extends Subsystem {
     public void neutral() {
     	doubleSolenoid1.set(DoubleSolenoid.Value.kOff);
 	}
-
-    
+    public BallDoorState getState(){
+    	switch(doubleSolenoid1.get()){
+    	case kForward:
+    		return BallDoorState.CLOSE;
+    	case kReverse:
+    		return BallDoorState.OPEN;
+    	case kOff:
+    		return BallDoorState.NEUTRAL;
+    	default:
+    		return BallDoorState.OPEN;
+    	}
+    }
+    public DoubleSolenoid.Value setDoor(BallDoorState desiredState){
+    	switch(desiredState){
+    	case OPEN:
+    		return DoubleSolenoid.Value.kReverse;
+    	case CLOSE:
+    		return DoubleSolenoid.Value.kForward;
+    	case NEUTRAL:
+    		return DoubleSolenoid.Value.kOff;
+    	default:
+    		return DoubleSolenoid.Value.kOff;
+    	}
+    		
+    }
 }
 
 /*
