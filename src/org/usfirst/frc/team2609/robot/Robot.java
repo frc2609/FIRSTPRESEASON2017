@@ -12,6 +12,7 @@ import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.LedControl;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
+import org.usfirst.frc.team2609.robot.subsystems.R03;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static Tsunami tsunami;
 	public static BallIntake ballIntake;
 	public static BallDoor ballDoor;
+	public static R03 r03;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
 	boolean gearSensorOld;
@@ -100,6 +102,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
 		ballDoor = new BallDoor();
         chooser = new SendableChooser();
+        r03 = new R03();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
         chooser.addObject("Straight Peg Red", new StraightPegRed());
         chooser.addObject("Straight Peg Blue", new StraightPegBlue());

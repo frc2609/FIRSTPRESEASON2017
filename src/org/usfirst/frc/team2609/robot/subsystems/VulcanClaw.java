@@ -21,10 +21,9 @@ public class VulcanClaw extends Subsystem {
 
 	
     public void toggleDeployClaw() {
-    	System.out.println("2.get"+ doubleSolenoid2.get());
-    	System.out.println("1.get"+doubleSolenoid1.get());
-
-    	
+    	System.out.println("For the love of Dean Kamen");
+    	System.out.println("pls no");
+    	//TODO: fix this spaghetti using the R03 method. 
     	if (doubleSolenoid1.get()==DoubleSolenoid.Value.kReverse && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse) {
 			Robot.ballDoor.close();
     		doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
@@ -45,6 +44,7 @@ public class VulcanClaw extends Subsystem {
     	}    	
     }
     public void toggleClaw() {
+    	System.out.println("pls no");
     	if (doubleSolenoid2.get() == DoubleSolenoid.Value.kReverse){
 				Robot.ballDoor.close();
     			doubleSolenoid2.set(DoubleSolenoid.Value.kForward);
@@ -63,27 +63,19 @@ public class VulcanClaw extends Subsystem {
     }
     
     public void closeClaw() {
-		Robot.ballDoor.close();
-    	doubleSolenoid2.set(DoubleSolenoid.Value.kReverse);
-		System.out.println("vulcanClaw close "+ doubleSolenoid2.get());
+    	Robot.r03.StayInsideR03(VulcanClawState.CLOSED);
     }
     
     public void openClaw() {
-		Robot.ballDoor.close();
-		doubleSolenoid2.set(DoubleSolenoid.Value.kForward);
-		System.out.println("vulcanClaw open "+ doubleSolenoid2.get());
+    	Robot.r03.StayInsideR03(VulcanClawState.OPEN);
     }
     
     public void downClaw() {
-		Robot.ballDoor.close();
-    	doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
-		System.out.println("vulcanDeploy down "+ doubleSolenoid1.get());
+    	Robot.r03.StayInsideR03(VulcanDeployState.DOWN);
     }
     
     public void upClaw() {
-		Robot.ballDoor.close();
-    	doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
-		System.out.println("vulcanDeploy up "+ doubleSolenoid1.get());
+    	Robot.r03.StayInsideR03(VulcanDeployState.UP);
     }
     
     public VulcanClawState getClawState(){
