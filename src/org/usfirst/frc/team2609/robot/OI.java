@@ -101,7 +101,6 @@ public class OI {
 		opButton1 = new JoystickButton(opStick, 1);
 //		opButton1.whenPressed(new BallDoorClose());
 		opButton2 = new JoystickButton(opStick, 2);
-//		opButton2.whenPressed(new LaunchMotionProfile());
 		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
 //		opButton2.whileHeld(new SetLED(0,0,255));
 		opButton3 = new JoystickButton(opStick, 3);

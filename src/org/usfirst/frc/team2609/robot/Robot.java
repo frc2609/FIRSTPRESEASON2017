@@ -11,7 +11,6 @@ import org.usfirst.frc.team2609.robot.subsystems.BallIntake;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.LedControl;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
-import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
 import org.usfirst.frc.team2609.robot.subsystems.Tsunami;
 import org.usfirst.frc.team2609.robot.subsystems.VulcanClaw;
@@ -174,9 +173,6 @@ public class Robot extends IterativeRobot {
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
 		shifter.low();
         if (autonomousCommand != null) autonomousCommand.start();
-        
-        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
-        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
  
 
     	
@@ -204,30 +200,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
 
-//        RobotMap._MotionPLeft.control();
-//        RobotMap._MotionPRight.control();
-		
 //        this.logger.logAll(); // write to logs
-        if(!RobotMap.drivetrainMPActive){
-        	RobotMap._MotionPLeft.reset();
-        	RobotMap._MotionPRight.reset();
-        }
-        else{
-        	this.logger.logAll();
-        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonLeft1.getPosition());
-        	SmartDashboard.putNumber("MPRight", RobotMap.driveTalonRight1.getPosition());
-        	
-        	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.MotionProfile);
-        	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.MotionProfile);
-        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
-            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
-            RobotMap.driveTalonLeft1.set(leftSetOutput.value);
-            RobotMap.driveTalonRight1.set(rightSetOutput.value);
-//            RobotMap._MotionPRight.startMotionProfile();
-//            RobotMap._MotionPLeft.startMotionProfile();
-            System.out.println("MP Running");
-            
-        }
         
 		
     }
@@ -253,8 +226,6 @@ public class Robot extends IterativeRobot {
         RobotMap.driveTalonRight1.setEncPosition(0);
         
         RobotMap.talonState = TalonState.ARCADE;
-        RobotMap._MotionPLeft = new MotionProfileSubsystem(RobotMap.driveTalonLeft1, DriveSide.LEFT);
-        RobotMap._MotionPRight = new MotionProfileSubsystem(RobotMap.driveTalonRight1, DriveSide.RIGHT);
     }
 
 	public void teleopPeriodic() {
@@ -299,14 +270,6 @@ public class Robot extends IterativeRobot {
 //			LedControl.setLed(255,0,0);
 		}
 		gearSensorOld = RobotMap.gearSensor.get();
-		/*Double readyVulcanClaw = table.getNumber("readyVulcanClaw", 0);
-		if (readyVulcanClaw == 1) {
-			new SetLED(255, 200, 0).start(); // yellow For the peanut gallery
-		}
-		else{
-//			new SetLED(156,39,176).start();//set led's to red otherwise yes this is good
-			new SetLED(255,0,0).start();//set led's to red otherwise yes this is good
-		}*/
 		
 //        this.logger.logAll(); // write to logs
         //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
@@ -346,34 +309,11 @@ public class Robot extends IterativeRobot {
 //        	RobotMap.tsunamiMotor.set(0);
 //        }
         
-        
-//        RobotMap._MotionPLeft.control();
-//        RobotMap._MotionPRight.control();
 //        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
-        if(!RobotMap.drivetrainMPActive){
-    		drivetrain.humanDrive();
-        	RobotMap._MotionPLeft.reset();
-        	RobotMap._MotionPRight.reset();
-        }
-        else{
-        	this.logger.logAll();
-        	SmartDashboard.putNumber("MPLeft", RobotMap.driveTalonLeft1.getPosition());
-        	SmartDashboard.putNumber("MPRight", RobotMap.driveTalonRight1.getPosition());
-        	
-        	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.MotionProfile);
-        	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.MotionProfile);
-        	CANTalon.SetValueMotionProfile rightSetOutput = RobotMap._MotionPRight.getSetValue();
-            CANTalon.SetValueMotionProfile leftSetOutput = RobotMap._MotionPLeft.getSetValue();
-            RobotMap.driveTalonLeft1.set(leftSetOutput.value);
-            RobotMap.driveTalonRight1.set(rightSetOutput.value);
-//            RobotMap._MotionPRight.startMotionProfile();
-//            RobotMap._MotionPLeft.startMotionProfile();
-            System.out.println("MP Running");
-            
-        }
+    	drivetrain.humanDrive();
 //        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             
@@ -384,11 +324,6 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
     public static void eStopMP(){
-    	RobotMap.MPLeftDisabled = true;
-    	RobotMap.MPRightDisabled = true;
-    	RobotMap.drivetrainMPActive = false;
-    	RobotMap._MotionPLeft.reset();
-    	RobotMap._MotionPRight.reset();
     	RobotMap.talonState = TalonState.ARCADE;
     }
 }
