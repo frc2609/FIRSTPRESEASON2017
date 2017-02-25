@@ -20,13 +20,13 @@ public class BallDoor extends Subsystem {
     	BallDoorState currentState = this.getState();
     	switch(currentState){
     	case OPEN:
-    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSE));
+    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSED));
     		break;
-    	case CLOSE:
+    	case CLOSED:
     		doubleSolenoid1.set(this.setDoor(BallDoorState.OPEN));
     		break;
     	case NEUTRAL:
-    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSE));
+    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSED));
     		break;
     	default:
     		System.out.println("Unknown BallDoor state!");
@@ -55,7 +55,7 @@ public class BallDoor extends Subsystem {
     public BallDoorState getState(){
     	switch(doubleSolenoid1.get()){
     	case kForward:
-    		return BallDoorState.CLOSE;
+    		return BallDoorState.CLOSED;
     	case kReverse:
     		return BallDoorState.OPEN;
     	case kOff:
@@ -68,7 +68,7 @@ public class BallDoor extends Subsystem {
     	switch(desiredState){
     	case OPEN:
     		return DoubleSolenoid.Value.kReverse;
-    	case CLOSE:
+    	case CLOSED:
     		return DoubleSolenoid.Value.kForward;
     	case NEUTRAL:
     		return DoubleSolenoid.Value.kOff;
@@ -76,6 +76,9 @@ public class BallDoor extends Subsystem {
     		return DoubleSolenoid.Value.kOff;
     	}
     		
+    }
+    public void forceSetDoor(DoubleSolenoid.Value intendedValue){
+    	doubleSolenoid1.set(intendedValue);
     }
 }
 
