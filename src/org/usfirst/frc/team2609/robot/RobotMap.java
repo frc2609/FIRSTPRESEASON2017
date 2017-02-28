@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import jaci.pathfinder.modifiers.TankModifier;
 
 import org.usfirst.frc.team2609.enums.TalonState;
-import org.usfirst.frc.team2609.robot.subsystems.MotionProfileSubsystem;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -53,15 +52,8 @@ public class RobotMap {
     public static AxisState axisState = AxisState.BALL;
     public static TalonState talonState = TalonState.ARCADE;
     
-    public static double[][] leftPath;
-    public static double[][] rightPath;
-    
     public static TankModifier gearPath; 
     
-    public static MotionProfileSubsystem _MotionPLeft;
-    public static MotionProfileSubsystem _MotionPRight;
-    public static boolean MPLeftDisabled, MPRightDisabled;
-    public static boolean drivetrainMPActive = false;
 
 	public static void init() {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
