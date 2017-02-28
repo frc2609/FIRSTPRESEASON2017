@@ -263,29 +263,29 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
         drivetrain.handleTalonState();
-    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
-    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
-    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
-    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
-    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
-    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
-		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
-		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
-		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
+//    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
+//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+//    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+//    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+//    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
+//    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+//    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
+//		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
+//		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
+//		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
+//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
+//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
 		
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
-		
-
-		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
-		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
+//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
+//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
+//		
+//
+//		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+//		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
     	
 		if (!gearSensorOld){
-			if (RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()){
+			if (RobotMap.gearSensor.get()){// && !RobotMap.clawDownSensor.get()){
 				new VulcanGearGrab().start();
 			}
 		}

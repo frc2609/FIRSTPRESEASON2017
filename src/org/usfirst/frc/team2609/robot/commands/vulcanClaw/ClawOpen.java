@@ -25,7 +25,7 @@ public class ClawOpen extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawOpenSensor.get() || timeSinceInitialized()>.2;
+        return !RobotMap.clawOpenSensor.get() || timeSinceInitialized()>.5;
     }
 
     // Called once after isFinished returns true

@@ -114,7 +114,7 @@ public class OI {
 		
 
         
-        toggleDeployClaw = new JoystickButton(driverStick, 10);
+        toggleDeployClaw = new JoystickButton(driverStick, 5);
         toggleDeployClaw.whenReleased(new toggleDeployClaw());
         
 

@@ -25,7 +25,8 @@ public class R03 extends Subsystem {
 		}else if (this.currentVulcanDeployState == VulcanDeployState.UP){
 			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(desiredState));
 		}else if(this.currentVulcanDeployState == VulcanDeployState.DOWN && this.currentVulcanClawState == VulcanClawState.OPEN){
-			System.out.println("THE ROBOT IS IN GEAR MODE, GO INTO BALLMODE TO SET THE DOOR TO " + desiredState);
+			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(desiredState));
+//			System.out.println("THE ROBOT IS IN GEAR MODE, GO INTO BALLMODE TO SET THE DOOR TO " + desiredState);
 		}
 	}
 	public void StayInsideR03(VulcanClawState desiredState){

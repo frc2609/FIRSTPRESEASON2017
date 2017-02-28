@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2609.robot.subsystems;
 import org.usfirst.frc.team2609.enums.BallDoorState;
+import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,13 +21,15 @@ public class BallDoor extends Subsystem {
     	BallDoorState currentState = this.getState();
     	switch(currentState){
     	case OPEN:
-    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSED));
-    		break;
+    		Robot.r03.StayInsideR03(BallDoorState.CLOSED);
+//    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSED));
+    		return;
     	case CLOSED:
-    		doubleSolenoid1.set(this.setDoor(BallDoorState.OPEN));
-    		break;
+    		Robot.r03.StayInsideR03(BallDoorState.OPEN);
+//    		doubleSolenoid1.set(this.setDoor(BallDoorState.OPEN));
+    		return;
     	case NEUTRAL:
-    		doubleSolenoid1.set(this.setDoor(BallDoorState.CLOSED));
+    		Robot.r03.StayInsideR03(BallDoorState.CLOSED);
     		break;
     	default:
     		System.out.println("Unknown BallDoor state!");
