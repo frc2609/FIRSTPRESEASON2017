@@ -27,7 +27,7 @@ public class GyroCameraTurn extends Command {
         gyroCameraP = (double)SmartDashboard.getNumber("turn P: ", 0);
         gyroCameraI = (double)SmartDashboard.getNumber("turn I: ", 0);
         gyroCameraD = (double)SmartDashboard.getNumber("turn D: ", 0);
-        gyroCameraMax = (double)SmartDashboard.getNumber("turn Max: ", 0.5);
+        gyroCameraMax = (double)SmartDashboard.getNumber("turn Max: ", 0);
         gyroCameraEps = (double)SmartDashboard.getNumber("turn Eps: ", 0);
         System.out.println("gyroCameraTURN CLASS INITED");
     	this.cameraPID = new SimPID();

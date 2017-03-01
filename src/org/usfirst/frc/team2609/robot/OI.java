@@ -28,7 +28,9 @@ public class OI {
     public JoystickButton VulcanGearScore;
     public JoystickButton VulcanGearMode;
     public JoystickButton VulcanBallMode;
-    public JoystickButton autoGear;
+    public static JoystickButton autoGear;
+    public JoystickButton BallDoorToggle;
+    public static JoystickButton driveStraightMode;
 
     public static Joystick opStick;
     public JoystickButton TsunamiUp;
@@ -63,16 +65,14 @@ public class OI {
 //        toggleClaw = new JoystickButton(driverStick, 9);
 //        toggleClaw.whenReleased(new toggleClaw());
 //        
-        
-        toggleLED = new JoystickButton(driverStick, 3);
-        toggleLED.whileHeld(new RingLED(true));
-        toggleLED.whileHeld(new GyroCameraTurn(1.0));
-        toggleLED.whenReleased(new RingLED(false));
+        driveStraightMode = new JoystickButton(driverStick, 3);
+        driveStraightMode.whileHeld(new DriveStraight());
 //        
         autoGear = new JoystickButton(driverStick, 4);
-        autoGear.whenPressed(new BallDoorToggle());
+        autoGear.whileHeld(new GyroCameraTurn(1.0));
         //autoGear.whenPressed(new AutoGear(0));
-		//toggleLED.whenReleased(new toggleLED());
+        toggleLED = new JoystickButton(opStick, 5);
+		toggleLED.whenReleased(new toggleLED());
 //        
 //        xxx = new JoystickButton(driverStick, 5);
         
@@ -95,21 +95,21 @@ public class OI {
         VulcanGearMode = new JoystickButton(driverStick, 8);
     	VulcanGearMode.whenPressed(new VulcanGearMode());
 
-        VulcanGearScore = new JoystickButton(driverStick, 9);
-    	VulcanGearScore.whenPressed(new VulcanGearScore());
+    	BallDoorToggle = new JoystickButton(driverStick, 9);
+    	BallDoorToggle.whenPressed(new BallDoorToggle());
     	
 		opButton1 = new JoystickButton(opStick, 1);
-//		opButton1.whenPressed(new BallDoorClose());
+		opButton1.whenPressed(new BallDoorClose());
 		opButton2 = new JoystickButton(opStick, 2);
 		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
 //		opButton2.whileHeld(new SetLED(0,0,255));
-		opButton3 = new JoystickButton(opStick, 3);
-//		opButton3.whenPressed(new BallDoorOpen());
+        toggleLED = new JoystickButton(opStick, 3);
+        toggleLED.whenPressed(new toggleLED());
 		opButton4 = new JoystickButton(opStick, 4);
 		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
-		opButton5.whenPressed(new GyroPathFollower());
+		opButton5.whileHeld(new GyroCameraTurn(1.0));
 		
 
         

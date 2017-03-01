@@ -131,6 +131,16 @@ public class Drivetrain extends Subsystem {
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
     }
     
+    public void driveStraightHuman(double steerInput, SimPID steerPID){
+    	steerPIDOutput = -steerPID.calcPID(steerInput);
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonLeft1.set(-RobotMap.Dandyboy.getRawAxis(1)-steerPIDOutput);
+        RobotMap.driveTalonRight1.set(-RobotMap.Dandyboy.getRawAxis(1)+steerPIDOutput);
+    }
+    
     public void driveLeft(double encLeft, SimPID encPIDLeft){
     	drivePIDOutputLeft = encPIDLeft.calcPID(encLeft);
     	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);

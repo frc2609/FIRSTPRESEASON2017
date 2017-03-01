@@ -28,7 +28,6 @@ import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.robot.commands.*;
 
-import org.usfirst.frc.team2609.robot.commands.AutoGear;
 import org.usfirst.frc.team2609.robot.commands.SetLED;
 import org.usfirst.frc.team2609.robot.commands.autons.*;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
@@ -60,6 +59,8 @@ public class Robot extends IterativeRobot {
 //	double autonHeading2 = 0;
 //	double autonHeading3 = 0;
     //public static double centerX = 0;
+	public static double angleToDriveInitial = 0;
+	public static double distanceToDriveInitial = 0;
     
     public void robotInit() {
 		RobotMap.init();// put this here when imports don't work / robots don't quit
@@ -229,23 +230,25 @@ public class Robot extends IterativeRobot {
         RobotMap.driveTalonRight1.setEncPosition(0);
         
         RobotMap.talonState = TalonState.ARCADE;
+        
+        LedControl.trackLED(true);
     }
 
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
         drivetrain.handleTalonState();
-//    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
-//    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
-//    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
-//    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
-//    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
-//    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
-//    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
-//		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
-//		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
-//		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
-//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
-//    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
+    	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
+    	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
+    	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
+    	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
+    	SmartDashboard.putNumber("driveEncLeft.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
+    	SmartDashboard.putNumber("driveEncRight.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
+		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
+		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
 		
 //    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
@@ -316,7 +319,9 @@ public class Robot extends IterativeRobot {
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
-    	drivetrain.humanDrive();
+    	if(!OI.autoGear.get() && !OI.driveStraightMode.get()){
+    		drivetrain.humanDrive();
+    	}
 //        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             

@@ -18,6 +18,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.mindsensors.CANLight;
 
 public class RobotMap {
+	public static boolean disableHumanDrive = false;
 	public static CANTalon driveTalonLeft1;
 	public static CANTalon driveTalonLeft2;
 	public static CANTalon driveTalonRight1;

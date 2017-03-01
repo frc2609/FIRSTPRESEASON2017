@@ -9,7 +9,7 @@ public class toggleLED extends Command {
     }
  
     protected void initialize() {
-    	Robot.LedControl.trackLED(true);
+    	Robot.LedControl.toggleLED();
     }
 
     protected void execute() {
