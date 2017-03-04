@@ -32,10 +32,15 @@ public class LeftPRed extends CommandGroup {
     	addSequential(new DriveEncoder(65,1.0,60));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
-//    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
-    	addParallel(new BallDoorOpen());
-    	addParallel(new BallLowGoalAuton(point3));
+    	addSequential(new DriveEncoder(-65,1.0,60));
+    	addSequential(new GyroTurn(1,0));
+    	addSequential(new EncReset());
+    	addSequential(new DriveEncoder(100,1.0,0));
+//    	addSequential(new EncReset());
+//    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
+////    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
+//    	addParallel(new BallDoorOpen());
+//    	addParallel(new BallLowGoalAuton(point3));
     	
     	
     	

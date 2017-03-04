@@ -124,6 +124,8 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
 		shifter.high();
 		SmartDashboard.putNumber("LED Colour: ", 4);
+        Robot.drivetrain.resetDriveEncoders();
+		
     }
 	
 	public void disabledPeriodic() {
@@ -259,7 +261,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
     	
 		if (!gearSensorOld){
-			if (RobotMap.gearSensor.get()){// && !RobotMap.clawDownSensor.get()){
+			if (RobotMap.gearSensor.get()&& !RobotMap.clawDownSensor.get()){
 				new VulcanGearGrab().start();
 			}
 		}
