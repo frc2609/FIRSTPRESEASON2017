@@ -35,10 +35,5 @@ public class LeftPBlue extends CommandGroup {
 //    	addParallel(new DriveEncoderCurveSimple(-125, 0.8, 0.2, -60, -42, -42, -42, -10, -120, -120));
     	addParallel(new BallDoorOpen());
     	addParallel(new BallLowGoalAuton(point3));
-//    	addSequential(new EncReset());
-//    	addSequential(new DriveEncoder(-63,1.0,60));
-//    	addSequential(new GyroTurn(1,0));
-//    	addSequential(new EncReset());
-//    	addSequential(new DriveEncoder(100,1.0,0));
     }
 }

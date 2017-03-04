@@ -252,6 +252,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
+        
+        LedControl.trackLED(true);
 		
 //    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
 //    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());

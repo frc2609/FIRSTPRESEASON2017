@@ -14,9 +14,9 @@ public class RightPRed extends CommandGroup {
 	
     public RightPRed() {
     	double point1 = -20;
-    	double point2 = -128;
-    	double point3 = -128;
-    	double totalArc = -135;
+    	double point2 = -120;
+    	double point3 = -120;
+    	double totalArc = -125;
     	
     	double heading1 = -60;
     	double heading2 = -42;
@@ -28,13 +28,8 @@ public class RightPRed extends CommandGroup {
     	addSequential(new DriveEncoder(75,1.0,0));
     	addSequential(new GyroTurn(1,-60));
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(63,1.0,-60));
+    	addSequential(new DriveEncoder(65,1.0,-60));
     	addSequential(new ClawOpen());
-//    	addSequential(new EncReset());
-//    	addSequential(new DriveEncoder(-63,1.0,-60));
-//    	addSequential(new GyroTurn(1,0));
-//    	addSequential(new EncReset());
-//    	addSequential(new DriveEncoder(100,1.0,0));
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
 //    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
