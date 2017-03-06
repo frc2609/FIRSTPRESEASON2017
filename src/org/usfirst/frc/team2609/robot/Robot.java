@@ -249,9 +249,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawCloseSensor.get()", RobotMap.clawCloseSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
+//		SmartDashboard.putBoolean("ClawClosedSolenoid", RobotMap.vulcanClaw.get());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
+        
+        if (RobotMap.vulcanClaw.get() == DoubleSolenoid.Value.kForward){
+        	SmartDashboard.putBoolean("ClawClosedSolenoid", true);
+        }
+        else{
+        	SmartDashboard.putBoolean("ClawClosedSolenoid", false);
+        }
         
         LedControl.trackLED(true);
 		
@@ -267,8 +275,9 @@ public class Robot extends IterativeRobot {
 				new VulcanGearGrab().start();
 			}
 		}
-		
-
+		if(OI.opButton9.get()){
+			Tsunami.pullUp(-Math.abs(OI.opStick.getRawAxis(3)));
+		}
 		Robot.LedControl.setLed();
 		
 		if (RobotMap.gearSensor.get()){

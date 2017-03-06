@@ -25,23 +25,23 @@ public class StraightPegBlue extends CommandGroup {
     	addSequential(new DriveEncoder(3, 0.3, 0));
     	*/
     	double point1 = -5;
-    	double point2 = -160;
-    	double point3 = -180;
-    	double totalArc = -190;
+    	double point2 = -130;
+    	double point3 = -140;
+    	double totalArc = -160;
     	
     	double heading1 = 0;
-    	double heading2 = -90;
-    	double heading3 = -45;
-    	double heading4 = -45;
+    	double heading2 = 90; //inverted after first match
+    	double heading3 = 45;
+    	double heading4 = 45;
     	
     	
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(79,1.0,0));
+    	addSequential(new DriveEncoder(82,1.0,0));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.7, 0.3, heading1, heading2, heading3, heading4, point1, point2, point3));
     	addParallel(new BallDoorOpen());
-    	addParallel(new BallLowGoalAuton(point3));
+//    	addParallel(new BallLowGoalAuton(point3));
     	
     	
 //    	addSequential(new EncReset());

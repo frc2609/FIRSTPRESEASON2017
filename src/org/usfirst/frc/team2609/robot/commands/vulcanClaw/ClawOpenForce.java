@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawOpen extends Command {
+public class ClawOpenForce extends Command {
 
-    public ClawOpen() {
+    public ClawOpenForce() {
         //requires(Robot.vulcanclaw);
     }
 
@@ -21,11 +21,12 @@ public class ClawOpen extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.vulcanclaw.openClaw();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timeSinceInitialized()>.2;
+        return false;
     }
 
     // Called once after isFinished returns true

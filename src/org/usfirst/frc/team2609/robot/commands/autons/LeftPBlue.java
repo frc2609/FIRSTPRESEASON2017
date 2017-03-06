@@ -25,15 +25,16 @@ public class LeftPBlue extends CommandGroup {
     	double heading4 = 42;
 
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(75,1.0,0));
+    	addSequential(new DriveEncoder(77,1.0,0));
     	addSequential(new GyroTurn(1,60));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(65,1.0,60));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
+//    	addSequential(new DriveEncoder(-10,1.0,60)); // Go back if we dont want to do balls
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
 //    	addParallel(new DriveEncoderCurveSimple(-125, 0.8, 0.2, -60, -42, -42, -42, -10, -120, -120));
     	addParallel(new BallDoorOpen());
-    	addParallel(new BallLowGoalAuton(point3));
+//    	addParallel(new BallLowGoalAuton(point3));
     }
 }
