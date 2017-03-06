@@ -25,7 +25,7 @@ public class Drivetrain extends Subsystem {
     throttle = -RobotMap.Dandyboy.getRawAxis(1); 
     turnValue = RobotMap.Dandyboy.getRawAxis(0);
     deadZone = 0.15;
-    turningGain = 0.0;
+    turningGain = 0;
     if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone)){
     	throttle = 0;
     	turnValue = 0;

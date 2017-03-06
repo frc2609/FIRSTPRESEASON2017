@@ -13,7 +13,7 @@ public class VulcanGearMode extends CommandGroup {
     public VulcanGearMode() {
         addSequential(new ClawClose());
         addSequential(new ClawDown());
-//        addSequential(new TimerDelay(0.5));
+        addSequential(new TimerDelay(0.1)); //without this the claw doesnt open again
         addSequential(new ClawOpen());
         
     }

@@ -10,7 +10,7 @@ public class Tsunami extends Subsystem {
     }
     public static void pullUp(double speed){
 //    	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
-    	RobotMap.tsunamiMotor.set(speed*SmartDashboard.getNumber("climber speed", 0));
+    	RobotMap.tsunamiMotor.set(speed*SmartDashboard.getNumber("climber speed", 0)); // - VE!!
     }
 }
 

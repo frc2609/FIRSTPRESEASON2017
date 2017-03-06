@@ -2,6 +2,7 @@ package org.usfirst.frc.team2609.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import org.usfirst.frc.team2609.robot.commands.*;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpenForce;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanBallMode;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearMode;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
@@ -31,6 +32,7 @@ public class OI {
     public static JoystickButton autoGear;
     public JoystickButton BallDoorToggle;
     public static JoystickButton driveStraightMode;
+    public JoystickButton ClawForceOpen;
 
     public static Joystick opStick;
     public JoystickButton TsunamiUp;
@@ -95,8 +97,11 @@ public class OI {
         VulcanGearMode = new JoystickButton(driverStick, 8);
     	VulcanGearMode.whenPressed(new VulcanGearMode());
 
-    	BallDoorToggle = new JoystickButton(driverStick, 9);
+    	BallDoorToggle = new JoystickButton(driverStick, 10);
     	BallDoorToggle.whenPressed(new BallDoorToggle());
+    	
+    	ClawForceOpen = new JoystickButton(driverStick, 9);
+    	ClawForceOpen.whileHeld(new ClawOpenForce());
     	
 		opButton1 = new JoystickButton(opStick, 1);
 		opButton1.whenPressed(new BallDoorClose());
@@ -110,6 +115,8 @@ public class OI {
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
 		opButton5.whileHeld(new GyroCameraTurn(1.0));
+		opButton9 = new JoystickButton(opStick, 9);
+		// Enable analog scaling
 		
 
         
