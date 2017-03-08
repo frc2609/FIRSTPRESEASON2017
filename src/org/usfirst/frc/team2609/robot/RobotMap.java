@@ -83,13 +83,13 @@ public class RobotMap {
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
-		driveTalonRight1.setInverted(false);
+		driveTalonRight1.setInverted(true);
 //		driveTalonRight1.configEncoderCodesPerRev(611); // TODO: Enable if Motion profiling
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonLeft1.configEncoderCodesPerRev(51);
-		driveTalonLeft1.setInverted(true);
+		driveTalonLeft1.setInverted(false);
 		driveTalonLeft1.reverseSensor(true);
 //		driveTalonLeft1.configEncoderCodesPerRev(611); // TODO: Enable if Motion profiling
 //		driveTalonLeft1.reverseSensor(false); // TODO: Enable if Motion profiling

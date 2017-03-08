@@ -22,8 +22,8 @@ public class Drivetrain extends Subsystem {
 	double[] defaultval = new double[0];
 	
     public void humanDrive(){
-    throttle = -RobotMap.Dandyboy.getRawAxis(1); 
-    turnValue = RobotMap.Dandyboy.getRawAxis(0);
+    throttle = RobotMap.Dandyboy.getRawAxis(1); 
+    turnValue = -RobotMap.Dandyboy.getRawAxis(0);
     deadZone = 0.15;
     turningGain = 0;
     if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone)){
