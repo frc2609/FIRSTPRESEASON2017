@@ -127,7 +127,7 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
-    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
+    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft+steerPIDOutput);
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
     }
     

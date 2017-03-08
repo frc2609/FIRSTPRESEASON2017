@@ -53,7 +53,7 @@ public class DriveEncoder extends Command {
         driveP = (double)SmartDashboard.getNumber("Drive P: ",0);
         driveI = (double)SmartDashboard.getNumber("Drive I: ",0);
         driveD = (double)SmartDashboard.getNumber("Drive D: ",0);
-        driveMax = (double)SmartDashboard.getNumber("Drive Max: ",0);
+        driveMax = (double)SmartDashboard.getNumber("Drive Max: ",0.5);
         driveDC = (int)SmartDashboard.getNumber("Drive DC: ",0);
         driveDR = SmartDashboard.getNumber("Drive DR: ",0);
         driveEps = SmartDashboard.getNumber("Drive Eps: ",0);
