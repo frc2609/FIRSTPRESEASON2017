@@ -26,10 +26,10 @@ public class StraightPegRed extends CommandGroup {
     	addSequential(new DriveEncoder(3, 0.3, 0));
     	*/
     	
-    	double point1 = -5;
-    	double point2 = -145;
-    	double point3 = -170;
-    	double totalArc = -180;
+    	double point1 = -25;
+    	double point2 = -165;
+    	double point3 = -200;
+    	double totalArc = -200;
     	
     	double heading1 = 0;
     	double heading2 = -90; //inverted after first match

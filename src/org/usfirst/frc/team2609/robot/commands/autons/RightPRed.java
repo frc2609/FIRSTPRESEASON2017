@@ -14,14 +14,14 @@ public class RightPRed extends CommandGroup {
 	
     public RightPRed() {
     	double point1 = -10;
-    	double point2 = -120;
-    	double point3 = -120;
-    	double totalArc = -125;
+    	double point2 = -60;
+    	double point3 = -140;
+    	double totalArc = -140;
     	
     	double heading1 = -60;
-    	double heading2 = -42;
-    	double heading3 = -42;
-    	double heading4 = -42;
+    	double heading2 = 0;
+    	double heading3 = -45;
+    	double heading4 = -45;
     	//left gear and ? auton with dashboard variables
     	
     	addSequential(new EncReset());
@@ -31,7 +31,7 @@ public class RightPRed extends CommandGroup {
     	addSequential(new DriveEncoder(65,1.0,-60));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.8, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
+    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.4, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
 //    	addParallel(new DriveEncoderCurveSimple(-135, 0.8,0.2, 60, 42, 42, 42, -20, -128, -128));
     	addParallel(new BallDoorOpen());
 //    	addParallel(new BallLowGoalAuton(point3));
