@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import jaci.pathfinder.modifiers.TankModifier;
@@ -39,6 +40,7 @@ public class RobotMap {
 	public static Relay ringLED;
 	public static DigitalInput dio9;
 	public static DigitalInput gearSensor;
+	public static Ultrasonic ultra;
 	
     public static CANLight frameLights;
     public static DriverStation ds;
@@ -108,6 +110,8 @@ public class RobotMap {
 		ringLED.set(Relay.Value.kOff);
 		dio9 = new DigitalInput(9);
 		gearSensor = new DigitalInput(3);
+		ultra = new Ultrasonic(6,7);
+		ultra.setAutomaticMode(true);
 		
 		clawCloseSensor = new DigitalInput(0);
 		clawMissSensor = new DigitalInput(4);

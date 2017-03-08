@@ -39,10 +39,10 @@ public class StraightPegRed extends CommandGroup {
     	
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(82,1.0,0));
-    	addSequential(new ClawOpen());
+//    	addSequential(new ClawOpen());
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.7, 0.3, heading1, heading2, heading3, heading4, point1, point2, point3));
-    	addParallel(new BallDoorOpen());
-    	addParallel(new BallLowGoalAuton(point3));
+//    	addParallel(new BallDoorOpen());
+//    	addParallel(new BallLowGoalAuton(point3));
     }
 }

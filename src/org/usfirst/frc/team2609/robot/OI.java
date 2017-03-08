@@ -73,8 +73,6 @@ public class OI {
         autoGear = new JoystickButton(driverStick, 4);
         autoGear.whileHeld(new GyroCameraTurn(1.0));
         //autoGear.whenPressed(new AutoGear(0));
-        toggleLED = new JoystickButton(opStick, 5);
-		toggleLED.whenReleased(new toggleLED());
 //        
 //        xxx = new JoystickButton(driverStick, 5);
         
@@ -114,7 +112,7 @@ public class OI {
 		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
-		opButton5.whileHeld(new GyroCameraTurn(1.0));
+		opButton5.whenPressed(new CameraToggle());
 		opButton9 = new JoystickButton(opStick, 9);
 		// Enable analog scaling
 		
