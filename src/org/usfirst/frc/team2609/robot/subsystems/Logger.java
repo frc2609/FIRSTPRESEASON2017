@@ -63,7 +63,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("FPGATime,time, encLeft, encRight, rateLeft, rateRight, yaw, angle, victorLeft, victorRight");
+	            this.writer.write("FPGATime, encLeft, encRight,leftVel, rightVel, yaw, angle, rightSetpoint, rightError");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -87,15 +87,19 @@ public class Logger {
 	        try {
 	        	//int ,%d
 	        	//double ,%.3f
-	        	this.writer.write(String.format(",%.3fd", Timer.getFPGATimestamp()));
-	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getDistance()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getDistance()));
-	           // this.writer.write(String.format(",%.3f", RobotMap.driveEncLeft.getRate()));
-	          //  this.writer.write(String.format(",%.3f", RobotMap.driveEncRight.getRate()));
+	        	this.writer.write(String.format("%.3f", Timer.getFPGATimestamp()));
+//	        	this.writer.write(String.format(",%d", new java.util.Date().getTime()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonLeft1.getPosition()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getPosition()));
+	            this.writer.write(String.format(",%d", RobotMap.driveTalonLeft1.getEncVelocity()));
+	            this.writer.write(String.format(",%d", RobotMap.driveTalonRight1.getEncVelocity()));
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
+	            
+
+	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getSetpoint()));
+	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getError()));
 	            
 	            
 	            

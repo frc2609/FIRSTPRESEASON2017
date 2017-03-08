@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2609.robot.*;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
-public class DriveEncoder extends Command {
+public class DriveEncoderCurve extends Command {
 	SimPID drivePIDLeft;
 	SimPID drivePIDRight;
 	SimPID steeringPID;
@@ -19,7 +19,10 @@ public class DriveEncoder extends Command {
 	double drivePower = 0;
 	double driveEps = 0;
 	double driveTarget = 0;
-	double driveHeading = 0;
+	double driveHeadingStart = 0;
+	double driveHeadingEnd = 0;
+	double curveStart = 0;
+	double curveEnd = 0;
 	double driveDR = 0;
 	int driveDC = 0;
 	//private double driveTarget;
@@ -27,10 +30,13 @@ public class DriveEncoder extends Command {
 	// 30min 10/18/2016
 	// 30min total
 	
-	public DriveEncoder(double driveTarget, double drivePower, double driveHeading) {
+	public DriveEncoderCurve(double driveTarget, double drivePower, double driveHeadingStart, double driveHeadingEnd, double curveStart, double curveEnd) {
         requires(Robot.drivetrain);
         this.driveTarget = driveTarget;
-        this.driveHeading = driveHeading;
+        this.driveHeadingStart = driveHeadingStart;
+        this.driveHeadingEnd = driveHeadingEnd;
+        this.curveStart = curveStart;
+        this.curveEnd = curveEnd;
         this.drivePower = drivePower;
     }
 
@@ -41,7 +47,6 @@ public class DriveEncoder extends Command {
     	steeringPID.resetPreviousVal();
     	drivePIDLeft.resetPreviousVal();
     	drivePIDRight.resetPreviousVal();
-        this.steeringPID.setDesiredValue(driveHeading);
         this.drivePIDLeft.setDesiredValue(driveTarget);
         this.drivePIDRight.setDesiredValue(driveTarget);
         gyroP = (double)SmartDashboard.getNumber("Gyro P: ",0);
@@ -74,6 +79,12 @@ public class DriveEncoder extends Command {
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
     	double gyroYaw = RobotMap.ahrs.getYaw();
+    	if (RobotMap.driveTalonLeft1.getPosition()<curveStart){
+            this.steeringPID.setDesiredValue(driveHeadingStart);
+    	}
+    	else if (RobotMap.driveTalonLeft1.getPosition()>=curveStart && RobotMap.driveTalonLeft1.getPosition()<curveEnd){
+            this.steeringPID.setDesiredValue(((RobotMap.driveTalonLeft1.getPosition() - curveStart)/curveEnd-curveStart)*driveHeadingEnd);
+    	}
     	Robot.drivetrain.driveStraight(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), gyroYaw, drivePIDLeft, drivePIDRight, steeringPID);	
     }
 

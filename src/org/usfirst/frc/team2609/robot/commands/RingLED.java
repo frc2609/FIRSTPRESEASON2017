@@ -12,11 +12,11 @@ public class RingLED extends Command {
     }
  
     protected void initialize() {
-    	Robot.drivetrain.trackLED(state);
+    	Robot.LedControl.trackLED(state);
     }
 
     protected void execute() {
-    	Robot.drivetrain.trackLED(state);
+    	Robot.LedControl.trackLED(state);
     }
 
     protected boolean isFinished() {

@@ -24,11 +24,11 @@ public class GyroCameraTurn extends Command {
 	int endCounter = 0;
 	
     public GyroCameraTurn(double maxPower) {
-        gyroCameraP = (double)SmartDashboard.getNumber("gyroCamera P: ", 0);
-        gyroCameraI = (double)SmartDashboard.getNumber("gyroCamera I: ", 0);
-        gyroCameraD = (double)SmartDashboard.getNumber("gyroCamera D: ", 0);
-        gyroCameraMax = (double)SmartDashboard.getNumber("gyroCamera Max: ", 0);
-        gyroCameraEps = (double)SmartDashboard.getNumber("gyroCamera Eps: ", 0);
+        gyroCameraP = (double)SmartDashboard.getNumber("turn P: ", 0);
+        gyroCameraI = (double)SmartDashboard.getNumber("turn I: ", 0);
+        gyroCameraD = (double)SmartDashboard.getNumber("turn D: ", 0);
+        gyroCameraMax = (double)SmartDashboard.getNumber("turn Max: ", 0);
+        gyroCameraEps = (double)SmartDashboard.getNumber("turn Eps: ", 0);
         System.out.println("gyroCameraTURN CLASS INITED");
     	this.cameraPID = new SimPID();
 
@@ -37,6 +37,7 @@ public class GyroCameraTurn extends Command {
     }
  
     protected void initialize() {
+    	Robot.LedControl.trackLED(true);
     	cameraPID.resetPreviousVal();
         this.cameraPID.setConstants(gyroCameraP, gyroCameraI, gyroCameraD);
         this.cameraPID.setErrorEpsilon(gyroCameraEps);
@@ -77,6 +78,7 @@ public class GyroCameraTurn extends Command {
 
     protected void end() {
     	System.out.println("CameraPID.isDone "+ cameraPID.isDone());
+//    	Robot.LedControl.trackLED(false);
     	Robot.drivetrain.stopDrive();
     }
 
