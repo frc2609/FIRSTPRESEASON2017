@@ -27,7 +27,7 @@ public class StraightPegRed extends CommandGroup {
     	*/
     	
     	double point1 = -5;
-    	double point2 = -155;
+    	double point2 = -145;
     	double point3 = -170;
     	double totalArc = -180;
     	
@@ -41,7 +41,7 @@ public class StraightPegRed extends CommandGroup {
     	addSequential(new DriveEncoder(82,1.0,0));
 //    	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.7, 0.3, heading1, heading2, heading3, heading4, point1, point2, point3));
+    	addSequential(new DriveEncoderCurveSimple(totalArc, 0.4, 0.2, heading1, heading2, heading3, heading4, point1, point2, point3));
 //    	addParallel(new BallDoorOpen());
 //    	addParallel(new BallLowGoalAuton(point3));
     }

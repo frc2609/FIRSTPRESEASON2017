@@ -15,7 +15,7 @@ public class DriveEncoder extends Command {
 	double driveP = 0;
 	double driveI = 0;
 	double driveD = 0;
-	double driveMax = 0;
+	double driveMax = 0.5;
 	double drivePower = 0;
 	double driveEps = 0;
 	double driveTarget = 0;

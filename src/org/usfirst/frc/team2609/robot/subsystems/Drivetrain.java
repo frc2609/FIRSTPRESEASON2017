@@ -22,8 +22,8 @@ public class Drivetrain extends Subsystem {
 	double[] defaultval = new double[0];
 	
     public void humanDrive(){
-    throttle = RobotMap.Dandyboy.getRawAxis(1); 
-    turnValue = -RobotMap.Dandyboy.getRawAxis(0);
+    throttle = -RobotMap.Dandyboy.getRawAxis(1); 
+    turnValue = RobotMap.Dandyboy.getRawAxis(0);
     deadZone = 0.15;
     turningGain = 0;
     if ((Math.abs(throttle)<deadZone) && (Math.abs(turnValue)<deadZone)){
@@ -127,7 +127,7 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
-    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft+steerPIDOutput);
+    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
     }
     
@@ -191,13 +191,13 @@ public class Drivetrain extends Subsystem {
     	switch(RobotMap.talonState){
     	case ARCADE:
     		RobotMap.driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		RobotMap.driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
-    		RobotMap.driveTalonRight1.setInverted(false);
+    		RobotMap.driveTalonRight1.configEncoderCodesPerRev(13);//this is haram
+    		RobotMap.driveTalonRight1.setInverted(true);
     		RobotMap.driveTalonRight1.reverseSensor(false);
     		RobotMap.driveTalonRight1.reverseOutput(false);
     		RobotMap.driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-    		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(51);
-    		RobotMap.driveTalonLeft1.setInverted(true);
+    		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(13);
+    		RobotMap.driveTalonLeft1.setInverted(false);
     		RobotMap.driveTalonLeft1.reverseSensor(true);
     		RobotMap.driveTalonLeft1.reverseOutput(false);
     		RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
@@ -207,12 +207,12 @@ public class Drivetrain extends Subsystem {
     	case SIMPID:
     		RobotMap.driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		RobotMap.driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
-    		RobotMap.driveTalonRight1.setInverted(false);
+    		RobotMap.driveTalonRight1.setInverted(true);
     		RobotMap.driveTalonRight1.reverseSensor(false);
     		RobotMap.driveTalonRight1.reverseOutput(false);
     		RobotMap.driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
     		RobotMap.driveTalonLeft1.configEncoderCodesPerRev(51);
-    		RobotMap.driveTalonLeft1.setInverted(true);
+    		RobotMap.driveTalonLeft1.setInverted(false);
     		RobotMap.driveTalonLeft1.reverseSensor(true);
     		RobotMap.driveTalonLeft1.reverseOutput(false);
     		RobotMap.driveTalonLeft1.setVoltageRampRate(24);
