@@ -87,6 +87,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("turn Eps: ",1.0);
         SmartDashboard.putNumber("turn DR: ",1.0);
         SmartDashboard.putNumber("turn DC: ",5);
+        
+        SmartDashboard.putNumber("UltraDistance: ",5);
 
         SmartDashboard.putNumber("LED Colour: ", 1);
         SmartDashboard.putBoolean("LED Flash: ", false);
@@ -163,8 +165,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 		SmartDashboard.putBoolean("little miss claw", RobotMap.clawMissSensor.get());
 		
-		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
-		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
+//		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
+//		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
 
 	}
     public void autonomousInit() {
@@ -193,6 +195,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
     	SmartDashboard.putNumber("driveEncLeft.getOutputVoltage()", RobotMap.driveTalonLeft1.getOutputVoltage());
     	SmartDashboard.putNumber("driveEncRight.getOutputVoltage()", RobotMap.driveTalonRight1.getOutputVoltage());
+    	SmartDashboard.putNumber("ultra.getRangeInches()", RobotMap.ultra.getRangeInches());
 
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
     	//RobotMap.ringLED.set(Relay.Value.kReverse);

@@ -58,9 +58,9 @@ public class BallDoor extends Subsystem {
     public BallDoorState getState(){
     	switch(doubleSolenoid1.get()){
     	case kForward:
-    		return BallDoorState.CLOSED;
-    	case kReverse:
     		return BallDoorState.OPEN;
+    	case kReverse:
+    		return BallDoorState.CLOSED;
     	case kOff:
     		return BallDoorState.NEUTRAL;
     	default:
@@ -70,9 +70,9 @@ public class BallDoor extends Subsystem {
     public DoubleSolenoid.Value setDoor(BallDoorState desiredState){
     	switch(desiredState){
     	case OPEN:
-    		return DoubleSolenoid.Value.kReverse;
-    	case CLOSED:
     		return DoubleSolenoid.Value.kForward;
+    	case CLOSED:
+    		return DoubleSolenoid.Value.kReverse;
     	case NEUTRAL:
     		return DoubleSolenoid.Value.kOff;
     	default:
