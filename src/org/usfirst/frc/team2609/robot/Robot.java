@@ -333,9 +333,9 @@ public class Robot extends IterativeRobot {
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
-    	if(!OI.autoGear.get() && !OI.driveStraightMode.get()){
-    		drivetrain.humanDrive();
-    	}
+    	
+    	drivetrain.humanDrive();
+
 //        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             

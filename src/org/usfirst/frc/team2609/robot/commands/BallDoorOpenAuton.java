@@ -25,7 +25,7 @@ public class BallDoorOpenAuton extends Command {
     }
 
     protected boolean isFinished() {
-        return true;//timeSinceInitialized()>1;
+    	return timeSinceInitialized()>15.0;
     }
 
     protected void end() {
