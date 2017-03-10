@@ -47,20 +47,20 @@ public class BallDoor extends Subsystem {
 //    	I will keep this in until the state machine is tested
     }
     public void open() {
-    	doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
+    	Robot.r03.StayInsideR03(BallDoorState.OPEN);
 	}
     public void close() {
-    	doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
+    	Robot.r03.StayInsideR03(BallDoorState.CLOSED);
 	}
     public void neutral() {
-    	doubleSolenoid1.set(DoubleSolenoid.Value.kOff);
+    	Robot.r03.StayInsideR03(BallDoorState.NEUTRAL);
 	}
     public BallDoorState getState(){
     	switch(doubleSolenoid1.get()){
     	case kForward:
-    		return BallDoorState.CLOSED;
-    	case kReverse:
     		return BallDoorState.OPEN;
+    	case kReverse:
+    		return BallDoorState.CLOSED;
     	case kOff:
     		return BallDoorState.NEUTRAL;
     	default:
@@ -70,9 +70,9 @@ public class BallDoor extends Subsystem {
     public DoubleSolenoid.Value setDoor(BallDoorState desiredState){
     	switch(desiredState){
     	case OPEN:
-    		return DoubleSolenoid.Value.kReverse;
-    	case CLOSED:
     		return DoubleSolenoid.Value.kForward;
+    	case CLOSED:
+    		return DoubleSolenoid.Value.kReverse;
     	case NEUTRAL:
     		return DoubleSolenoid.Value.kOff;
     	default:

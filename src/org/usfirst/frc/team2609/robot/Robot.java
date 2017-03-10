@@ -277,7 +277,7 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		if(OI.opButton9.get()){
-			Tsunami.pullUp(-Math.abs(OI.opStick.getRawAxis(3)));
+			Tsunami.pullUp(OI.opStick.getRawAxis(3));
 		}
 		Robot.LedControl.setLed();
 		
