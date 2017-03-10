@@ -31,7 +31,6 @@ public class OI {
     public JoystickButton VulcanBallMode;
     public static JoystickButton autoGear;
     public JoystickButton BallDoorToggle;
-    public static JoystickButton driveStraightMode;
     public JoystickButton ClawForceOpen;
 
     public static Joystick opStick;
@@ -67,8 +66,8 @@ public class OI {
 //        toggleClaw = new JoystickButton(driverStick, 9);
 //        toggleClaw.whenReleased(new toggleClaw());
 //        
-        driveStraightMode = new JoystickButton(driverStick, 3);
-        driveStraightMode.whenPressed(new CameraToggle());
+        button3 = new JoystickButton(driverStick, 3);
+        button3.whenPressed(new CameraToggle());
 //        
         //autoGear = new JoystickButton(driverStick, 4);
         //autoGear.whileHeld(new GyroCameraTurn(1.0));

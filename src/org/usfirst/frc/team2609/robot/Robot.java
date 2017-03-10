@@ -165,7 +165,17 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
-
+		if(OI.opButton5.get()){
+			new CameraToggle().start();
+		}
+		if(OI.button3.get()){
+	    	double currentState = Robot.table.getNumber("rPiCam", 0.0);
+	    	if(currentState == 1){
+	    		Robot.table.putNumber("rPiCam", 0.0);
+	    	}else{
+	    		Robot.table.putNumber("rPiCam", 1.0);
+	    	}
+		}
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
