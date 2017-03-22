@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2609.robot.commands.autons;
 import org.usfirst.frc.team2609.robot.commands.BallDoorOpen;
+import org.usfirst.frc.team2609.robot.commands.BallDoorOpenAuton;
 import org.usfirst.frc.team2609.robot.commands.BallLowGoalAuton;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoderCurveSimple;
@@ -24,10 +25,10 @@ public class StraightPegBlue extends CommandGroup {
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(3, 0.3, 0));
     	*/
-    	double point1 = -5;
-    	double point2 = -130;
-    	double point3 = -140;
-    	double totalArc = -160;
+    	double point1 = -25;
+    	double point2 = -150;
+    	double point3 = -185;
+    	double totalArc = -200;
     	
     	double heading1 = 0;
     	double heading2 = 90; //inverted after first match
@@ -36,19 +37,13 @@ public class StraightPegBlue extends CommandGroup {
     	
     	
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(82,1.0,0));
+    	addSequential(new DriveEncoder(84,1.0,0));
     	addSequential(new ClawOpen());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.7, 0.3, heading1, heading2, heading3, heading4, point1, point2, point3));
-    	addParallel(new BallDoorOpen());
-//    	addParallel(new BallLowGoalAuton(point3));
+//    	addSequential(new DriveEncoder(-3,1.0,0)); // didnt go back enough
+    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1, heading2, heading3, heading4, point1, point2, point3));
+    	addParallel(new BallDoorOpenAuton(point3));
+    	addParallel(new BallLowGoalAuton(point3));
     	
-    	
-//    	addSequential(new EncReset());
-//    	addSequential(new DriveEncoder(80,1.0,0));
-//    	addSequential(new ClawOpen());
-//    	addSequential(new EncReset());
-//    	addParallel(new DriveEncoderCurveSimple(-190, 0.5, 0.5, 0, -90, -135, -135, 50, 160, 190));
-//    	addParallel(new BallLowGoalAuton());
     }
 }

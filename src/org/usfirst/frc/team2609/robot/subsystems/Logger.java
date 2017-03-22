@@ -63,7 +63,7 @@ public class Logger {
 	        try{
 	            path = this.getPath();
 	            this.writer = new BufferedWriter(new FileWriter(path));
-	            this.writer.write("FPGATime, encLeft, encRight,leftVel, rightVel, yaw, angle, rightSetpoint, rightError");
+	            this.writer.write("FPGATime, encLeft, encRight,leftVel, rightVel, yaw, angle, claw, deploy, ballDoor, shifter");
 	            this.writer.newLine();
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -96,11 +96,13 @@ public class Logger {
 	            
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getYaw()));
 	            this.writer.write(String.format(",%.3f", (double)RobotMap.ahrs.getAngle()));
-	            
+	           
 
-	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getSetpoint()));
-	            this.writer.write(String.format(",%.3f", RobotMap.driveTalonRight1.getError()));
-	            
+	            this.writer.write(RobotMap.vulcanClaw.get().toString());
+	            this.writer.write(RobotMap.vulcanDeploy.get().toString());
+	            this.writer.write(RobotMap.ballDoor.get().toString());
+	            this.writer.write(RobotMap.vulcanDeploy.get().toString());
+	            this.writer.write(RobotMap.shifter.get().toString());
 	            
 	            
 	            

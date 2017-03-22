@@ -114,6 +114,7 @@ public class Robot extends IterativeRobot {
         this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
+		Robot.table.putNumber("rPiCam", 1.0); // Default to field cam
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
@@ -165,17 +166,17 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
-		if(OI.opButton5.get()){
-			new CameraToggle().start();
-		}
-		if(OI.button3.get()){
-	    	double currentState = Robot.table.getNumber("rPiCam", 0.0);
-	    	if(currentState == 1){
-	    		Robot.table.putNumber("rPiCam", 0.0);
-	    	}else{
-	    		Robot.table.putNumber("rPiCam", 1.0);
-	    	}
-		}
+//		if(OI.opButton5.get()){
+//			new CameraToggle().start();
+//		}
+//		if(OI.button3.get()){
+//	    	double currentState = Robot.table.getNumber("rPiCam", 0.0);
+//	    	if(currentState == 1){
+//	    		Robot.table.putNumber("rPiCam", 0.0);
+//	    	}else{
+//	    		Robot.table.putNumber("rPiCam", 1.0);
+//	    	}
+//		}
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
@@ -206,7 +207,7 @@ public class Robot extends IterativeRobot {
 
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
     	//RobotMap.ringLED.set(Relay.Value.kReverse);
-//        this.logger.logAll(); // write to logs
+        this.logger.logAll(); // write to logs
         //SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		//SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 		//SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
@@ -227,7 +228,7 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
 //        RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
-        this.logger.openFile();
+//        this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);

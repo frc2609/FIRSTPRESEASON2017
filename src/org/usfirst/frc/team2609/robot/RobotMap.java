@@ -108,9 +108,8 @@ public class RobotMap {
         	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kOff);
-		dio9 = new DigitalInput(9);
 		gearSensor = new DigitalInput(3);
-		ultra = new Ultrasonic(6,7);
+		ultra = new Ultrasonic(8,9);
 		ultra.setAutomaticMode(true);
 		
 		clawCloseSensor = new DigitalInput(0);

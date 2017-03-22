@@ -27,7 +27,7 @@ public class StraightPegRed extends CommandGroup {
     	*/
     	
     	double point1 = -25;
-    	double point2 = -170;
+    	double point2 = -173;
     	double point3 = -195;
     	double totalArc = -200;
     	
