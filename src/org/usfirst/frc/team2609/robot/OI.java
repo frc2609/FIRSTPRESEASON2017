@@ -53,10 +53,8 @@ public class OI {
     	opStick = new Joystick(1);
         
         button1 = new JoystickButton(driverStick, 1);
-        button1.whenPressed(new ShifterCommandHigh());
         
         shift = new JoystickButton(driverStick, 2);
-        shift.whenPressed(new ShifterCommandLow());
 
 //        button1 = new JoystickButton(driverStick, 1);
 //        //button1.whenPressed(new GyroCameraTurn(.5));
@@ -71,7 +69,6 @@ public class OI {
         driveStraightMode.whileHeld(new DriveStraight());
 //        
         autoGear = new JoystickButton(driverStick, 4);
-        autoGear.whileHeld(new GyroCameraTurn(1.0));
         //autoGear.whenPressed(new AutoGear(0));
 //        
 //        xxx = new JoystickButton(driverStick, 5);
@@ -96,23 +93,18 @@ public class OI {
     	VulcanGearMode.whenPressed(new VulcanGearMode());
 
     	BallDoorToggle = new JoystickButton(driverStick, 10);
-    	BallDoorToggle.whenPressed(new BallDoorToggle());
     	
     	ClawForceOpen = new JoystickButton(driverStick, 9);
     	ClawForceOpen.whileHeld(new ClawOpenForce());
     	
-		opButton1 = new JoystickButton(opStick, 1);
-		opButton1.whenPressed(new BallDoorClose());
 		opButton2 = new JoystickButton(opStick, 2);
 		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
 //		opButton2.whileHeld(new SetLED(0,0,255));
         toggleLED = new JoystickButton(opStick, 3);
-        toggleLED.whenPressed(new toggleLED());
 		opButton4 = new JoystickButton(opStick, 4);
 		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
-		opButton5.whenPressed(new CameraToggle());
 		opButton9 = new JoystickButton(opStick, 9);
 		// Enable analog scaling
 		

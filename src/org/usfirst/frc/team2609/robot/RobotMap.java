@@ -9,14 +9,12 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import jaci.pathfinder.modifiers.TankModifier;
 
 import org.usfirst.frc.team2609.enums.TalonState;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
 import com.kauailabs.navx.frc.AHRS;
-import com.mindsensors.CANLight;
 
 public class RobotMap {
 	public static boolean disableHumanDrive = false;
@@ -42,7 +40,6 @@ public class RobotMap {
 	public static DigitalInput gearSensor;
 	public static Ultrasonic ultra;
 	
-    public static CANLight frameLights;
     public static DriverStation ds;
     
     public static DigitalInput clawCloseSensor;
@@ -55,7 +52,6 @@ public class RobotMap {
     public static AxisState axisState = AxisState.BALL;
     public static TalonState talonState = TalonState.ARCADE;
     
-    public static TankModifier gearPath; 
     
 
 	public static void init() {
@@ -119,7 +115,6 @@ public class RobotMap {
 		clawUpSensor = new DigitalInput(1);
 		clawDownSensor = new DigitalInput(2);
 		
-        frameLights = new CANLight(12);
         ds = DriverStation.getInstance();
         Dandyboy = new Joystick(0);
 	}

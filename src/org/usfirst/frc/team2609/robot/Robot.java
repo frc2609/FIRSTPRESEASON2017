@@ -34,9 +34,7 @@ import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
 public class Robot extends IterativeRobot {
 
-	public static LedControl LedControl;
 	public static Drivetrain drivetrain;
-	public static Shifter shifter;
 	public static VulcanClaw vulcanclaw;
 	public static OI oi;
 	public static Tsunami tsunami;
@@ -44,7 +42,6 @@ public class Robot extends IterativeRobot {
 	public static BallDoor ballDoor;
 	public static R03 r03;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
-	private Logger logger;
 	boolean gearSensorOld;
     Command autonomousCommand;
     SendableChooser chooser;
@@ -96,11 +93,8 @@ public class Robot extends IterativeRobot {
         boolean valueVision = false;
         SmartDashboard.putBoolean("vision", valueVision);
     	SmartDashboard.putNumber("climber speed", 1);
-
-        shifter = new Shifter();
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
-		LedControl = new LedControl();
 		ballIntake = new BallIntake();
 		ballDoor = new BallDoor();
         chooser = new SendableChooser();
@@ -113,7 +107,6 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Left peg Blue", new LeftPBlue());
         chooser.addObject("Right peg Blue", new RightPBlue());
         SmartDashboard.putData("Auto mode", chooser);
-        this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
@@ -124,7 +117,6 @@ public class Robot extends IterativeRobot {
     }
 	
     public void disabledInit(){
-		shifter.high();
 		SmartDashboard.putNumber("LED Colour: ", 4);
         Robot.drivetrain.resetDriveEncoders();
 		
@@ -133,15 +125,6 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		//LedControl.setLed(255, 255, 0);
-		this.logger.close();
-		Robot.LedControl.setLed();
-//        if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Red) {
-//        	RobotMap.frameLights.showRGB(255, 0, 0);
-//        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Blue) {
-//        	RobotMap.frameLights.showRGB(0, 0, 255);
-//        } else if (RobotMap.ds.getAlliance() == DriverStation.Alliance.Invalid) {
-//        	RobotMap.frameLights.showRGB(255, 200, 0); // yellow
-//        }
 		Double readyVulcanClaw = table.getNumber("readyVulcanClaw",2);
         if (readyVulcanClaw == 1) {
         	//RobotMap.frameLights.showRGB(255, 200, 0); // yellow For the peanut gallery
@@ -176,11 +159,9 @@ public class Robot extends IterativeRobot {
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         autonomousCommand = (Command) chooser.getSelected();
-        this.logger.openFile();
 
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
-		shifter.low();
         if (autonomousCommand != null) autonomousCommand.start();
  
 
@@ -198,8 +179,6 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("ultra.getRangeInches()", RobotMap.ultra.getRangeInches());
 
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
-    	//RobotMap.ringLED.set(Relay.Value.kReverse);
-//        this.logger.logAll(); // write to logs
         //SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveEncLeft.getDistance());
 		//SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveEncRight.getDistance());
 		//SmartDashboard.putNumber("driveEncLeft.getRate()", RobotMap.driveEncLeft.getRate());
@@ -210,7 +189,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
 		
 
-//        this.logger.logAll(); // write to logs
         
 		
     }
@@ -220,7 +198,6 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.resetDriveEncoders();
         Robot.drivetrain.gyroYawZero();
 //        RobotMap.frameLights.showRGB(255, 0, 0);//set led's to red for start of match
-        this.logger.openFile();
         //RobotMap.serialport.reset();
 		//RobotMap.serialport.writeString(":85");
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
@@ -230,14 +207,12 @@ public class Robot extends IterativeRobot {
     	
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
-		shifter.high();
 
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
         
         RobotMap.talonState = TalonState.ARCADE;
         
-        LedControl.trackLED(true);
     }
 
 	public void teleopPeriodic() {
@@ -265,7 +240,6 @@ public class Robot extends IterativeRobot {
         	SmartDashboard.putBoolean("ClawClosedSolenoid", false);
         }
         
-        LedControl.trackLED(true);
 		
 //    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.ballIntake.getOutputVoltage());
 //    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.ballIntake.getOutputCurrent());
@@ -282,55 +256,13 @@ public class Robot extends IterativeRobot {
 		if(OI.opButton9.get()){
 			Tsunami.pullUp(-Math.abs(OI.opStick.getRawAxis(3)));
 		}
-		Robot.LedControl.setLed();
 		
-		if (RobotMap.gearSensor.get()){
-			SmartDashboard.putNumber("LED Colour: ", 2);
-//			LedControl.setLed(0,255,0);
-		}
-		else{
-			SmartDashboard.putNumber("LED Colour: ", 1);
-//			LedControl.setLed(255,0,0);
-		}
 		gearSensorOld = RobotMap.gearSensor.get();
 		
-//        this.logger.logAll(); // write to logs
-        //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
-        if(RobotMap.axisState == AxisState.SCALER){
-        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
-        }
-        else{
-        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
-        }
     	
-//        if(OI.driverStick.getPOV() == 180){
-//        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
-//        }
-//        else if (OI.driverStick.getPOV() == 0){
-//        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
-//        }
-//        else{
-//        	RobotMap.tsunamiMotor.set(0);
-//        }
-    	//RobotMap.ringLED.set(Relay.Value.kReverse);
-        if(RobotMap.axisState == AxisState.SCALER){
-//        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
-        }
-        else{
-        	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
-        }
         
         
     	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
-//        if(OI.driverStick.getPOV() == 180){
-//        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
-//        }
-//        else if (OI.driverStick.getPOV() == 0){
-//        	RobotMap.tsunamiMotor.set(SmartDashboard.getNumber("climber speed", 0));
-//        }
-//        else{
-//        	RobotMap.tsunamiMotor.set(0);
-//        }
         
 //        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
