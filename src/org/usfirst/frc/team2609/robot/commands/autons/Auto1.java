@@ -2,7 +2,6 @@ package org.usfirst.frc.team2609.robot.commands.autons;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;
 import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
-import org.usfirst.frc.team2609.robot.commands.RingLED;
 import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -33,22 +32,7 @@ public class Auto1 extends CommandGroup {
 		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
 		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
     	
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
+
     	
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.exampleSubsystem);

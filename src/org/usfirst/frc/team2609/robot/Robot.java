@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team2609.robot.subsystems.BallDoor;
 import org.usfirst.frc.team2609.robot.subsystems.BallIntake;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team2609.robot.subsystems.LedControl;
 import org.usfirst.frc.team2609.robot.subsystems.Logger;
 import org.usfirst.frc.team2609.robot.subsystems.R03;
 import org.usfirst.frc.team2609.robot.subsystems.Shifter;
@@ -28,7 +27,6 @@ import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.robot.commands.*;
 
-import org.usfirst.frc.team2609.robot.commands.SetLED;
 import org.usfirst.frc.team2609.robot.commands.autons.*;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearGrab;
 
