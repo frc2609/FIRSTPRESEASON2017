@@ -25,7 +25,7 @@ public class ClawUp extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !RobotMap.clawUpSensor.get() || timeSinceInitialized()>0.5;
+        return timeSinceInitialized()>0.5;
     }
 
     // Called once after isFinished returns true

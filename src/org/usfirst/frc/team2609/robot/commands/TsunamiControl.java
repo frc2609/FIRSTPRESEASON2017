@@ -19,7 +19,6 @@ public class TsunamiControl extends Command {
     }
 
     protected void initialize() {
-    	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
     }
 
     protected void execute() {

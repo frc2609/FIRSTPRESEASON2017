@@ -37,7 +37,6 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Tsunami tsunami;
 	public static BallIntake ballIntake;
-	public static BallDoor ballDoor;
 	public static R03 r03;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	boolean gearSensorOld;
@@ -94,7 +93,6 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
 		ballIntake = new BallIntake();
-		ballDoor = new BallDoor();
         chooser = new SendableChooser();
         r03 = new R03();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
@@ -106,8 +104,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Right peg Blue", new RightPBlue());
         SmartDashboard.putData("Auto mode", chooser);
         table = NetworkTable.getTable("RaspberryPi");
-        table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
-        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
+        table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, 
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
@@ -227,8 +224,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 //		SmartDashboard.putBoolean("ClawClosedSolenoid", RobotMap.vulcanClaw.get());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
-    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
         
         if (RobotMap.vulcanClaw.get() == DoubleSolenoid.Value.kForward){
@@ -252,7 +247,7 @@ public class Robot extends IterativeRobot {
 			}
 		}
 		if(OI.opButton9.get()){
-			Tsunami.pullUp(-Math.abs(OI.opStick.getRawAxis(3)));
+			Tsunami.pullUp(OI.opStick.getRawAxis(3));
 		}
 		
 		gearSensorOld = RobotMap.gearSensor.get();
@@ -260,7 +255,6 @@ public class Robot extends IterativeRobot {
     	
         
         
-    	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
         
 //        System.out.println("Left: " + RobotMap.driveTalonLeft1.getEncPosition());
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());

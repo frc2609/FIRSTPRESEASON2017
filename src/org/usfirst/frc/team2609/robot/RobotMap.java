@@ -6,7 +6,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -23,7 +26,7 @@ public class RobotMap {
 	public static CANTalon driveTalonRight1;
 	public static CANTalon driveTalonRight2;
 	public static CANTalon ballIntake;
-	public static CANTalon tsunamiMotor;
+	public static Victor tsunamiMotor;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -58,11 +61,18 @@ public class RobotMap {
 		// DONT DEFINE THE OBJECT TYPE HERE!!1111! actually you cant define an object that is part of a spectrum!
 		//ONE ex. Victor  driveVictorLeft1 = new Victor(0);
 		try {
-            ahrs = new AHRS(SPI.Port.kMXP);
+            ahrs = new AHRS(SerialPort.Port.kUSB);
             LiveWindow.addSensor("Drivetrain", "AHRS", ahrs);
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
         }
+		
+		try {
+			CameraServer.getInstance().startAutomaticCapture();
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("Error instantiating camera:  " + ex.getMessage(), true);
+        }
+		
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
 		driveTalonRight1 = new CANTalon(3);
@@ -70,7 +80,7 @@ public class RobotMap {
 		driveTalonLeft1 = new CANTalon(1);
 		driveTalonLeft2 = new CANTalon(2);
 		ballIntake = new CANTalon(5);
-		tsunamiMotor = new CANTalon(6);
+		tsunamiMotor = new Victor(9);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
@@ -91,16 +101,12 @@ public class RobotMap {
 //		driveTalonLeft1.reverseSensor(false); // TODO: Enable if Motion profiling
 		driveTalonLeft1.reverseOutput(false);
 		
-		
-		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
 
 //		prototype = new CANTalon(5);
 //		prototype.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);	
 //		prototype.reverseSensor(false);
-        shifter = new DoubleSolenoid(0, 1, 0);
-        vulcanClaw = new DoubleSolenoid(0, 7, 6);
-        vulcanDeploy = new DoubleSolenoid(0, 4, 5);
-        ballDoor = new DoubleSolenoid(0,2,3);
+        vulcanClaw = new DoubleSolenoid(0, 1, 3);
+        vulcanDeploy = new DoubleSolenoid(0, 2, 0);
         	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kOff);

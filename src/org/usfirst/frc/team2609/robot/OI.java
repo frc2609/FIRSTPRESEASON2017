@@ -76,7 +76,6 @@ public class OI {
         toggleClaw = new JoystickButton(driverStick, 6);
         toggleClaw.whenReleased(new toggleClaw());
         
-        TsunamiDown = new JoystickButton(driverStick, 5);
         
 //        VulcanGearMode = new JoystickButton(driverStick, 8);
 //    	VulcanGearMode.whenPressed(new VulcanGearMode());
@@ -98,13 +97,14 @@ public class OI {
     	ClawForceOpen.whileHeld(new ClawOpenForce());
     	
 		opButton2 = new JoystickButton(opStick, 2);
-		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
+		//opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
 //		opButton2.whileHeld(new SetLED(0,0,255));
         toggleLED = new JoystickButton(opStick, 3);
 		opButton4 = new JoystickButton(opStick, 4);
-		opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
+		//opButton4.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,1));
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
+		opButton7 = new JoystickButton(opStick, 7);
 		opButton9 = new JoystickButton(opStick, 9);
 		// Enable analog scaling
 		
