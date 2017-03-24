@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Gyro P: ", 0.05);
     	SmartDashboard.putNumber("Gyro I: ", 0.000);
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
-    	SmartDashboard.putNumber("Gyro Max: ", 0.2);
+    	SmartDashboard.putNumber("Gyro Max: ", 0.1);
 //    	SmartDashboard.putNumber("Gyro Eps: ", 0.2); If needed later
 		
         SmartDashboard.putNumber("turn P: ",0.02);
@@ -95,8 +95,7 @@ public class Robot extends IterativeRobot {
 		ballIntake = new BallIntake();
         chooser = new SendableChooser();
         r03 = new R03();
-        chooser.addDefault("Default Auto - Dont move", new Auto1());
-        chooser.addObject("Straight Peg Red", new StraightPegRed());
+        chooser.addDefault("Straight Peg Red", new StraightPegRed());
         chooser.addObject("Straight Peg Blue", new StraightPegBlue());
         chooser.addObject("Left peg Red", new LeftPRed());
         chooser.addObject("Right peg Red", new RightPRed());
@@ -149,8 +148,6 @@ public class Robot extends IterativeRobot {
 	}
     public void autonomousInit() {
         Robot.drivetrain.gyroYawZero();
-        Robot.drivetrain.resetDriveEncoders();
-        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         autonomousCommand = (Command) chooser.getSelected();
@@ -246,9 +243,7 @@ public class Robot extends IterativeRobot {
 				new VulcanGearGrab().start();
 			}
 		}
-		if(OI.opButton9.get()){
-			Tsunami.pullUp(OI.opStick.getRawAxis(3));
-		}
+		Tsunami.pullUp(OI.opStick.getRawAxis(3)*0.9);
 		
 		gearSensorOld = RobotMap.gearSensor.get();
 		
@@ -260,9 +255,7 @@ public class Robot extends IterativeRobot {
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
-    	if(!OI.autoGear.get() && !OI.driveStraightMode.get()){
-    		drivetrain.humanDrive();
-    	}
+		drivetrain.humanDrive();
 //        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));
             

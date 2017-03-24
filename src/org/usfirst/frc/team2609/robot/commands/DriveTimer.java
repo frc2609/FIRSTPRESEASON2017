@@ -30,7 +30,7 @@ public class DriveTimer extends Command {
     protected void initialize() {
         this.steeringPID = new SimPID();
     	steeringPID.resetPreviousVal();
-        this.steeringPID.setDesiredValue(RobotMap.ahrs.getYaw());
+        this.steeringPID.setDesiredValue(0);
         gyroP = (double)SmartDashboard.getNumber("Gyro P: ",0);
         gyroI = (double)SmartDashboard.getNumber("Gyro I: ",0);
         gyroD = (double)SmartDashboard.getNumber("Gyro D: ",0);
@@ -53,6 +53,7 @@ public class DriveTimer extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drivetrain.stopDrive();
     }
 
     // Called when another command which requires one or more of the same
