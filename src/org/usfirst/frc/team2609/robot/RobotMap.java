@@ -26,7 +26,7 @@ public class RobotMap {
 	public static CANTalon driveTalonRight1;
 	public static CANTalon driveTalonRight2;
 	public static CANTalon ballIntake;
-	public static Victor tsunamiMotor;
+	public static CANTalon tsunamiMotor;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -80,7 +80,7 @@ public class RobotMap {
 		driveTalonLeft1 = new CANTalon(1);
 		driveTalonLeft2 = new CANTalon(2);
 		ballIntake = new CANTalon(5);
-		tsunamiMotor = new Victor(9);
+		tsunamiMotor = new CANTalon(6);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
@@ -100,6 +100,9 @@ public class RobotMap {
 //		driveTalonLeft1.configEncoderCodesPerRev(611); // TODO: Enable if Motion profiling
 //		driveTalonLeft1.reverseSensor(false); // TODO: Enable if Motion profiling
 		driveTalonLeft1.reverseOutput(false);
+		
+		tsunamiMotor.setCurrentLimit(20);
+		tsunamiMotor.EnableCurrentLimit(true);
 		
 
 //		prototype = new CANTalon(5);
