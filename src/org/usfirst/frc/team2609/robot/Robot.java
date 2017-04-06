@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.enums.VulcanClawState;
+import org.usfirst.frc.team2609.enums.VulcanDeployState;
 import org.usfirst.frc.team2609.robot.commands.*;
 
 import org.usfirst.frc.team2609.robot.commands.SetLED;
@@ -117,11 +118,14 @@ public class Robot extends IterativeRobot {
         this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
-        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kForward); //Closed Claw
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+//        RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kForward); //Closed Claw
+//        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
+//        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+
+        this.vulcanclaw.setClaw(VulcanClawState.NEUTRAL);
+        this.vulcanclaw.setClaw(VulcanDeployState.NEUTRAL);
     }
 	
     public void disabledInit(){
@@ -176,11 +180,12 @@ public class Robot extends IterativeRobot {
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
         RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kForward); //Closed Claw
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
+        
         autonomousCommand = (Command) chooser.getSelected();
         this.logger.openFile();
 
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+        this.vulcanclaw.setClaw(VulcanClawState.CLOSED);
+        this.vulcanclaw.setClaw(VulcanDeployState.NEUTRAL);
 		shifter.low();
         if (autonomousCommand != null) autonomousCommand.start();
  
@@ -228,10 +233,11 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
-    	
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kForward);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
-		shifter.high();
+
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kForward);
+//        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+        this.vulcanclaw.setClaw(VulcanClawState.CLOSED);
+        this.vulcanclaw.setClaw(VulcanDeployState.NEUTRAL);
 
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
@@ -277,7 +283,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
     	
 		if (!gearSensorOld){
-			if (RobotMap.gearSensor.get() && vulcanclaw.getClawState() == VulcanClawState.OPEN){//&& !RobotMap.clawDownSensor.get()){
+			if (RobotMap.gearSensor.get() && vulcanclaw.getDeployState() == VulcanDeployState.DOWN){//&& !RobotMap.clawDownSensor.get()){
 				RobotMap.gearRollerMotor.set(0);
 				new VulcanGearGrab().start();
 			}
@@ -296,10 +302,10 @@ public class Robot extends IterativeRobot {
 			RobotMap.gearRollerMotor.set(0);
 		}
 
-		if(OI.VulcanGearMode.get()){
-			Robot.vulcanclaw.openClaw();;
-			RobotMap.gearRollerMotor.set(-1);
-		}	
+//		if(OI.VulcanGearMode.get()){
+//			Robot.vulcanclaw.openClaw();;
+//			RobotMap.gearRollerMotor.set(-1);
+//		}	
 		if(OI.opButton9.get()){
 			Tsunami.pullUp(-Math.abs(OI.opStick.getRawAxis(3)));
 		}

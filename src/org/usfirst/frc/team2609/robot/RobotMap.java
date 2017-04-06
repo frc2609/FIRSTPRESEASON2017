@@ -106,8 +106,8 @@ public class RobotMap {
 //		prototype.reverseSensor(false);
         vulcanClaw = new DoubleSolenoid(0, 0, 1);
         shifter = new DoubleSolenoid(0, 7, 6);
-        vulcanDeploy = new DoubleSolenoid(0, 4, 5);
-        ballDoor = new DoubleSolenoid(0,2,3);
+        vulcanDeploy = new DoubleSolenoid(0, 3, 2);
+        ballDoor = new DoubleSolenoid(0,4,5);
         	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kOff);

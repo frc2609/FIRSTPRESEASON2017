@@ -89,11 +89,11 @@ public class OI {
 //    	
 //        VulcanGearScore = new JoystickButton(driverStick, 6);
 //    	VulcanGearScore.whenPressed(new VulcanGearScore());
-//        VulcanBallMode = new JoystickButton(driverStick, 7);
-//    	VulcanBallMode.whenPressed(new VulcanBallMode());
+        VulcanBallMode = new JoystickButton(driverStick, 7);
+    	VulcanBallMode.whenPressed(new VulcanBallMode());
     	
         VulcanGearMode = new JoystickButton(driverStick, 8);
-//    	VulcanGearMode.whenPressed(new VulcanGearMode());
+    	VulcanGearMode.whenPressed(new VulcanGearMode());
 
     	BallDoorToggle = new JoystickButton(driverStick, 10);
     	BallDoorToggle.whenPressed(new BallDoorToggle());
@@ -113,7 +113,7 @@ public class OI {
 //		opButton4.whileHeld(new SetLED(0,0,255));
 		opButton5 = new JoystickButton(opStick, 5);
 		opButton5.whenPressed(new CameraToggle());
-		opButton7 = new JoystickButton(driverStick, 7);
+//		opButton7 = new JoystickButton(driverStick, 7);
 		
 		opButton9 = new JoystickButton(opStick, 9);
 		// Enable analog scaling
