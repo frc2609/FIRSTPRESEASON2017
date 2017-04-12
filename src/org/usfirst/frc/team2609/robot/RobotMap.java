@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import jaci.pathfinder.modifiers.TankModifier;
@@ -26,6 +27,7 @@ public class RobotMap {
 	public static CANTalon driveTalonRight2;
 	public static CANTalon ballIntake;
 	public static CANTalon tsunamiMotor;
+	public static CANTalon gearRoller;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -67,6 +69,11 @@ public class RobotMap {
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
         }
+		try {
+			CameraServer.getInstance().startAutomaticCapture();
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("Error instantiating camera:  " + ex.getMessage(), true);
+        }
     	//serialport = new SerialPort(9600, SerialPort.Port.kUSB);
     	//SerialPort serial = new SerialPort(115200, SerialPort.Port.kUSB);
 		driveTalonRight1 = new CANTalon(3);
@@ -75,6 +82,7 @@ public class RobotMap {
 		driveTalonLeft2 = new CANTalon(2);
 		ballIntake = new CANTalon(5);
 		tsunamiMotor = new CANTalon(6);
+		gearRoller = new CANTalon(7);
 		
 		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);

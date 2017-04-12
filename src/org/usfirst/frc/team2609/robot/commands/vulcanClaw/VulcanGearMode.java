@@ -15,6 +15,7 @@ public class VulcanGearMode extends CommandGroup {
         addSequential(new ClawDown());
         addSequential(new TimerDelay(0.1)); //without this the claw doesnt open again
         addSequential(new ClawOpen());
+        addSequential(new gearRollerSetSpeed(0.8));
         
     }
 }

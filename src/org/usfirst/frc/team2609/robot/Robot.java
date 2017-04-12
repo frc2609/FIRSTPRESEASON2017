@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.enums.TalonState;
+import org.usfirst.frc.team2609.enums.VulcanClawState;
+import org.usfirst.frc.team2609.enums.VulcanDeployState;
 import org.usfirst.frc.team2609.robot.commands.*;
 
 import org.usfirst.frc.team2609.robot.commands.SetLED;
@@ -302,14 +304,12 @@ public class Robot extends IterativeRobot {
 		}
 		gearSensorOld = RobotMap.gearSensor.get();
 		
-//        this.logger.logAll(); // write to logs
-        //drivetrain.driveTank(-RobotMap.Dandyboy.getRawAxis(1),-RobotMap.Dandyboy.getRawAxis(3));
-        if(RobotMap.axisState == AxisState.SCALER){
-        	RobotMap.tsunamiMotor.set(RobotMap.Dandyboy.getRawAxis(3));
-        }
-        else{
-        	RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
-        }
+        RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
+		if ((RobotMap.clawCloseSensor.get() || RobotMap.clawMissSensor.get()) && this.vulcanclaw.getClawState() == VulcanClawState.OPEN && RobotMap.clawDownSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN){
+			vulcanclaw.gearRollerSetSpeed(0.8);
+		}else if(!RobotMap.clawUpSensor.get() || this.vulcanclaw.getDeployState() == VulcanDeployState.UP){
+			vulcanclaw.gearRollerSetSpeed(0.0);
+		}
     	
 //        if(OI.driverStick.getPOV() == 180){
 //        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));

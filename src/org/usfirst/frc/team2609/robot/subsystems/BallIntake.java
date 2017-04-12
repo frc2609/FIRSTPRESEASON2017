@@ -13,11 +13,11 @@ public class BallIntake extends Subsystem {
     // here. Call these from Commands.
 	
 	public void ballIntake() {
-    	RobotMap.ballIntake.set(1.0);
+//    	RobotMap.ballIntake.set(1.0);
 	}
 
 	public void ballOut() {
-    	RobotMap.ballIntake.set(-1.0);
+//    	RobotMap.ballIntake.set(-1.0);
 	}
 	
     public void initDefaultCommand() {

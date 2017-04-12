@@ -135,6 +135,10 @@ public class VulcanClaw extends Subsystem {
     	doubleSolenoid1.set(desiredValue);
     }
     
+    public void gearRollerSetSpeed(double gearRollerSpeed){
+    	RobotMap.gearRoller.set(gearRollerSpeed);
+    }
+    
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
