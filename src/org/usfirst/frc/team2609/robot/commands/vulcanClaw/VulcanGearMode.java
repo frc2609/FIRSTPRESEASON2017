@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class VulcanGearMode extends CommandGroup {
 
     public VulcanGearMode() {
+    	addSequential(new GearPushIn());
+    	addSequential(new TimerDelay(0.1));
         addSequential(new ClawClose());
         addSequential(new ClawDown());
         addSequential(new TimerDelay(0.1)); //without this the claw doesnt open again

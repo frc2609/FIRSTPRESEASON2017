@@ -82,8 +82,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro Max: ", 0.2);
 //    	SmartDashboard.putNumber("Gyro Eps: ", 0.2); If needed later
 		
-        SmartDashboard.putNumber("turn P: ",0.02);
-        SmartDashboard.putNumber("turn I: ",0.002);
+        SmartDashboard.putNumber("turn P: ",0.01);
+        SmartDashboard.putNumber("turn I: ",0.0015);
         SmartDashboard.putNumber("turn D: ",0.0);
         SmartDashboard.putNumber("turn Max: ",1.0);
         SmartDashboard.putNumber("turn Eps: ",1.0);
@@ -168,6 +168,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
+		SmartDashboard.putBoolean("Gear launcher disable", false);
 //		if(OI.opButton5.get()){
 //			new CameraToggle().start();
 //		}
@@ -306,11 +307,23 @@ public class Robot extends IterativeRobot {
 		
         RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
 		if ((RobotMap.clawCloseSensor.get() || RobotMap.clawMissSensor.get()) && this.vulcanclaw.getClawState() == VulcanClawState.OPEN && RobotMap.clawDownSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN){
-			vulcanclaw.gearRollerSetSpeed(0.8);
+			// Claw down and open
+			vulcanclaw.gearRollerSetSpeed(0.8); // start rollers
 		}else if(!RobotMap.clawUpSensor.get() || this.vulcanclaw.getDeployState() == VulcanDeployState.UP){
-			vulcanclaw.gearRollerSetSpeed(0.0);
+			// Claw up for whatever reason
+			vulcanclaw.gearRollerSetSpeed(0.0); // stop rollers
 		}
-    	
+//    	if(!SmartDashboard.getBoolean("Gear launcher disable", false) && !RobotMap.clawUpSensor.get() && RobotMap.clawCloseSensor.get() && RobotMap.clawMissSensor.get()){
+//    		RobotMap.gearPusher.set(DoubleSolenoid.Value.kForward);
+//    	}
+//    	else if(!SmartDashboard.getBoolean("Gear launcher disable", false) && RobotMap.clawUpSensor.get() || !RobotMap.clawCloseSensor.get() || !RobotMap.clawMissSensor.get()){
+//    		RobotMap.gearPusher.set(DoubleSolenoid.Value.kReverse);
+//    	}
+//    	else{
+//    		RobotMap.gearPusher.set(DoubleSolenoid.Value.kOff);
+//    	}
+		
+		
 //        if(OI.driverStick.getPOV() == 180){
 //        	RobotMap.tsunamiMotor.set(-SmartDashboard.getNumber("climber speed", 0));
 //        }

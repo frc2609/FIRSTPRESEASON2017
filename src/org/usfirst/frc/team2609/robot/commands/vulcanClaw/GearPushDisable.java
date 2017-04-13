@@ -8,17 +8,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ClawScore extends Command {
+public class GearPushDisable extends Command {
 
-    public ClawScore() {
+    public GearPushDisable() {
         //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (!RobotMap.clawUpSensor.get() && !RobotMap.clawCloseSensor.get()){
-    		Robot.vulcanclaw.openClaw();
-    	}
+    	Robot.vulcanclaw.gearPushDisable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,7 +25,7 @@ public class ClawScore extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timeSinceInitialized()>0.2;
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -29,7 +29,7 @@ public class OI {
     public JoystickButton VulcanGearScore;
     public JoystickButton VulcanGearMode;
     public JoystickButton VulcanBallMode;
-    public static JoystickButton autoGear;
+    public static JoystickButton vulcanGearScore;
     public JoystickButton BallDoorToggle;
     public JoystickButton ClawForceOpen;
 
@@ -69,9 +69,8 @@ public class OI {
         button3 = new JoystickButton(driverStick, 3);
         button3.whenPressed(new CameraToggle());
 //        
-        //autoGear = new JoystickButton(driverStick, 4);
-        //autoGear.whileHeld(new GyroCameraTurn(1.0));
-        //autoGear.whenPressed(new AutoGear(0));
+        vulcanGearScore = new JoystickButton(driverStick, 4);
+        vulcanGearScore.whenPressed(new VulcanGearScore());
 //        
 //        xxx = new JoystickButton(driverStick, 5);
         

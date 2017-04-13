@@ -3,34 +3,24 @@ package org.usfirst.frc.team2609.robot.commands.vulcanClaw;
 import org.usfirst.frc.team2609.robot.Robot;
 import org.usfirst.frc.team2609.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class toggleClaw extends Command {
-	
-	boolean needToDelay = false;
-    public toggleClaw() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+public class GearPushIn extends Command {
+
+    public GearPushIn() {
+        //requires(Robot.vulcanclaw);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(RobotMap.gearPusher.get() == DoubleSolenoid.Value.kReverse){
-    		needToDelay = true;
-    		System.out.println("Use of non enums detected. Fix ASAP!!!");
-    	}
     	Robot.vulcanclaw.gearPushIn();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(needToDelay && timeSinceInitialized()<=0.1){
-    		Robot.vulcanclaw.toggleClaw();
-    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

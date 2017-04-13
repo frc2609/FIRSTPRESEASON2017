@@ -139,6 +139,19 @@ public class VulcanClaw extends Subsystem {
     	RobotMap.gearRoller.set(gearRollerSpeed);
     }
     
+    public void gearPushOut(){
+    	RobotMap.gearPusher.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void gearPushIn(){
+    	RobotMap.gearPusher.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void gearPushDisable(){
+    	RobotMap.gearPusher.set(DoubleSolenoid.Value.kOff);
+    }
+    
+    
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
