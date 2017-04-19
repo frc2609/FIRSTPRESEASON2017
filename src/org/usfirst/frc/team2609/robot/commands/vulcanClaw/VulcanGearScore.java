@@ -13,6 +13,8 @@ public class VulcanGearScore extends CommandGroup {
         addSequential(new ClawOpen());
     	addSequential(new TimerDelay(0.1));
     	addSequential(new GearPushOut());
+    	addSequential(new TimerDelay(0.5));
+    	addSequential(new GearPushIn());
         
     }
 }

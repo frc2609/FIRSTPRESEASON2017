@@ -32,7 +32,7 @@ public class TsunamiControl extends Command {
 //    		RobotMap.tsunamiMotor.set(1);
     	}
     	else if(direction == TsunamiDirection.DOWN){
-    		Tsunami.pullUp(-speed);
+    		Tsunami.pullUp(speed);
     		SmartDashboard.putNumber("LED Colour: ", 3);
 //    		RobotMap.tsunamiMotor.set(-1);
     	}

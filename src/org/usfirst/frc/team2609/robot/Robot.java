@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 
+import org.usfirst.frc.team2609.enums.BallDoorState;
 import org.usfirst.frc.team2609.enums.DriveSide;
 import org.usfirst.frc.team2609.enums.TalonState;
 import org.usfirst.frc.team2609.enums.VulcanClawState;
@@ -57,6 +58,8 @@ public class Robot extends IterativeRobot {
 	double autonAngle1 = 0;
 	double autonAngle2 = 0;
 	double autonAngle3 = 0;
+	
+	int sensorCounter = 0;
 //	double autonHeading1 = 0;
 //	double autonHeading2 = 0;
 //	double autonHeading3 = 0;
@@ -165,10 +168,13 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 		SmartDashboard.putBoolean("little miss claw", RobotMap.clawMissSensor.get());
+		SmartDashboard.putBoolean("CompToggle", true);
+		
 		
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
 		SmartDashboard.putBoolean("Gear launcher disable", false);
+		SmartDashboard.putNumber("High gear arcade scaling factor", 0.6);
 //		if(OI.opButton5.get()){
 //			new CameraToggle().start();
 //		}
@@ -239,9 +245,10 @@ public class Robot extends IterativeRobot {
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     	
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
 		shifter.high();
+		RobotMap.gearPusher.set(DoubleSolenoid.Value.kForward);
 
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
@@ -265,8 +272,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("RobotMap.clawUpSensor.get()", RobotMap.clawUpSensor.get());
 		SmartDashboard.putBoolean("RobotMap.clawDownSensor.get()", RobotMap.clawDownSensor.get());
 //		SmartDashboard.putBoolean("ClawClosedSolenoid", RobotMap.vulcanClaw.get());
+    	SmartDashboard.putNumber("driveTalonLeft1.getOutputCurrent", RobotMap.driveTalonLeft1.getOutputCurrent());
+    	SmartDashboard.putNumber("driveTalonLeft2.getOutputCurrent", RobotMap.driveTalonLeft2.getOutputCurrent());
+    	SmartDashboard.putNumber("driveTalonRight1.getOutputCurrent", RobotMap.driveTalonRight1.getOutputCurrent());
+    	SmartDashboard.putNumber("driveTalonRight2.getOutputCurrent", RobotMap.driveTalonRight2.getOutputCurrent());
+    	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getBusVoltage()", RobotMap.tsunamiMotor.getOutputVoltage());
     	SmartDashboard.putNumber("RobotMap.tsunamiMotor.getOutputCurrent()", RobotMap.tsunamiMotor.getOutputCurrent());
+//    	SmartDashboard.putNumber("CurrentChannel11", RobotMap.pdp.getCurrent(1));
+    	
         table.putNumber("gyro.getYaw", RobotMap.ahrs.getYaw());
         
         if (RobotMap.vulcanClaw.get() == DoubleSolenoid.Value.kForward){
@@ -285,14 +299,23 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("driveTalonLeft1.getEncPosition()", RobotMap.driveTalonLeft1.getEncPosition());
 //		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
     	
-		if (!gearSensorOld){
-			if (RobotMap.gearSensor.get()&& !RobotMap.clawDownSensor.get()){
-				new VulcanGearGrab().start();
-			}
+//        if ((RobotMap.gearSensor.get() && !RobotMap.clawDownSensor.get()) && sensorCounter > 5 && !OI.button3.get()){
+//			new VulcanGearGrab().start();
+//			sensorCounter = 0;
+//		}else if ((RobotMap.gearSensor.get()&& !RobotMap.clawDownSensor.get()) && sensorCounter <=5){
+//			sensorCounter++;
+//		}else if(!(RobotMap.gearSensor.get()&& !RobotMap.clawDownSensor.get())){
+//			sensorCounter = 0;
+//		}
+        if ((RobotMap.gearSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter > 5 && !OI.button3.get()){
+			new VulcanGearGrab().start();
+			sensorCounter = 0;
+		}else if ((RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter <=5){
+			sensorCounter++;
+		}else if(!(RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN)){
+			sensorCounter = 0;
 		}
-		if(OI.opButton9.get()){
-			Tsunami.pullUp(OI.opStick.getRawAxis(3));
-		}
+		RobotMap.compressor.setClosedLoopControl(SmartDashboard.getBoolean("CompToggle", true));
 		Robot.LedControl.setLed();
 		
 		if (RobotMap.gearSensor.get()){
@@ -306,13 +329,21 @@ public class Robot extends IterativeRobot {
 		gearSensorOld = RobotMap.gearSensor.get();
 		
         RobotMap.ballIntake.set(-RobotMap.Dandyboy.getRawAxis(3));
-		if ((RobotMap.clawCloseSensor.get() || RobotMap.clawMissSensor.get()) && this.vulcanclaw.getClawState() == VulcanClawState.OPEN && RobotMap.clawDownSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN){
+
+		if(OI.button3.get() ){
+			vulcanclaw.gearRollerSetSpeed(0.0); // stop rollers
+		}
+		else if (!RobotMap.clawDownSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN){
 			// Claw down and open
 			vulcanclaw.gearRollerSetSpeed(0.8); // start rollers
-		}else if(!RobotMap.clawUpSensor.get() || this.vulcanclaw.getDeployState() == VulcanDeployState.UP){
+		}
+		else if(!RobotMap.clawUpSensor.get() || this.vulcanclaw.getDeployState() == VulcanDeployState.UP){
 			// Claw up for whatever reason
 			vulcanclaw.gearRollerSetSpeed(0.0); // stop rollers
 		}
+		
+//		vulcanclaw.gearRollerSetSpeed(OI.opStick.getRawAxis(1));
+		
 //    	if(!SmartDashboard.getBoolean("Gear launcher disable", false) && !RobotMap.clawUpSensor.get() && RobotMap.clawCloseSensor.get() && RobotMap.clawMissSensor.get()){
 //    		RobotMap.gearPusher.set(DoubleSolenoid.Value.kForward);
 //    	}
@@ -334,12 +365,10 @@ public class Robot extends IterativeRobot {
 //        	RobotMap.tsunamiMotor.set(0);
 //        }
     	//RobotMap.ringLED.set(Relay.Value.kReverse);
-        if(RobotMap.axisState == AxisState.SCALER){
-//        	RobotMap.tsunamiMotor.set(driveStick.getRawAxis(3));
-        }
-        else{
+		
+		RobotMap.tsunamiMotor.set(Math.abs(OI.opStick.getRawAxis(3)));
         	//RobotMap.ballIntake.set(-driveStick.getRawAxis(3));
-        }
+        
         
         
     	RobotMap.tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -357,8 +386,14 @@ public class Robot extends IterativeRobot {
 //        System.out.println("Right: " + RobotMap.driveTalonRight1.getEncPosition());
 //        System.out.println("LeftOutput: " + leftOutput);
 //        System.out.println("RightOutput: " + rightOutput);
+    	if(RobotMap.shifter.get() == DoubleSolenoid.Value.kForward){
+    		drivetrain.arcadeDriveLow(); // low gear arcade
+    	}else{
+    		drivetrain.arcadeDriveHigh();
+    	}
+//    	drivetrain.humanDriveLow();
     	
-    	drivetrain.humanDrive();
+    	
 
 //        
 //            RobotMap.launcherVictor.set(SmartDashboard.getNumber("Launcher Speed", 0));

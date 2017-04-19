@@ -7,6 +7,8 @@ import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RightPBlue extends CommandGroup {
@@ -31,7 +33,7 @@ public class RightPBlue extends CommandGroup {
     	addSequential(new GyroTurn(1,-60));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(75,1.0,-60));
-    	addSequential(new ClawOpen());
+    	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(-75,1.0,60));
     	addSequential(new GyroTurn(1,0));

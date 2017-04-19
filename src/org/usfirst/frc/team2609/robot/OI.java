@@ -67,7 +67,7 @@ public class OI {
 //        toggleClaw.whenReleased(new toggleClaw());
 //        
         button3 = new JoystickButton(driverStick, 3);
-        button3.whenPressed(new CameraToggle());
+//        button3.whenPressed(new CameraToggle());
 //        
         vulcanGearScore = new JoystickButton(driverStick, 4);
         vulcanGearScore.whenPressed(new VulcanGearScore());

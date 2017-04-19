@@ -7,6 +7,8 @@ import org.usfirst.frc.team2609.robot.commands.DriveEncoderCurveSimple;
 import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class RightPRed extends CommandGroup {
@@ -15,7 +17,7 @@ public class RightPRed extends CommandGroup {
 	
     public RightPRed() {
     	double point1 = -30;
-    	double point2 = -58;
+    	double point2 = -50;
     	double point3 = -135;
     	double totalArc = -145;
     	
@@ -26,11 +28,11 @@ public class RightPRed extends CommandGroup {
     	//left gear and ? auton with dashboard variables
     	
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(71,1.0,0));
+    	addSequential(new DriveEncoder(72,1.0,0));
     	addSequential(new GyroTurn(1,-60));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(68,1.0,-60));
-    	addSequential(new ClawOpen());
+    	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1, heading2, heading3, heading4, point1, point2, point3));
     	addParallel(new BallDoorOpenAuton(point3));

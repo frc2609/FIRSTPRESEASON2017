@@ -8,6 +8,8 @@ import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -39,7 +41,7 @@ public class StraightPegRed extends CommandGroup {
     	
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(82,1.0,0));
-    	addSequential(new ClawOpen());
+    	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1,
     			heading2, heading3, heading4, point1, point2, point3));

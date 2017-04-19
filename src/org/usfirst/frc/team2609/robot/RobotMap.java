@@ -3,11 +3,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import jaci.pathfinder.modifiers.TankModifier;
@@ -28,6 +30,8 @@ public class RobotMap {
 	public static CANTalon ballIntake;
 	public static CANTalon tsunamiMotor;
 	public static CANTalon gearRoller;
+	public static PowerDistributionPanel pdp;
+	public static Compressor compressor;
 	
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
@@ -84,25 +88,33 @@ public class RobotMap {
 		ballIntake = new CANTalon(5);
 		tsunamiMotor = new CANTalon(6);
 		gearRoller = new CANTalon(7);
+		pdp = new PowerDistributionPanel();
+		compressor = new Compressor(0);
 		
-		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
-		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
-		driveTalonRight2.set(3); // Follows talon 3 talon is the second best talon
-		driveTalonLeft2.set(1); // Follows talon 1 talon 3 is not the best talon
+//		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
+//		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
+//		driveTalonRight2.set(3); // Follows talon 3 talon is the second best talon
+//		driveTalonLeft2.set(1); // Follows talon 1 talon 3 is not the best talon
 		
 		driveTalonRight1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonRight1.configEncoderCodesPerRev(51);//this is haram
-		driveTalonRight1.setInverted(false);
 //		driveTalonRight1.configEncoderCodesPerRev(611); // TODO: Enable if Motion profiling
+		driveTalonRight1.setInverted(false);
 		driveTalonRight1.reverseSensor(false);
 		driveTalonRight1.reverseOutput(false);
+		driveTalonRight2.setInverted(false);
+		driveTalonRight2.reverseSensor(false);
+		driveTalonRight2.reverseOutput(false);
 		driveTalonLeft1.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
 		driveTalonLeft1.configEncoderCodesPerRev(51);
 		driveTalonLeft1.setInverted(true);
 		driveTalonLeft1.reverseSensor(true);
+		driveTalonLeft1.reverseOutput(false);
+		driveTalonLeft2.setInverted(true);
+		driveTalonLeft2.reverseSensor(true);
+		driveTalonLeft2.reverseOutput(false);
 //		driveTalonLeft1.configEncoderCodesPerRev(611); // TODO: Enable if Motion profiling
 //		driveTalonLeft1.reverseSensor(false); // TODO: Enable if Motion profiling
-		driveTalonLeft1.reverseOutput(false);
 		
 		
 		tsunamiMotor.changeControlMode(TalonControlMode.PercentVbus);
@@ -115,7 +127,7 @@ public class RobotMap {
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
         ballDoor = new DoubleSolenoid(0,2,3);
         
-        gearPusher = new DoubleSolenoid(12,0,1);
+        gearPusher = new DoubleSolenoid(13,0,1);
         	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kOff);

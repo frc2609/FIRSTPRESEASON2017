@@ -8,6 +8,8 @@ import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.TimerDelay;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
+import org.usfirst.frc.team2609.robot.commands.vulcanClaw.VulcanGearScore;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,7 +28,7 @@ public class StraightPegBlue extends CommandGroup {
     	addSequential(new DriveEncoder(3, 0.3, 0));
     	*/
     	double point1 = -25;
-    	double point2 = -150;
+    	double point2 = -140;
     	double point3 = -185;
     	double totalArc = -200;
     	
@@ -38,7 +40,7 @@ public class StraightPegBlue extends CommandGroup {
     	
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(84,1.0,0));
-    	addSequential(new ClawOpen());
+    	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
 //    	addSequential(new DriveEncoder(-3,1.0,0)); // didnt go back enough
     	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1, heading2, heading3, heading4, point1, point2, point3));
