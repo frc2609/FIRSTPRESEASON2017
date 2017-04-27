@@ -18,7 +18,7 @@ public class ClawUpWithGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (RobotMap.gearSensor.get()){
+    	if (Robot.vulcanclaw.getGearSensor()){
         	Robot.vulcanclaw.upClaw();
     	}
     	else{

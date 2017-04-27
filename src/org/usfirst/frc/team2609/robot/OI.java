@@ -100,7 +100,7 @@ public class OI {
     	ClawForceOpen.whileHeld(new ClawOpenForce());
     	
 		opButton1 = new JoystickButton(opStick, 1);
-		opButton1.whenPressed(new BallDoorClose());
+		opButton1.whenPressed(new autoClawClose());
 		opButton2 = new JoystickButton(opStick, 2);
 		opButton2.whileHeld(new TsunamiControl(TsunamiDirection.DOWN,0.5));
 //		opButton2.whileHeld(new SetLED(0,0,255));

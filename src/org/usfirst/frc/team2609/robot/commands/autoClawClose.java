@@ -3,15 +3,14 @@ import org.usfirst.frc.team2609.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class BallDoorOpen extends Command {
+public class autoClawClose extends Command {
 
-    public BallDoorOpen() {
+    public autoClawClose() {
     }
 
     protected void initialize() {
-    	Robot.ballDoor.open();
-    	//Robot.LedControl.flash(true);
-    	
+    	Robot.autoClaw.close();
+    	//Robot.LedControl.flash(false);
     }
 
     protected void execute() {
@@ -19,7 +18,7 @@ public class BallDoorOpen extends Command {
     }
 
     protected boolean isFinished() {
-        return true;//timeSinceInitialized()>1;
+        return timeSinceInitialized()>1;
     }
 
     protected void end() {

@@ -1,5 +1,5 @@
 package org.usfirst.frc.team2609.robot.commands.autons;
-import org.usfirst.frc.team2609.robot.commands.BallDoorOpen;
+import org.usfirst.frc.team2609.robot.commands.autoClawOpen;
 import org.usfirst.frc.team2609.robot.commands.BallDoorOpenAuton;
 import org.usfirst.frc.team2609.robot.commands.BallLowGoalAuton;
 import org.usfirst.frc.team2609.robot.commands.DriveEncoder;

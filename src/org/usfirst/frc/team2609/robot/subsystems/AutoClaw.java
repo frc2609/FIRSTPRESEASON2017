@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class BallDoor extends Subsystem {
+public class AutoClaw extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -15,7 +15,7 @@ public class BallDoor extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    DoubleSolenoid doubleSolenoid1 = RobotMap.ballDoor;
+    DoubleSolenoid doubleSolenoid1 = RobotMap.autoClaw;
     
     public void toggle() {
     	BallDoorState currentState = this.getState();
@@ -70,9 +70,9 @@ public class BallDoor extends Subsystem {
     public DoubleSolenoid.Value setDoor(BallDoorState desiredState){
     	switch(desiredState){
     	case OPEN:
-    		return DoubleSolenoid.Value.kForward;
-    	case CLOSED:
     		return DoubleSolenoid.Value.kReverse;
+    	case CLOSED:
+    		return DoubleSolenoid.Value.kForward;
     	case NEUTRAL:
     		return DoubleSolenoid.Value.kOff;
     	default:

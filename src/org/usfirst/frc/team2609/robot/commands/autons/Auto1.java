@@ -4,6 +4,8 @@ import org.usfirst.frc.team2609.robot.commands.EncReset;
 import org.usfirst.frc.team2609.robot.commands.GyroTurn;
 import org.usfirst.frc.team2609.robot.commands.RingLED;
 import org.usfirst.frc.team2609.robot.commands.TimerDelay;
+import org.usfirst.frc.team2609.robot.commands.autoClawClose;
+import org.usfirst.frc.team2609.robot.commands.autoClawOpen;
 import org.usfirst.frc.team2609.robot.commands.vulcanClaw.ClawOpen;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,23 +34,12 @@ public class Auto1 extends CommandGroup {
 		autonAngle1 = (double)SmartDashboard.getNumber("auton angle 1: ",0);
 		autonAngle2 = (double)SmartDashboard.getNumber("auton angle 2: ",0);
 		autonAngle3 = (double)SmartDashboard.getNumber("auton angle 3: ",0);
+
+		addSequential(new TimerDelay(2));
+		addSequential(new autoClawClose());
+		addSequential(new TimerDelay(2));
+		addSequential(new autoClawOpen());
     	
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(true));
-    	addSequential(new TimerDelay(0.5));
-    	addSequential(new RingLED(false));
-    	addSequential(new TimerDelay(0.5));
     	
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.exampleSubsystem);

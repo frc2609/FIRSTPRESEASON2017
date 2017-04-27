@@ -21,6 +21,7 @@ public class Drivetrain extends Subsystem {
 	private static double turningGain = 0;  // 0 is no change, larger has greater effect
 	private static double deadZone = 0.15; //Deadband for the controller
 	double[] defaultval = new double[0];
+	double angleReverse = 0;
 	
     public void arcadeDriveLow(){
 		double X = RobotMap.Dandyboy.getRawAxis(0);
@@ -114,11 +115,31 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(24);
     	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft-steerPIDOutput);
+    	RobotMap.driveTalonLeft2.set(drivePIDOutputLeft-steerPIDOutput);
         RobotMap.driveTalonRight1.set(drivePIDOutputLeft+steerPIDOutput);
+        RobotMap.driveTalonRight2.set(drivePIDOutputLeft+steerPIDOutput);
     }
-    
+
+    public void driveStraightReverse(double encLeft, double encRight, double steerInput, SimPID encPIDLeft, SimPID encPIDRight, SimPID steerPID){
+    	steerPIDOutput = -steerPID.calcPID(steerInput);
+    	drivePIDOutputLeft = encPIDLeft.calcPID(encLeft);
+    	drivePIDOutputRight = encPIDLeft.calcPID(encLeft);
+    	System.out.println("drivePIDOutput " + drivePIDOutputLeft + drivePIDOutputRight + " steerPIDOutput " + steerPIDOutput);
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft1.set(drivePIDOutputLeft+steerPIDOutput);
+    	RobotMap.driveTalonLeft2.set(drivePIDOutputLeft+steerPIDOutput);
+        RobotMap.driveTalonRight1.set(drivePIDOutputLeft-steerPIDOutput);
+        RobotMap.driveTalonRight2.set(drivePIDOutputLeft-steerPIDOutput);
+    }
     public void driveStraightHuman(double steerInput, SimPID steerPID){
     	steerPIDOutput = -steerPID.calcPID(steerInput);
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
@@ -166,12 +187,39 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
     	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(24);
     	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(24);
     	double leftValue = leftPID.calcPID(RobotMap.ahrs.getYaw());
     	double rightValue = -rightPID.calcPID(RobotMap.ahrs.getYaw());
-    	driveTank(leftValue, rightValue);
+    	RobotMap.driveTalonLeft1.set(leftValue);
+    	RobotMap.driveTalonLeft2.set(leftValue);
+        RobotMap.driveTalonRight1.set(rightValue);
+        RobotMap.driveTalonRight2.set(rightValue);
     }
     
+    public void gyroTurnReverse(SimPID rightPID, SimPID leftPID)
+    {
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(24);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(24);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(24);
+    	if(RobotMap.ahrs.getYaw()<0){
+    		angleReverse = -(RobotMap.ahrs.getYaw() + 180);
+    	}
+    	else{
+    		angleReverse = -(RobotMap.ahrs.getYaw() - 180);
+    	}
+    	
+    	double leftValue = -leftPID.calcPID(angleReverse);
+    	double rightValue = rightPID.calcPID(angleReverse);
+    	RobotMap.driveTalonLeft1.set(leftValue);
+    	RobotMap.driveTalonLeft2.set(leftValue);
+        RobotMap.driveTalonRight1.set(rightValue);
+        RobotMap.driveTalonRight2.set(rightValue);
+    }
     public void gyroYawZero(){
     	RobotMap.ahrs.zeroYaw();
     }

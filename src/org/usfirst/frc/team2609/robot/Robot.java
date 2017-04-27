@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-import org.usfirst.frc.team2609.robot.subsystems.BallDoor;
+import org.usfirst.frc.team2609.robot.subsystems.AutoClaw;
 import org.usfirst.frc.team2609.robot.subsystems.BallIntake;
 import org.usfirst.frc.team2609.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2609.robot.subsystems.LedControl;
@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static Tsunami tsunami;
 	public static BallIntake ballIntake;
-	public static BallDoor ballDoor;
+	public static AutoClaw autoClaw;
 	public static R03 r03;
 //	public static VulcanGearGrab vulcangeargrab = new VulcanGearGrab();
 	private Logger logger;
@@ -84,7 +84,13 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro D: ", 0.0);
     	SmartDashboard.putNumber("Gyro Max: ", 0.2);
 //    	SmartDashboard.putNumber("Gyro Eps: ", 0.2); If needed later
-		
+
+		SmartDashboard.putNumber("Curve P: ", 0.01);
+    	SmartDashboard.putNumber("Curve I: ", 0.000);
+    	SmartDashboard.putNumber("Curve D: ", 0.0);
+    	SmartDashboard.putNumber("Curve Max: ", 0.2);
+//    	SmartDashboard.putNumber("Curve Eps: ", 0.2); If needed later
+    	
         SmartDashboard.putNumber("turn P: ",0.01);
         SmartDashboard.putNumber("turn I: ",0.0015);
         SmartDashboard.putNumber("turn D: ",0.0);
@@ -100,12 +106,13 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putBoolean("vision", valueVision);
     	SmartDashboard.putNumber("climber speed", 1);
 
+		SmartDashboard.putBoolean("Disable claw", true);
         shifter = new Shifter();
 		drivetrain = new Drivetrain();
 		vulcanclaw = new VulcanClaw();
 		LedControl = new LedControl();
 		ballIntake = new BallIntake();
-		ballDoor = new BallDoor();
+		autoClaw = new AutoClaw();
         chooser = new SendableChooser();
         r03 = new R03();
         chooser.addDefault("Default Auto - Dont move", new Auto1());
@@ -115,16 +122,15 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Right peg Red", new RightPRed());
         chooser.addObject("Left peg Blue", new LeftPBlue());
         chooser.addObject("Right peg Blue", new RightPBlue());
+        chooser.addObject("double Dragon", new doubleDragon());
         SmartDashboard.putData("Auto mode", chooser);
         this.logger = Logger.getInstance(); // Changed from logger.getInstance to Logger.getInstance at Eclipse insistence
         table = NetworkTable.getTable("RaspberryPi");
         table.putNumber("display", 0); //1 will Enable display outputs on the raspberry pi, will crash if no monitor connected to it.
 		Robot.table.putNumber("rPiCam", 1.0); // Default to field cam
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
+//        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
     }
 	
     public void disabledInit(){
@@ -174,6 +180,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("avalanche limit Fwd", RobotMap.tsunamiMotor.isFwdLimitSwitchClosed());
 		SmartDashboard.putBoolean("avalanche limit Rev", RobotMap.tsunamiMotor.isRevLimitSwitchClosed());
 		SmartDashboard.putBoolean("Gear launcher disable", false);
+		SmartDashboard.putBoolean("Disable claw", true);
 		SmartDashboard.putNumber("High gear arcade scaling factor", 0.6);
 //		if(OI.opButton5.get()){
 //			new CameraToggle().start();
@@ -191,13 +198,14 @@ public class Robot extends IterativeRobot {
         Robot.drivetrain.gyroYawZero();
         Robot.drivetrain.resetDriveEncoders();
         RobotMap.shifter.set(DoubleSolenoid.Value.kForward); //Low gear
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
+        RobotMap.autoClaw.set(DoubleSolenoid.Value.kForward); //close auto claw
+
+    	RobotMap.hodor.set(DoubleSolenoid.Value.kForward);
+//        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse); //Closed Claw
+//        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse); //Claw up
         autonomousCommand = (Command) chooser.getSelected();
         this.logger.openFile();
 
-        RobotMap.vulcanClaw.set(DoubleSolenoid.Value.kReverse);
-        RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
 		shifter.low();
         if (autonomousCommand != null) autonomousCommand.start();
  
@@ -225,7 +233,15 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("driveTalonRight1.getEncPosition()", RobotMap.driveTalonRight1.getEncPosition());
 		SmartDashboard.putNumber("driveVictorLeft1.get()", RobotMap.driveTalonLeft1.get());
 		SmartDashboard.putNumber("driveVictorRight1.get()", RobotMap.driveTalonRight1.get());
-		
+
+        if ((RobotMap.gearSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter > 5 && !OI.button3.get()){
+			new VulcanGearGrab().start();
+			sensorCounter = 0;
+		}else if ((RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter <=5){
+			sensorCounter++;
+		}else if(!(RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN)){
+			sensorCounter = 0;
+		}
 
 //        this.logger.logAll(); // write to logs
         
@@ -249,6 +265,7 @@ public class Robot extends IterativeRobot {
         RobotMap.vulcanDeploy.set(DoubleSolenoid.Value.kReverse);
 		shifter.high();
 		RobotMap.gearPusher.set(DoubleSolenoid.Value.kForward);
+        RobotMap.autoClaw.set(DoubleSolenoid.Value.kForward); //close auto claw
 
         RobotMap.driveTalonLeft1.setEncPosition(0);
         RobotMap.driveTalonRight1.setEncPosition(0);
@@ -261,6 +278,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
         drivetrain.handleTalonState();
+
+		SmartDashboard.putBoolean("gearSensor", RobotMap.gearSensor.get());
     	SmartDashboard.putNumber("Gyro getYaw", RobotMap.ahrs.getYaw());
     	SmartDashboard.putNumber("driveEncLeft.getDistance()", RobotMap.driveTalonLeft1.getPosition());
     	SmartDashboard.putNumber("driveEncRight.getDistance()", RobotMap.driveTalonRight1.getPosition());
@@ -307,12 +326,12 @@ public class Robot extends IterativeRobot {
 //		}else if(!(RobotMap.gearSensor.get()&& !RobotMap.clawDownSensor.get())){
 //			sensorCounter = 0;
 //		}
-        if ((RobotMap.gearSensor.get() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter > 5 && !OI.button3.get()){
+        if ((this.vulcanclaw.getGearSensor() && this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter > 5 && !OI.button3.get()){
 			new VulcanGearGrab().start();
 			sensorCounter = 0;
-		}else if ((RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter <=5){
+		}else if ((this.vulcanclaw.getGearSensor()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN) && sensorCounter <=5){
 			sensorCounter++;
-		}else if(!(RobotMap.gearSensor.get()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN)){
+		}else if(!(this.vulcanclaw.getGearSensor()&& this.vulcanclaw.getDeployState() == VulcanDeployState.DOWN)){
 			sensorCounter = 0;
 		}
 		RobotMap.compressor.setClosedLoopControl(SmartDashboard.getBoolean("CompToggle", true));

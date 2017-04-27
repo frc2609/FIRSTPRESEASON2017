@@ -1,16 +1,21 @@
 package org.usfirst.frc.team2609.robot.commands;
 import org.usfirst.frc.team2609.robot.Robot;
+import org.usfirst.frc.team2609.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class BallDoorClose extends Command {
+public class autoClawOpen extends Command {
 
-    public BallDoorClose() {
+    public autoClawOpen() {
     }
 
     protected void initialize() {
-    	Robot.ballDoor.close();
-    	//Robot.LedControl.flash(false);
+//    	Robot.autoClaw.open();
+    	RobotMap.hodor.set(DoubleSolenoid.Value.kReverse);
+    	//Robot.LedControl.flash(true);
+    	
     }
 
     protected void execute() {

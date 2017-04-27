@@ -19,7 +19,7 @@ public class BallDoorOpenAuton extends Command {
 
     protected void execute() {
     	if (RobotMap.driveTalonLeft1.getPosition()<Distance){
-        	Robot.ballDoor.open();
+        	Robot.autoClaw.open();
     	}
     	//Robot.LedControl.setLed(255,235,59);
     }

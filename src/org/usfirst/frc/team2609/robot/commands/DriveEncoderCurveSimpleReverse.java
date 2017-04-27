@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2609.robot.*;
 import org.usfirst.frc.team2609.robot.subsystems.SimPID;
 
-public class DriveEncoderCurveSimple extends Command {
+public class DriveEncoderCurveSimpleReverse extends Command {
 	SimPID drivePIDLeft;
 	SimPID drivePIDRight;
 	SimPID steeringPID;
@@ -28,12 +28,13 @@ public class DriveEncoderCurveSimple extends Command {
 	double curvePoint3 = 0;
 	double driveDR = 0;
 	int driveDC = 0;
+	double reverseAngle = 0;
 	//private double driveTarget;
 	// Number of minutes wasted on 1s vs ls:
 	// 30min 10/18/2016
 	// 30min total
 	
-	public DriveEncoderCurveSimple(double driveTarget, double drivePower, double gyroMax, double driveHeading1, double driveHeading2, double driveHeading3, double driveHeading4, double curvePoint1, double curvePoint2, double curvePoint3) {
+	public DriveEncoderCurveSimpleReverse(double driveTarget, double drivePower, double gyroMax, double driveHeading1, double driveHeading2, double driveHeading3, double driveHeading4, double curvePoint1, double curvePoint2, double curvePoint3) {
         requires(Robot.drivetrain);
         this.driveTarget = driveTarget;
         this.driveHeading1 = driveHeading1;
@@ -84,7 +85,14 @@ public class DriveEncoderCurveSimple extends Command {
 
     protected void execute() {
     	//double encError = Math.abs((Math.abs(RobotMap.driveEncLeft.getRate()) - Math.abs(RobotMap.driveEncRight.getRate())));
-    	double gyroYaw = RobotMap.ahrs.getYaw();
+
+    	if(RobotMap.ahrs.getYaw()<0){
+    		reverseAngle = -(RobotMap.ahrs.getYaw()+180);
+    	}
+    	else{
+    		reverseAngle = -(RobotMap.ahrs.getYaw()-180);
+    	}
+    	
     	if (Math.abs(RobotMap.driveTalonLeft1.getPosition())<Math.abs(curvePoint1)){
     		System.out.println("curvepoint1---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading1);
@@ -101,7 +109,7 @@ public class DriveEncoderCurveSimple extends Command {
     		System.out.println("curvepoint4---------------------------------------");
             this.steeringPID.setDesiredValue(driveHeading4);
     	}
-    	Robot.drivetrain.driveStraight(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), gyroYaw, drivePIDLeft, drivePIDRight, steeringPID);	
+    	Robot.drivetrain.driveStraightReverse(RobotMap.driveTalonLeft1.getPosition(), RobotMap.driveTalonRight1.getPosition(), reverseAngle, drivePIDLeft, drivePIDRight, steeringPID);	
     }
 
     protected boolean isFinished() {

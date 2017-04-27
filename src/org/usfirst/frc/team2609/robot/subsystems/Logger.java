@@ -100,7 +100,7 @@ public class Logger {
 
 	            this.writer.write(RobotMap.vulcanClaw.get().toString());
 	            this.writer.write(RobotMap.vulcanDeploy.get().toString());
-	            this.writer.write(RobotMap.ballDoor.get().toString());
+	            this.writer.write(RobotMap.autoClaw.get().toString());
 	            this.writer.write(RobotMap.vulcanDeploy.get().toString());
 	            this.writer.write(RobotMap.shifter.get().toString());
 	            

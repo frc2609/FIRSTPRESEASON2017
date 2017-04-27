@@ -9,7 +9,7 @@ public class BallDoorToggle extends Command {
     }
 
     protected void initialize() {
-    	Robot.ballDoor.toggle();
+    	Robot.autoClaw.toggle();
     	//Robot.LedControl.flash(false);
     }
 

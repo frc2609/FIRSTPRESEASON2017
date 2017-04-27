@@ -8,6 +8,7 @@ import org.usfirst.frc.team2609.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -18,24 +19,31 @@ public class VulcanClaw extends Subsystem {
     // here. Call these from Commands.
 	DoubleSolenoid doubleSolenoid1 = RobotMap.vulcanDeploy;
 	DoubleSolenoid doubleSolenoid2 = RobotMap.vulcanClaw;
-
+	 
+	public static boolean getGearSensor(){
+		if(SmartDashboard.getBoolean("Disable claw", false)){
+			return RobotMap.gearSensor.get();
+		}else{
+			return false; // no gear as far as we know
+		}
+	}
 	
     public void toggleDeployClaw() {
     	System.out.println("For the love of Dean Kamen");
     	System.out.println("pls no");
     	//TODO: fix this spaghetti using the R03 method. 
     	if (doubleSolenoid1.get()==DoubleSolenoid.Value.kReverse && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse) {
-			Robot.ballDoor.close();
+//			Robot.autoClaw.close();
     		doubleSolenoid1.set(DoubleSolenoid.Value.kForward);
     		System.out.println("vulcanDeploy up "+ doubleSolenoid1.get());
     	}
     	else if (doubleSolenoid1.get() == DoubleSolenoid.Value.kForward && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse){
-			Robot.ballDoor.close();
+//			Robot.autoClaw.close();
     		doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("vulcanDeploy down "+ doubleSolenoid1.get());
     	}
     	else if(doubleSolenoid1.get()==DoubleSolenoid.Value.kOff && doubleSolenoid2.get()==DoubleSolenoid.Value.kReverse){
-			Robot.ballDoor.close();
+//			Robot.autoClaw.close();
 			doubleSolenoid1.set(DoubleSolenoid.Value.kReverse);	
     	}
     	else {
@@ -46,17 +54,17 @@ public class VulcanClaw extends Subsystem {
     public void toggleClaw() {
     	System.out.println("pls no");
     	if (doubleSolenoid2.get() == DoubleSolenoid.Value.kReverse){
-				Robot.ballDoor.close();
+//				Robot.autoClaw.close();
     			doubleSolenoid2.set(DoubleSolenoid.Value.kForward);
     			System.out.println("vulcanClaw open "+ doubleSolenoid2.get());
     	}
     	else if (doubleSolenoid2.get() == DoubleSolenoid.Value.kForward){
-			Robot.ballDoor.close();
+//			Robot.autoClaw.close();
 			doubleSolenoid2.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("vulcanClaw close "+ doubleSolenoid2.get());
     	}
     	else {
-			Robot.ballDoor.close();
+//			Robot.autoClaw.close();
     		doubleSolenoid2.set(DoubleSolenoid.Value.kReverse);
     		System.out.println("vulcanClaw close "+ doubleSolenoid2.get());
     	}    	

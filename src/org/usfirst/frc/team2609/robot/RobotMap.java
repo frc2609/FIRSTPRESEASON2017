@@ -36,7 +36,8 @@ public class RobotMap {
     public static DoubleSolenoid shifter;
     public static DoubleSolenoid vulcanDeploy;
     public static DoubleSolenoid vulcanClaw;
-    public static DoubleSolenoid ballDoor;
+    public static DoubleSolenoid autoClaw;
+    public static DoubleSolenoid hodor;
     public static DoubleSolenoid gearPusher;
     
 	public static CANTalon prototype;
@@ -125,7 +126,8 @@ public class RobotMap {
         shifter = new DoubleSolenoid(0, 1, 0);
         vulcanClaw = new DoubleSolenoid(0, 7, 6);
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
-        ballDoor = new DoubleSolenoid(0,2,3);
+        autoClaw = new DoubleSolenoid(1,2,3);
+        hodor = new DoubleSolenoid(0,2,3);
         
         gearPusher = new DoubleSolenoid(13,0,1);
         	

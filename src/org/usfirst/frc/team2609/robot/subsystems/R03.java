@@ -23,11 +23,13 @@ public class R03 extends Subsystem {
 		if(this.currentVulcanDeployState == VulcanDeployState.DOWN && this.currentVulcanClawState == VulcanClawState.CLOSED){
 			System.out.println("ARMS STICKING OUT AT THE BOTTOM, PUT THE ARM UP!");
 		}else if (this.currentVulcanDeployState == VulcanDeployState.UP){
-			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(desiredState));
+			Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(desiredState));
 		}else if(this.currentVulcanDeployState == VulcanDeployState.DOWN && this.currentVulcanClawState == VulcanClawState.OPEN){
-			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(desiredState));
+			Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(desiredState));
 //			System.out.println("THE ROBOT IS IN GEAR MODE, GO INTO BALLMODE TO SET THE DOOR TO " + desiredState);
 		}
+		Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(desiredState));
+		
 	}
 	public void StayInsideR03(VulcanClawState desiredState){
 		getStates();
@@ -40,10 +42,10 @@ public class R03 extends Subsystem {
 		if(this.currentVulcanDeployState == VulcanDeployState.DOWN && desiredState == VulcanClawState.CLOSED){
 			if(this.currentBallDoorState == BallDoorState.OPEN){
 				System.out.println("THE BALL DOOR IS OPEN, IN ORDER TO STAY INSIDE THE VOLUME, THE DOOR WILL BE CLOSED");
-				Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(BallDoorState.CLOSED));
+				Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(BallDoorState.CLOSED));
 			}else{
 				System.out.println("The ball door seems to be closed, forcing it to close anyways");
-				Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(BallDoorState.CLOSED));
+				Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(BallDoorState.CLOSED));
 			}
 		}
 		Robot.vulcanclaw.forceSetClaw(Robot.vulcanclaw.setClaw(desiredState));
@@ -55,16 +57,16 @@ public class R03 extends Subsystem {
 		// If the door is open, print out that it needed to be closed
 		if(this.currentBallDoorState == BallDoorState.OPEN){
 			System.out.println("THE BALL DOOR IS OPEN, IN ORDER TO STAY INSIDE THE VOLUME THE DOOR WILL BE CLOSED!");
-			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(BallDoorState.CLOSED));
+			Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(BallDoorState.CLOSED));
 		}else if(this.currentBallDoorState == BallDoorState.CLOSED){
 			System.out.println("The ball door is closed, we are free to move the arm");
-			Robot.ballDoor.forceSetDoor(Robot.ballDoor.setDoor(BallDoorState.CLOSED));
+			Robot.autoClaw.forceSetDoor(Robot.autoClaw.setDoor(BallDoorState.CLOSED));
 		}
 		Robot.vulcanclaw.forceSetDeployClaw(Robot.vulcanclaw.setClaw(desiredState));
 		
 	}
 	public void getStates(){
-		this.currentBallDoorState = Robot.ballDoor.getState();
+		this.currentBallDoorState = Robot.autoClaw.getState();
 		this.currentVulcanClawState = Robot.vulcanclaw.getClawState();
 		this.currentVulcanDeployState = Robot.vulcanclaw.getDeployState();
 	}
