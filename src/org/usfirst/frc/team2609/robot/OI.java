@@ -75,7 +75,7 @@ public class OI {
 //        xxx = new JoystickButton(driverStick, 5);
         
         toggleClaw = new JoystickButton(driverStick, 6);
-        toggleClaw.whenReleased(new toggleClaw());
+        toggleClaw.whenPressed(new toggleClaw());
         
         TsunamiDown = new JoystickButton(driverStick, 5);
         
@@ -111,13 +111,13 @@ public class OI {
 //		opButton4.whileHeld(new SetLED(0,0,255));
 //		opButton5 = new JoystickButton(driverStick, 3);
 //		opButton5.whenPressed(new CameraToggle());
-		opButton9 = new JoystickButton(opStick, 9);
+		opButton7 = new JoystickButton(opStick, 7);
 		// Enable analog scaling
 		
 
         
         toggleDeployClaw = new JoystickButton(driverStick, 5);
-        toggleDeployClaw.whenReleased(new toggleDeployClaw());
+        toggleDeployClaw.whenPressed(new toggleDeployClaw());
         
 
     }

@@ -27,7 +27,14 @@ public class VulcanClaw extends Subsystem {
 			return false; // no gear as far as we know
 		}
 	}
-	
+	public boolean currentDetect(){
+		double current = RobotMap.gearRoller.getOutputCurrent();
+		if(current > 15){
+			return true;
+		}else{
+			return false;
+		}
+	}
     public void toggleDeployClaw() {
     	System.out.println("For the love of Dean Kamen");
     	System.out.println("pls no");
@@ -71,6 +78,7 @@ public class VulcanClaw extends Subsystem {
     }
     
     public void closeClaw() {
+    	System.out.println("CLOSECLAW");
     	Robot.r03.StayInsideR03(VulcanClawState.CLOSED);
     }
     

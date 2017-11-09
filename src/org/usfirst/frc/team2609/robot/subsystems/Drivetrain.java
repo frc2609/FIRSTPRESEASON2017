@@ -54,7 +54,69 @@ public class Drivetrain extends Subsystem {
         RobotMap.driveTalonRight2.set(right);
         
     }
-    
+    public void arcadeDriveLowReverse(){
+		double X = RobotMap.Dandyboy.getRawAxis(0);
+        double Y = RobotMap.Dandyboy.getRawAxis(1);
+        double scaling = SmartDashboard.getNumber("High gear arcade scaling factor", 0.8);
+        double left = 0;
+        double right = 0;
+        // left = y+x
+        // right = y-x
+        if(Math.abs(X)<deadZone && Math.abs(Y)<deadZone){
+            left=0;
+            right =0;
+        }
+        else{
+            left=Y+X;
+            right = Y-X;
+        }
+
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft2.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight2.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
+        RobotMap.driveTalonLeft1.set(left);
+        RobotMap.driveTalonLeft2.set(left);
+        RobotMap.driveTalonRight1.set(right);
+        RobotMap.driveTalonRight2.set(right);
+        
+    }
+    public void arcadeDriveHighReverse(){
+		double X = RobotMap.Dandyboy.getRawAxis(0);
+        double Y = RobotMap.Dandyboy.getRawAxis(1);
+        double scaling = SmartDashboard.getNumber("High gear arcade scaling factor", 0.6);
+        double left = 0;
+        double right = 0;
+        // left = y+x
+        // right = y-x
+        if(Math.abs(X)<deadZone && Math.abs(Y)<deadZone){
+            left=0;
+            right =0;
+        }
+        else{
+            left=Y+(X*(1-Math.abs(scaling*Y)));
+            right = Y-(X*(1-Math.abs(scaling*Y)));
+        }
+
+
+    	RobotMap.driveTalonLeft1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight1.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft2.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonRight2.changeControlMode(TalonControlMode.PercentVbus);
+    	RobotMap.driveTalonLeft1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
+    	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
+    	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
+        RobotMap.driveTalonLeft1.set(left);
+        RobotMap.driveTalonLeft2.set(left);
+        RobotMap.driveTalonRight1.set(right);
+        RobotMap.driveTalonRight2.set(right);
+        
+    }
     public void arcadeDriveHigh(){
 		double X = RobotMap.Dandyboy.getRawAxis(0);
         double Y = -RobotMap.Dandyboy.getRawAxis(1);

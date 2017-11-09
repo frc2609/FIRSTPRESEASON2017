@@ -27,7 +27,7 @@ public class RobotMap {
 	public static CANTalon driveTalonLeft2;
 	public static CANTalon driveTalonRight1;
 	public static CANTalon driveTalonRight2;
-	public static CANTalon ballIntake;
+	public static CANTalon tsunamiMotor2;
 	public static CANTalon tsunamiMotor;
 	public static CANTalon gearRoller;
 	public static PowerDistributionPanel pdp;
@@ -77,6 +77,7 @@ public class RobotMap {
         }
 		try {
 			CameraServer.getInstance().startAutomaticCapture();
+			CameraServer.getInstance().startAutomaticCapture();
         } catch (RuntimeException ex ) {
             DriverStation.reportError("Error instantiating camera:  " + ex.getMessage(), true);
         }
@@ -86,12 +87,16 @@ public class RobotMap {
 		driveTalonRight2 = new CANTalon(4);
 		driveTalonLeft1 = new CANTalon(1);
 		driveTalonLeft2 = new CANTalon(2);
-		ballIntake = new CANTalon(5);
+		tsunamiMotor2 = new CANTalon(5);
 		tsunamiMotor = new CANTalon(6);
 		gearRoller = new CANTalon(7);
 		pdp = new PowerDistributionPanel();
 		compressor = new Compressor(0);
 		
+		
+		tsunamiMotor2.changeControlMode(TalonControlMode.Follower);
+		tsunamiMotor2.reverseOutput(true);
+		tsunamiMotor2.set(6);
 //		driveTalonRight2.changeControlMode(TalonControlMode.Follower);
 //		driveTalonLeft2.changeControlMode(TalonControlMode.Follower);
 //		driveTalonRight2.set(3); // Follows talon 3 talon is the second best talon
@@ -127,9 +132,9 @@ public class RobotMap {
         vulcanClaw = new DoubleSolenoid(0, 7, 6);
         vulcanDeploy = new DoubleSolenoid(0, 4, 5);
         autoClaw = new DoubleSolenoid(1,2,3);
-        hodor = new DoubleSolenoid(0,2,3);
+        hodor = new DoubleSolenoid(2,2,3);
         
-        gearPusher = new DoubleSolenoid(13,0,1);
+        gearPusher = new DoubleSolenoid(0,2,3);
         	
 		ringLED = new Relay(0);
 		ringLED.set(Relay.Value.kOff);

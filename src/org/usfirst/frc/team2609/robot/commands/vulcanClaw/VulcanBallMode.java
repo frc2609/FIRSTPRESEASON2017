@@ -14,6 +14,7 @@ public class VulcanBallMode extends CommandGroup {
     	addSequential(new GearPushIn());
     	addSequential(new TimerDelay(0.1));
         addSequential(new ClawClose());
+    	addSequential(new TimerDelay(0.45));
         addSequential(new ClawUp());
         addSequential(new gearRollerSetSpeed(0.8));
         
