@@ -142,7 +142,7 @@ public class RobotMap {
 		ultra = new Ultrasonic(8,9);
 		ultra.setAutomaticMode(true);
 		
-		clawCloseSensor = new DigitalInput(0);
+		clawCloseSensor = new DigitalInput(6);
 		clawMissSensor = new DigitalInput(4);
 		clawOpenSensor = new DigitalInput(5);
 		clawUpSensor = new DigitalInput(1);

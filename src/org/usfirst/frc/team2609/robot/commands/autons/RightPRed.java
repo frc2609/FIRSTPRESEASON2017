@@ -34,9 +34,13 @@ public class RightPRed extends CommandGroup {
     	addSequential(new DriveEncoder(68,1.0,-60));
     	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
-    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1, heading2, heading3, heading4, point1, point2, point3));
-    	addParallel(new BallDoorOpenAuton(point3));
-    	addParallel(new BallLowGoalAuton(point3));
+    	addSequential(new DriveEncoder(-75,1.0,-60));
+    	addSequential(new GyroTurn(1,0));
+    	addSequential(new EncReset());
+    	addSequential(new DriveEncoder(100,1.0,0));
+//    	addParallel(new DriveEncoderCurveSimple(totalArc, 0.6, 0.4, heading1, heading2, heading3, heading4, point1, point2, point3));
+//    	addParallel(new BallDoorOpenAuton(point3));
+//    	addParallel(new BallLowGoalAuton(point3));
     	
     }
 }
