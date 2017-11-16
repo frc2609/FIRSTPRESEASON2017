@@ -48,10 +48,10 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
-        RobotMap.driveTalonLeft1.set(left);
-        RobotMap.driveTalonLeft2.set(left);
-        RobotMap.driveTalonRight1.set(right);
-        RobotMap.driveTalonRight2.set(right);
+        RobotMap.driveTalonLeft1.set(left/4);
+        RobotMap.driveTalonLeft2.set(left/4);
+        RobotMap.driveTalonRight1.set(right/4);
+        RobotMap.driveTalonRight2.set(right/4);
         
     }
     public void arcadeDriveLowReverse(){
@@ -79,10 +79,10 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
-        RobotMap.driveTalonLeft1.set(left);
-        RobotMap.driveTalonLeft2.set(left);
-        RobotMap.driveTalonRight1.set(right);
-        RobotMap.driveTalonRight2.set(right);
+        RobotMap.driveTalonLeft1.set(left/4);
+        RobotMap.driveTalonLeft2.set(left/4);
+        RobotMap.driveTalonRight1.set(right/4);
+        RobotMap.driveTalonRight2.set(right/4);
         
     }
     public void arcadeDriveHighReverse(){
@@ -111,10 +111,10 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
-        RobotMap.driveTalonLeft1.set(left);
-        RobotMap.driveTalonLeft2.set(left);
-        RobotMap.driveTalonRight1.set(right);
-        RobotMap.driveTalonRight2.set(right);
+        RobotMap.driveTalonLeft1.set(left/4);
+        RobotMap.driveTalonLeft2.set(left/4);
+        RobotMap.driveTalonRight1.set(right/4);
+        RobotMap.driveTalonRight2.set(right/4);
         
     }
     public void arcadeDriveHigh(){
@@ -143,10 +143,10 @@ public class Drivetrain extends Subsystem {
     	RobotMap.driveTalonRight1.setVoltageRampRate(10000);
     	RobotMap.driveTalonLeft2.setVoltageRampRate(10000);
     	RobotMap.driveTalonRight2.setVoltageRampRate(10000);
-        RobotMap.driveTalonLeft1.set(left);
-        RobotMap.driveTalonLeft2.set(left);
-        RobotMap.driveTalonRight1.set(right);
-        RobotMap.driveTalonRight2.set(right);
+        RobotMap.driveTalonLeft1.set(left/4);
+        RobotMap.driveTalonLeft2.set(left/4);
+        RobotMap.driveTalonRight1.set(right/4);
+        RobotMap.driveTalonRight2.set(right/4);
         
     }
     

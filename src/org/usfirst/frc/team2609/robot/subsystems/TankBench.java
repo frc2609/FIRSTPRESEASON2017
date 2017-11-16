@@ -46,8 +46,8 @@ public class TankBench {
 //        Pathfinder.writeToCSV(leftF, left);
 //        File rightF = new File("right.csv");
 //        Pathfinder.writeToCSV(rightF, right);
-        double[][] rightpos = right.getPositions();
-        double[][] leftpos = left.getPositions();
+//        double[][] rightpos = right.getPositions();
+//        double[][] leftpos = left.getPositions();
 //        for (int i = 0; i < rightpos.length; i++){
 ////    		System.out.print("vel:" + rightpos[i][0]+ " ");
 ////    		System.out.print("accel:" + rightpos[i][1] + " ");
@@ -61,19 +61,19 @@ public class TankBench {
 //        	System.out.print(rightpos[i][2]);
 //        	System.out.print("}, \n");
 //    	} 
-        for (int i = 0; i < rightpos.length; i++){
-//    		System.out.print("vel:" + rightpos[i][0]+ " ");
-//    		System.out.print("accel:" + rightpos[i][1] + " ");
-//    		System.out.print("dt:" + rightpos[i][2] + " ");
-//    		System.out.print("\n");
-        	System.out.print("{");
-        	System.out.print(leftpos[i][0]);
-        	System.out.print(",");
-        	System.out.print(leftpos[i][1]);
-        	System.out.print(",");
-        	System.out.print(leftpos[i][2]);
-        	System.out.print("}, \n");
-    	}
+//        for (int i = 0; i < rightpos.length; i++){
+////    		System.out.print("vel:" + rightpos[i][0]+ " ");
+////    		System.out.print("accel:" + rightpos[i][1] + " ");
+////    		System.out.print("dt:" + rightpos[i][2] + " ");
+////    		System.out.print("\n");
+//        	System.out.print("{");
+//        	System.out.print(leftpos[i][0]);
+//        	System.out.print(",");
+//        	System.out.print(leftpos[i][1]);
+//        	System.out.print(",");
+//        	System.out.print(leftpos[i][2]);
+//        	System.out.print("}, \n");
+//    	}
         System.out.println("This took "+ (highModTime+highGenTime) + "ms");
 //        System.out.println("highGenTime: " + highGenTime);
 //        System.out.println("highModTime: " + highModTime);

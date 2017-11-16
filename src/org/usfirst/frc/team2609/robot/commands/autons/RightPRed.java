@@ -28,13 +28,13 @@ public class RightPRed extends CommandGroup {
     	//left gear and ? auton with dashboard variables
     	
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(72,1.0,0));
+    	addSequential(new DriveEncoder(79,1.0,0));
     	addSequential(new GyroTurn(1,-60));
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(68,1.0,-60));
+    	addSequential(new DriveEncoder(61,1.0,-60));
     	addSequential(new VulcanGearScore());
     	addSequential(new EncReset());
-    	addSequential(new DriveEncoder(-75,1.0,-60));
+    	addSequential(new DriveEncoder(-65,1.0,-60));
     	addSequential(new GyroTurn(1,0));
     	addSequential(new EncReset());
     	addSequential(new DriveEncoder(100,1.0,0));

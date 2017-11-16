@@ -29,7 +29,7 @@ public class VulcanClaw extends Subsystem {
 	}
 	public boolean currentDetect(){
 		double current = RobotMap.gearRoller.getOutputCurrent();
-		if(current > 15){
+		if(current > 7){
 			return true;
 		}else{
 			return false;

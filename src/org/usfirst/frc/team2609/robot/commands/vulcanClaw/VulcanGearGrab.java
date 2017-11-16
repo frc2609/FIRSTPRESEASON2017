@@ -13,7 +13,7 @@ public class VulcanGearGrab extends CommandGroup {
 
     public VulcanGearGrab() {
         addSequential(new ClawClose());
-        addSequential(new TimerDelay(0.2));
+        addSequential(new TimerDelay(0.5));
         addSequential(new ClawUpWithGear());
         addParallel(new gearRollerSetSpeed(0));
         
